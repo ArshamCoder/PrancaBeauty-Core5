@@ -4,8 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Bonique - Beauty & Cosmetic eCommerce HTML Template </title>
-    <meta name="description" content="">
+    <title>@ViewData["Title"] </title>
+    <meta name="description" content="@ViewData["description"]">
+    @if (@ViewData["canonical"] != null)
+    {
+<meta name="canonical" content="@ViewData["canonical"]">}
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/Main/img/favicon.ico">
