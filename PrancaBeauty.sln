@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrancaBeauty.WebApp", "PrancaBeauty.WebApp\PrancaBeauty.WebApp.csproj", "{700CFC36-9A60-4EF5-9A95-BE337FADD86B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrancaBeauty.WebApp", "PrancaBeauty.WebApp\PrancaBeauty.WebApp.csproj", "{700CFC36-9A60-4EF5-9A95-BE337FADD86B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrancaBeauty.Domain", "PrancaBeauty.Domain\PrancaBeauty.Domain.csproj", "{3F1B0F5E-9931-43A7-AC5B-7261DAEE66D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrancaBeauty.Application", "PrancaBeauty.Application\PrancaBeauty.Application.csproj", "{0143F417-4E60-4F02-B521-6AE96392C565}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrancaBeauty.Application.Contracts", "PrancaBeauty.Application.Contracts\PrancaBeauty.Application.Contracts.csproj", "{5F42A3CF-2C45-4AB6-B55B-A265CD499FA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrancaBeauty.Infrastructure.Core", "PrancaBeauty.Infrastructure.Core\PrancaBeauty.Infrastructure.Core.csproj", "{833BF8FC-4FC3-48D7-A189-8D8859C73BD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrancaBeauty.Infrastructure.EfCore", "PrancaBeauty.Infrastructure.EfCore\PrancaBeauty.Infrastructure.EfCore.csproj", "{AA61D823-D2F5-418C-BFB1-19D76042E95B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{5163B960-06CD-4258-BE34-70E5D6B7A449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +27,30 @@ Global
 		{700CFC36-9A60-4EF5-9A95-BE337FADD86B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{700CFC36-9A60-4EF5-9A95-BE337FADD86B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{700CFC36-9A60-4EF5-9A95-BE337FADD86B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F1B0F5E-9931-43A7-AC5B-7261DAEE66D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F1B0F5E-9931-43A7-AC5B-7261DAEE66D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F1B0F5E-9931-43A7-AC5B-7261DAEE66D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F1B0F5E-9931-43A7-AC5B-7261DAEE66D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0143F417-4E60-4F02-B521-6AE96392C565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0143F417-4E60-4F02-B521-6AE96392C565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0143F417-4E60-4F02-B521-6AE96392C565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0143F417-4E60-4F02-B521-6AE96392C565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F42A3CF-2C45-4AB6-B55B-A265CD499FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F42A3CF-2C45-4AB6-B55B-A265CD499FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F42A3CF-2C45-4AB6-B55B-A265CD499FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F42A3CF-2C45-4AB6-B55B-A265CD499FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{833BF8FC-4FC3-48D7-A189-8D8859C73BD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{833BF8FC-4FC3-48D7-A189-8D8859C73BD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{833BF8FC-4FC3-48D7-A189-8D8859C73BD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{833BF8FC-4FC3-48D7-A189-8D8859C73BD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA61D823-D2F5-418C-BFB1-19D76042E95B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA61D823-D2F5-418C-BFB1-19D76042E95B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA61D823-D2F5-418C-BFB1-19D76042E95B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA61D823-D2F5-418C-BFB1-19D76042E95B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5163B960-06CD-4258-BE34-70E5D6B7A449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5163B960-06CD-4258-BE34-70E5D6B7A449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5163B960-06CD-4258-BE34-70E5D6B7A449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5163B960-06CD-4258-BE34-70E5D6B7A449}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
