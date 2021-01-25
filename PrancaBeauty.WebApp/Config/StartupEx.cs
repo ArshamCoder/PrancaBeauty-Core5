@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.WebEncoders;
+using PrancaBeauty.WebApp.Localization;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Encodings.Web;
@@ -51,5 +54,32 @@ namespace PrancaBeauty.WebApp.Config
             return app.UseRequestLocalization(options);
         }
 
+
+        public static IMvcBuilder AddCustomViewLocalization(this IMvcBuilder builder, string resourcePath)
+        {
+            builder.AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, option =>
+            {
+                option.ResourcesPath = resourcePath;
+            });
+            return builder;
+        }
+
+        public static IMvcBuilder AddCustomDataAnnotationLocalization(this IMvcBuilder builder, IServiceCollection services, Type typeOfSharedResource)
+        {
+            builder.AddDataAnnotationsLocalization(option =>
+            {
+                var localizer = new FactoryLocalizer().Set(services, typeOfSharedResource);
+                option.DataAnnotationLocalizerProvider = (type, factory) => localizer;
+            });
+            return builder;
+        }
+
+
+        public static IServiceCollection AddInject(this IServiceCollection services)
+        {
+            //تزریق وابستگی
+            services.AddSingleton<ILocalizer, Localizer>();
+            return services;
+        }
     }
 }

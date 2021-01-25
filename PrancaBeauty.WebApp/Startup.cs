@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrancaBeauty.WebApp.Config;
+using PrancaBeauty.WebApp.Localization.Resource;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -27,7 +28,15 @@ namespace PrancaBeauty.WebApp
 
             services.WebEncoderConfig();
             #endregion
-            services.AddRazorPageConfig();
+
+
+
+            services.AddRazorPageConfig()
+                .AddCustomViewLocalization("Localization/Resource")
+                .AddCustomDataAnnotationLocalization(services, typeof(SharedResource));
+
+            services.AddInject();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
