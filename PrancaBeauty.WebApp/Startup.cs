@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PrancaBeauty.Infrastructure.Core.Configuration;
+using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Config;
 using PrancaBeauty.WebApp.Localization.Resource;
 using System.Collections.Generic;
@@ -36,6 +38,9 @@ namespace PrancaBeauty.WebApp
                 .AddCustomDataAnnotationLocalization(services, typeof(SharedResource));
 
             services.AddInject();
+            services.AddCustomIdentity()
+                //ترجمه پیغام های خطا 
+                .AddErrorDescriber<CustomErrorDescriber>();
 
         }
 
@@ -50,6 +55,10 @@ namespace PrancaBeauty.WebApp
             app.UseRouting();
             app.UseStaticFiles();
             app.UseLocalization(new List<CultureInfo>() { new CultureInfo("en-US"), new CultureInfo("fa-IR") }, "fa-IR");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

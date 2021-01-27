@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PrancaBeauty.Application\PrancaBeauty.Application.csproj" />
+    <ProjectReference Include="..\PrancaBeauty.Infrastructure.EfCore\PrancaBeauty.Infrastructure.EfCore.csproj" />
+  </ItemGroup>
+
 </Project>

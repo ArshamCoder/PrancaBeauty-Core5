@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Framework.Domain;
+using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace PrancaBeauty.Domain.User.UserAgg.Entities
 {
-    public class TblUser : IdentityUser<Guid>
+    public class TblUser : IdentityUser<Guid>, IEntity
     {
 
     }

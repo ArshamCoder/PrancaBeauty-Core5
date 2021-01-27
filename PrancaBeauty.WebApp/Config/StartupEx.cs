@@ -81,5 +81,8 @@ namespace PrancaBeauty.WebApp.Config
             services.AddSingleton<ILocalizer, Localizer>();
             return services;
         }
+
+
+
     }
 }
