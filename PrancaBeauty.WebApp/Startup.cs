@@ -42,6 +42,8 @@ namespace PrancaBeauty.WebApp
                 //ترجمه پیغام های خطا 
                 .AddErrorDescriber<CustomErrorDescriber>();
 
+            services.AddJwtAuthentication("", "", "", "");
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
