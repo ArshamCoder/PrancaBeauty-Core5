@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 namespace PrancaBeauty.WebApp.Authentication
@@ -30,9 +33,38 @@ namespace PrancaBeauty.WebApp.Authentication
                 })
                 .AddJwtBearer(opt =>
                 {
+                    opt.RequireHttpsMetadata = false;
+                    opt.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ClockSkew = TimeSpan.Zero,
+                        RequireSignedTokens = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(_SecretCode),
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+                        ValidateIssuer = true,
+                        ValidIssuer = issuer
+                    };
 
                 });
 
         }
+
+
+
+
+        public static void UseJwtAuthentication(this IApplicationBuilder app, string cookieName)
+        {
+            app.UseAuthentication();
+            app.UseAuthorization();
+        }
+
+
+
+
+
+
     }
 }

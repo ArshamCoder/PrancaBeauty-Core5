@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Framework.Application.Consts;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,7 +43,7 @@ namespace PrancaBeauty.WebApp
                 //ترجمه پیغام های خطا 
                 .AddErrorDescriber<CustomErrorDescriber>();
 
-            services.AddJwtAuthentication("", "", "", "");
+            services.AddJwtAuthentication(AuthConst.SecretCode, AuthConst.SecretKey, AuthConst.Audience, AuthConst.Issuer);
 
         }
 
@@ -58,8 +59,9 @@ namespace PrancaBeauty.WebApp
             app.UseStaticFiles();
             app.UseLocalization(new List<CultureInfo>() { new CultureInfo("en-US"), new CultureInfo("fa-IR") }, "fa-IR");
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseJwtAuthentication(AuthConst.CookieName);
+
+
 
             app.UseEndpoints(endpoints =>
             {
