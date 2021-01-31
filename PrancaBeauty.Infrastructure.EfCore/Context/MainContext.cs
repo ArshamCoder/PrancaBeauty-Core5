@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Domain.User.RoleAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
+using PrancaBeauty.Infrastructure.EfCore.Common.ExMothods;
+using PrancaBeauty.Infrastructure.EfCore.Contracts;
 using System;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Context
@@ -21,6 +23,15 @@ namespace PrancaBeauty.Infrastructure.EfCore.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            #region رجیستر خودکار هر کلاسی که IEntityConf دارد
+
+            var entitiesAssembly = typeof(IEntityConf).Assembly;
+            builder.RegisterEntityTypeConfiguration(entitiesAssembly);
+
+
+            #endregion
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

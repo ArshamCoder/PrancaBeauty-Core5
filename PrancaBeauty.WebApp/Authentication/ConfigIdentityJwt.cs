@@ -57,6 +57,7 @@ namespace PrancaBeauty.WebApp.Authentication
 
         public static void UseJwtAuthentication(this IApplicationBuilder app, string cookieName)
         {
+            app.UseMiddleware<JwtAuthenticationWebAppMiddleware>(_SecretKey, cookieName);
             app.UseAuthentication();
             app.UseAuthorization();
         }

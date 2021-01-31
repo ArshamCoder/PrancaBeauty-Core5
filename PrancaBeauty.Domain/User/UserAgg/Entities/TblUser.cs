@@ -6,6 +6,8 @@ namespace PrancaBeauty.Domain.User.UserAgg.Entities
 {
     public class TblUser : IdentityUser<Guid>, IEntity
     {
-
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime Date { get; set; }
     }
 }
