@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Framework.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Domain.User.RoleAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
@@ -24,10 +25,18 @@ namespace PrancaBeauty.Infrastructure.EfCore.Context
         {
             base.OnModelCreating(builder);
 
-            #region رجیستر خودکار هر کلاسی که IEntityConf دارد
+            #region DbSet Automatic
 
-            var entitiesAssembly = typeof(IEntityConf).Assembly;
-            builder.RegisterEntityTypeConfiguration(entitiesAssembly);
+            var entitiesAssembly = typeof(IEntity).Assembly;
+            builder.RegisterAllEntities<IEntity>(entitiesAssembly);
+
+            #endregion
+
+
+
+            #region رجیستر خودکار هر کلاسی که IEntityConf دارد
+            var entitiesConfAssembly = typeof(IEntityConf).Assembly;
+            builder.RegisterEntityTypeConfiguration(entitiesConfAssembly);
 
 
             #endregion
@@ -36,7 +45,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer("Server=.;Database=PrancaBeautyDb;Trusted_Connection=True;");
         }
     }
 }
