@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PrancaBeauty.Infrastructure.EfCore.Context;
+using PrancaBeauty.Infrastructure.Logger.Contracts;
+using PrancaBeauty.Infrastructure.Logger.SeriLogger;
 
 namespace PrancaBeauty.Infrastructure.Core.Configuration
 {
@@ -10,6 +12,8 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
         {
             services.AddDbContext<MainContext>(opt =>
                 opt.UseSqlServer("Server=.;Database=PrancaBeautyDb;Trusted_Connection=True;"));
+
+            services.AddSingleton<ILogger, Serilogger>();
         }
     }
 }
