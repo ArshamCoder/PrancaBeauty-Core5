@@ -1,5 +1,6 @@
-﻿using System;
-using Serilog;
+﻿using Serilog;
+using Serilog.Events;
+using System;
 using ILogger = PrancaBeauty.Infrastructure.Logger.Contracts.ILogger;
 
 namespace PrancaBeauty.Infrastructure.Logger.SeriLogger
@@ -8,6 +9,8 @@ namespace PrancaBeauty.Infrastructure.Logger.SeriLogger
     {
         public Serilogger()
         {
+
+            Log.Logger = new SerilogConfig().ConfigSqlServer(LogEventLevel.Warning).CreateLogger();
 
         }
 
