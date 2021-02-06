@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="User\RoleAgg\Contracts\" />
-    <Folder Include="User\UserAgg\Contracts\" />
   </ItemGroup>
 
   <ItemGroup>

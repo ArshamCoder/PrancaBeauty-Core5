@@ -120,7 +120,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.User.RoleAgg.Entities.TblRole", b =>
+            modelBuilder.Entity("PrancaBeauty.Domain.User.RoleAgg.DbEntities.TblRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,7 +165,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.User.UserAgg.Entities.TblUser", b =>
+            modelBuilder.Entity("PrancaBeauty.Domain.User.UserAgg.DbEntities.TblUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +246,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("PrancaBeauty.Domain.User.RoleAgg.Entities.TblRole", null)
+                    b.HasOne("PrancaBeauty.Domain.User.RoleAgg.DbEntities.TblRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -255,7 +255,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.Entities.TblUser", null)
+                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.DbEntities.TblUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -264,7 +264,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.Entities.TblUser", null)
+                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.DbEntities.TblUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -273,13 +273,13 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("PrancaBeauty.Domain.User.RoleAgg.Entities.TblRole", null)
+                    b.HasOne("PrancaBeauty.Domain.User.RoleAgg.DbEntities.TblRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.Entities.TblUser", null)
+                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.DbEntities.TblUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -288,7 +288,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.Entities.TblUser", null)
+                    b.HasOne("PrancaBeauty.Domain.User.UserAgg.DbEntities.TblUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
