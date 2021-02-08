@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="User\AccessLevelAgg\Contracts\" />
     <Folder Include="User\RoleAgg\Contracts\" />
   </ItemGroup>
 

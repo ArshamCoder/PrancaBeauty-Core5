@@ -12,11 +12,18 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
     {
         public static void Config(this IServiceCollection services)
         {
-            services.AddDbContext<MainContext>(opt =>
-                opt.UseSqlServer("Server=.;Database=PrancaBeautyDb;Trusted_Connection=True;"));
+            //services.AddDbContext<MainContext>(opt =>
+            //    opt.UseSqlServer("Server=.;Database=PrancaBeautyDb;Trusted_Connection=True;"));
 
-            services.AddSingleton<ILogger, Serilogger>();
-            services.AddSingleton<IUserRepository, UserRepository>();
+            //services.AddScoped<ILogger, Serilogger>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+
+
+            services.AddDbContext<MainContext>(opt => opt.UseSqlServer("Server=.;Database=PrancaBeautyDb;Trusted_Connection=True;"));
+
+            services.AddScoped<ILogger, Serilogger>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

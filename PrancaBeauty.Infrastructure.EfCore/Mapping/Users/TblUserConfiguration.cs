@@ -16,6 +16,18 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
             builder.Property(a => a.LastName)
                 .IsRequired()
                 .HasMaxLength(100);
+
+
+            //fluent api join
+            // join between user and accessLevel
+            //جوین همیشه از سمت جدولی که چند است میخورد
+            // هر دسترسی میتواند برای چندتا کاربر باشد
+            //پس جدول کاربران چند به حساب می آید
+            builder.HasOne(x => x.TblAccessLevels)
+                .WithMany(x => x.TblUsers)
+                .HasPrincipalKey(x => x.Id) //معرفی کلید خارجی
+                .HasForeignKey(x => x.AccessLevelId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
