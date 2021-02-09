@@ -12,7 +12,7 @@ namespace PrancaBeauty.Domain.User.UserAgg.Entities
         public string LastName { get; set; }
         public DateTime Date { get; set; }
 
-
+        public bool IsActive { get; set; }
         public virtual TblAccessLevels TblAccessLevels { get; set; }
     }
 }
