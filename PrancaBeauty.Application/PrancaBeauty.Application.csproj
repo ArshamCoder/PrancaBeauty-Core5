@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PrancaBeauty.Application.Contracts\PrancaBeauty.Application.Contracts.csproj" />
+    <ProjectReference Include="..\PrancaBeauty.Domain\PrancaBeauty.Domain.csproj" />
     <ProjectReference Include="..\PrancaBeauty.Infrastructure.Logger.SeriLogger\PrancaBeauty.Infrastructure.Logger.SeriLogger.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Extention\" />
   </ItemGroup>
 
 </Project>
