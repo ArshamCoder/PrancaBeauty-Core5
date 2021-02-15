@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 using PrancaBeauty.Infrastructure.EfCore.Repository.User;
@@ -23,7 +24,12 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
 
             services.AddScoped<ILogger, Serilogger>();
 
+            // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
+
+            // Applications
+            services.AddScoped<IUserApplication, UserApplication>();
+
         }
     }
 }

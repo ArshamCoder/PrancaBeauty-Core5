@@ -20,7 +20,7 @@ namespace Framework.Infrastructure
 
         public IQueryable<TEntity> Get => DbEntities;
         public IQueryable<TEntity> GetNoTraking => DbEntities.AsNoTracking();
-        public async Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool autoSave = true)
+        public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool autoSave = true)
         {
             await DbEntities.AddAsync(entity, cancellationToken);
 
@@ -28,7 +28,7 @@ namespace Framework.Infrastructure
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task AddRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
+        public virtual async Task AddRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
         {
             await DbEntities.AddRangeAsync(entities, cancellationToken);
 
@@ -36,7 +36,7 @@ namespace Framework.Infrastructure
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoSave = true)
+        public virtual async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoSave = true)
         {
             DbEntities.Remove(entity);
 
@@ -44,7 +44,7 @@ namespace Framework.Infrastructure
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
+        public virtual async Task DeleteRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
         {
             DbEntities.RemoveRange(entities);
 
@@ -52,7 +52,7 @@ namespace Framework.Infrastructure
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoSave = true)
+        public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoSave = true)
         {
             DbEntities.Update(entity);
 
@@ -60,7 +60,7 @@ namespace Framework.Infrastructure
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task UpdateRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
+        public virtual async Task UpdateRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
         {
             DbEntities.UpdateRange(entities);
 
@@ -68,12 +68,12 @@ namespace Framework.Infrastructure
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<TEntity> GetById(CancellationToken cancellationToken, params object[] ids)
+        public virtual async Task<TEntity> GetById(CancellationToken cancellationToken, params object[] ids)
         {
             return await DbEntities.FindAsync(ids, cancellationToken);
         }
 
-        public async Task<int> SaveChangeAsync()
+        public virtual async Task<int> SaveChangeAsync()
         {
             return await dbContext.SaveChangesAsync();
         }
