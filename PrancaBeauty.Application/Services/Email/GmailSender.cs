@@ -118,7 +118,7 @@ namespace PrancaBeauty.Application.Services.Email
             }
             catch (Exception ex)
             {
-                _Logger.Error(ex);
+                _logger.Error(ex);
             }
         }
 
