@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.Users;
+using PrancaBeauty.Application.Services.Email;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using System.Threading.Tasks;
 
@@ -11,11 +12,14 @@ namespace PrancaBeauty.WebApp.Pages.Auth
     {
 
         private readonly IUserApplication _userApplication;
+        private readonly IEmailSender _emailSender;
 
-        public RegisterModel(IUserApplication userApplication)
+        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender)
         {
             _userApplication = userApplication;
+            _emailSender = emailSender;
         }
+
 
         //  [BindProperty(SupportsGet = true)] // Get Data In Post And Get Method
         [BindProperty] // Get Data In Post Method
@@ -43,7 +47,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth
             if (result.IsSucceed)
             {
                 // ارسال ایمیل تایید
-
+                await _emailSender.SendAsync("", "", "");
                 return Page();
             }
             else

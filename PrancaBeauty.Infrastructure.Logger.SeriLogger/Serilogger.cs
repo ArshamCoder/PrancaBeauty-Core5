@@ -1,11 +1,10 @@
 ﻿using Serilog;
 using Serilog.Events;
 using System;
-using ILogger = PrancaBeauty.Infrastructure.Logger.Contracts.ILogger;
 
 namespace PrancaBeauty.Infrastructure.Logger.SeriLogger
 {
-    public class Serilogger : ILogger
+    public class Serilogger : Framework.Infrastructure.ILogger
     {
         public Serilogger()
         {
