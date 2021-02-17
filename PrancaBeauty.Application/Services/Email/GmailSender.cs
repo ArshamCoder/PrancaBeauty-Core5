@@ -10,21 +10,21 @@ namespace PrancaBeauty.Application.Services.Email
 {
     public class GmailSender : IEmailSender
     {
-        private readonly string SenderTitle;
-        private readonly string UserName;
-        private readonly string Password;
-        private readonly int Port;
-        private readonly bool UseSSL;
+        private readonly string _senderTitle;
+        private readonly string _userName;
+        private readonly string _password;
+        private readonly int _port;
+        private readonly bool _useSsl;
         private readonly ILogger _logger;
 
         public GmailSender(ILogger logger)
         {
             _logger = logger;
-            SenderTitle = "PrancaBeauty Shop";
-            UserName = "arshambh9@gmail.com";
-            Password = "1234567898";
-            Port = 587;
-            UseSSL = true;
+            _senderTitle = "PrancaBeauty Shop";
+            _userName = "arshambh9@gmail.com";
+            _password = "1234567898";
+            _port = 587;
+            _useSsl = true;
         }
 
         public bool Send(string to, string subject, string message)
@@ -33,7 +33,7 @@ namespace PrancaBeauty.Application.Services.Email
             {
                 MailMessage mail = new MailMessage();
 
-                mail.From = new MailAddress(UserName, SenderTitle, Encoding.UTF8);
+                mail.From = new MailAddress(_userName, _senderTitle, Encoding.UTF8);
                 mail.To.Add(new MailAddress(to));
                 mail.Subject = subject;
                 mail.Body = message;
@@ -43,9 +43,9 @@ namespace PrancaBeauty.Application.Services.Email
 
 
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                smtp.Port = Port;
-                smtp.Credentials = new NetworkCredential(UserName, Password);
-                smtp.EnableSsl = UseSSL;
+                smtp.Port = _port;
+                smtp.Credentials = new NetworkCredential(_userName, _password);
+                smtp.EnableSsl = _useSsl;
 
                 smtp.Send(mail);
                 return true;
@@ -62,9 +62,11 @@ namespace PrancaBeauty.Application.Services.Email
         {
             try
             {
-                MailMessage mail = new MailMessage();
+                MailMessage mail = new MailMessage
+                {
+                    From = new MailAddress(_userName, _senderTitle, Encoding.UTF8)
+                };
 
-                mail.From = new MailAddress(UserName, SenderTitle, Encoding.UTF8);
                 mail.To.Add(new MailAddress(to));
                 mail.Subject = subject;
                 mail.Body = message;
@@ -73,10 +75,12 @@ namespace PrancaBeauty.Application.Services.Email
                 mail.Priority = MailPriority.Normal;
 
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                smtp.Port = Port;
-                smtp.Credentials = new NetworkCredential(UserName, Password);
-                smtp.EnableSsl = UseSSL;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = _port,
+                    Credentials = new NetworkCredential(_userName, _password),
+                    EnableSsl = _useSsl
+                };
 
                 smtp.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
 
@@ -102,14 +106,14 @@ namespace PrancaBeauty.Application.Services.Email
         {
             try
             {
-                string Token = (string)e.UserState;
+                var token = (string)e.UserState;
                 if (e.Cancelled)
                 {
 
                 }
                 else if (e.Error != null)
                 {
-                    throw new Exception($"Token: [{Token}], Errors: [{e.Error.Message}]", e.Error);
+                    throw new Exception($"Token: [{token}], Errors: [{e.Error.Message}]", e.Error);
                 }
                 else
                 {
