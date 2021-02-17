@@ -62,7 +62,20 @@ namespace PrancaBeauty.Application.Apps.Users
                 var result = await _userRepository.CreateUserAsync(tUser, input.Password);
                 if (result.Succeeded)
                 {
-                    return new OperationResult().Succeed("UserCreatedSuccessfully");
+                    if (_userRepository.RequireConfirmEmail())
+                    {
+                        /*
+                         * code = 1
+                         * یعنی کاربر ثبت نام کرده و باید ایمیلش هم تایید کند
+                         */
+                        return new OperationResult().Succeed(1, tUser.Id.ToString());
+
+                    }
+                    else
+                    {
+                        //کاربر نیاز به تایید ایمیل ندارد
+                        return new OperationResult().Succeed("UserCreatedSuccessfully");
+                    }
 
                 }
                 else
@@ -78,6 +91,14 @@ namespace PrancaBeauty.Application.Apps.Users
 
             }
         }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(string userId)
+        {
+            //تولید ایمیل فعال سازی
+            var qUser = await _userRepository.FindByIdAsync(userId);
+            return await _userRepository.GenerateEmailConfirmationTokenAsync(qUser);
+        }
+
     }
 
 

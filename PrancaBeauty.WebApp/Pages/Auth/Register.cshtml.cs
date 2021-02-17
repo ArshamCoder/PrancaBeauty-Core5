@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Framework.Application.Consts;
+using Framework.Common.ExMethod;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.Application.Services.Email;
+using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.Auth
@@ -13,11 +17,13 @@ namespace PrancaBeauty.WebApp.Pages.Auth
 
         private readonly IUserApplication _userApplication;
         private readonly IEmailSender _emailSender;
+        private readonly ILocalizer _Localizer;
 
-        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender)
+        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender, ILocalizer localizer)
         {
             _userApplication = userApplication;
             _emailSender = emailSender;
+            _Localizer = localizer;
         }
 
 
@@ -31,7 +37,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
@@ -46,9 +52,29 @@ namespace PrancaBeauty.WebApp.Pages.Auth
             });
             if (result.IsSucceed)
             {
-                // ارسال ایمیل تایید
-                await _emailSender.SendAsync("", "", "");
-                return Page();
+                if (result.Code == 1)
+                {
+                    #region ارسال ایمیل تایید
+
+                    string userId = result.Message;
+                    var token = await _userApplication.GenerateEmailConfirmationTokenAsync(userId);
+                    var encryptedToken = $"{userId}, {token}".AesEncrypt(AuthConst.SecretKey);
+
+                    string url = $"/Auth/EmailConfirmation?Token={WebUtility.UrlEncode(encryptedToken)}";
+
+                    await _emailSender.SendAsync(Input.Email,
+                        _Localizer["RegistrationEmailSubject"],
+                        $"<a href=\"{url}\">Click!!!</a>");
+                    #endregion
+
+                    return Page();
+                }
+                else
+                {
+                    return Redirect("/Auth/UserCreatedSuccessfully");
+                }
+
+
             }
             else
             {
