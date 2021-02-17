@@ -31,9 +31,11 @@ namespace PrancaBeauty.Application.Services.Email
         {
             try
             {
-                MailMessage mail = new MailMessage();
+                MailMessage mail = new MailMessage
+                {
+                    From = new MailAddress(_userName, _senderTitle, Encoding.UTF8)
+                };
 
-                mail.From = new MailAddress(_userName, _senderTitle, Encoding.UTF8);
                 mail.To.Add(new MailAddress(to));
                 mail.Subject = subject;
                 mail.Body = message;
@@ -42,10 +44,12 @@ namespace PrancaBeauty.Application.Services.Email
                 mail.Priority = MailPriority.Normal;
 
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                smtp.Port = _port;
-                smtp.Credentials = new NetworkCredential(_userName, _password);
-                smtp.EnableSsl = _useSsl;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = _port,
+                    Credentials = new NetworkCredential(_userName, _password),
+                    EnableSsl = _useSsl
+                };
 
                 smtp.Send(mail);
                 return true;
