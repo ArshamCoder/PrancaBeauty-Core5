@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20210218181212_mig4")]
+    partial class mig4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,7 +122,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.Region.LanguageAgg.Entities.TblLanguage", b =>
+            modelBuilder.Entity("PrancaBeauty.Domain.Region.Language.Entities.TblLanguage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,51 +155,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.ToTable("TblLanguage");
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.SettingAgg.Entities.TblSetting", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsInManufacture")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("LangId")
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SiteDescription")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("SiteEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("SitePhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("SiteTitle")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("SiteUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LangId");
-
-                    b.ToTable("TblSetting");
-                });
-
-            modelBuilder.Entity("PrancaBeauty.Domain.TemplateAgg.Entities.TblTemplate", b =>
+            modelBuilder.Entity("PrancaBeauty.Domain.Template.Entities.TblTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -312,8 +270,8 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1b1098fa-de5e-4d82-8059-acd301747526"),
-                            ConcurrencyStamp = "265eab78-2b0d-4f15-92ba-57f21bd7cdf3",
+                            Id = new Guid("e9c107f5-0f7b-4afc-b264-acd30165a7c8"),
+                            ConcurrencyStamp = "1a27e91e-bbc1-44ab-92b3-6dc0afee93ce",
                             Description = "دسترسی مدیر کل",
                             Name = "FullControl",
                             NormalizedName = "FULLCONTROL",
@@ -460,20 +418,9 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.SettingAgg.Entities.TblSetting", b =>
+            modelBuilder.Entity("PrancaBeauty.Domain.Template.Entities.TblTemplate", b =>
                 {
-                    b.HasOne("PrancaBeauty.Domain.Region.LanguageAgg.Entities.TblLanguage", "TblLanguage")
-                        .WithMany("TblSettings")
-                        .HasForeignKey("LangId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("TblLanguage");
-                });
-
-            modelBuilder.Entity("PrancaBeauty.Domain.TemplateAgg.Entities.TblTemplate", b =>
-                {
-                    b.HasOne("PrancaBeauty.Domain.Region.LanguageAgg.Entities.TblLanguage", "Language")
+                    b.HasOne("PrancaBeauty.Domain.Region.Language.Entities.TblLanguage", "Language")
                         .WithMany("TblTemplates")
                         .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -512,10 +459,8 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.Navigation("TblAccessLevels");
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.Region.LanguageAgg.Entities.TblLanguage", b =>
+            modelBuilder.Entity("PrancaBeauty.Domain.Region.Language.Entities.TblLanguage", b =>
                 {
-                    b.Navigation("TblSettings");
-
                     b.Navigation("TblTemplates");
                 });
 

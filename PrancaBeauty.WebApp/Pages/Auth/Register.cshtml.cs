@@ -2,11 +2,13 @@
 using Framework.Common.ExMethod;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.Application.Services.Email;
 using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
+using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -18,12 +20,14 @@ namespace PrancaBeauty.WebApp.Pages.Auth
         private readonly IUserApplication _userApplication;
         private readonly IEmailSender _emailSender;
         private readonly ILocalizer _Localizer;
+        private readonly ITemplateApplication _templateApplication;
 
-        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender, ILocalizer localizer)
+        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender, ILocalizer localizer, ITemplateApplication templateApplication)
         {
             _userApplication = userApplication;
             _emailSender = emailSender;
             _Localizer = localizer;
+            _templateApplication = templateApplication;
         }
 
 
@@ -60,11 +64,12 @@ namespace PrancaBeauty.WebApp.Pages.Auth
                     var token = await _userApplication.GenerateEmailConfirmationTokenAsync(userId);
                     var encryptedToken = $"{userId}, {token}".AesEncrypt(AuthConst.SecretKey);
 
-                    string url = $"/Auth/EmailConfirmation?Token={WebUtility.UrlEncode(encryptedToken)}";
+                    string siteUrl = "";
+                    string url = $"{siteUrl}/Auth/EmailConfirmation?Token={WebUtility.UrlEncode(encryptedToken)}";
 
                     await _emailSender.SendAsync(Input.Email,
                         _Localizer["RegistrationEmailSubject"],
-                        $"<a href=\"{url}\">Click!!!</a>");
+                        await _templateApplication.GetEmailConfirmationTemplateAsync(CultureInfo.CurrentCulture.Name, url));
                     #endregion
 
                     return Page();
