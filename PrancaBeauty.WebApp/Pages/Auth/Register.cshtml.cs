@@ -2,6 +2,7 @@
 using Framework.Common.ExMethod;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.Users;
@@ -21,13 +22,16 @@ namespace PrancaBeauty.WebApp.Pages.Auth
         private readonly IEmailSender _emailSender;
         private readonly ILocalizer _Localizer;
         private readonly ITemplateApplication _templateApplication;
+        private readonly ISettingApplication _settingApplication;
 
-        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender, ILocalizer localizer, ITemplateApplication templateApplication)
+
+        public RegisterModel(IUserApplication userApplication, IEmailSender emailSender, ILocalizer localizer, ITemplateApplication templateApplication, ISettingApplication settingApplication)
         {
             _userApplication = userApplication;
             _emailSender = emailSender;
             _Localizer = localizer;
             _templateApplication = templateApplication;
+            _settingApplication = settingApplication;
         }
 
 
@@ -64,7 +68,8 @@ namespace PrancaBeauty.WebApp.Pages.Auth
                     var token = await _userApplication.GenerateEmailConfirmationTokenAsync(userId);
                     var encryptedToken = $"{userId}, {token}".AesEncrypt(AuthConst.SecretKey);
 
-                    string siteUrl = "";
+                    string siteUrl = (await _settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
+
                     string url = $"{siteUrl}/Auth/EmailConfirmation?Token={WebUtility.UrlEncode(encryptedToken)}";
 
                     await _emailSender.SendAsync(Input.Email,

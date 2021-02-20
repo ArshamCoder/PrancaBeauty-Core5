@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Region\LanguageAgg\Contracts\" />
-    <Folder Include="SettingAgg\Contracts\" />
     <Folder Include="User\AccessLevelAgg\Contracts\" />
     <Folder Include="User\RoleAgg\Contracts\" />
   </ItemGroup>

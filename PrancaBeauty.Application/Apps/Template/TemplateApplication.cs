@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Contracts.Templates;
 using PrancaBeauty.Domain.TemplateAgg.Contracts;
 using System.Collections.Generic;
@@ -10,11 +11,13 @@ namespace PrancaBeauty.Application.Apps.Template
     public class TemplateApplication : ITemplateApplication
     {
         private readonly ITemplateRepository _templateRepository;
-        private readonly List<OutTemplate> _listTemplate;
+        private readonly ISettingApplication _settingApplication;
+        private List<OutTemplate> _listTemplate;
 
-        public TemplateApplication(ITemplateRepository templateRepository)
+        public TemplateApplication(ITemplateRepository templateRepository, ISettingApplication settingApplication)
         {
             _templateRepository = templateRepository;
+            _settingApplication = settingApplication;
             _listTemplate = new List<OutTemplate>();
         }
 
@@ -23,7 +26,7 @@ namespace PrancaBeauty.Application.Apps.Template
         {
             string template = await GetTemplateAsync(langCode, "");
 
-            return SetGeneralParameters(template)
+            return (await SetGeneralParameters(template, langCode))
                 .Replace("[Url]", url);
         }
 
@@ -51,10 +54,17 @@ namespace PrancaBeauty.Application.Apps.Template
         }
 
 
-        private string SetGeneralParameters(string template)
+        private async Task<string> SetGeneralParameters(string template, string langCode)
         {
-            return template.Replace("[SiteName]", "PrancaBeauty")
-                .Replace("[SiteUrl]", "https://PrancaBeauty.com");
+            var qSetting = await _settingApplication.GetSettingAsync(langCode);
+
+            return template.Replace("[SiteName]", qSetting.SiteTitle)
+                .Replace("[SiteUrl]", qSetting.SiteUrl);
+        }
+
+        public void ClearCache()
+        {
+            _listTemplate = new List<OutTemplate>();
         }
     }
 }

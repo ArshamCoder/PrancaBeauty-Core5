@@ -10,7 +10,8 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
             {
                 new AddDataAccessLevel().Run();
                 new AddDataUser().Run();
-
+                new AddDataLanguage().Run();
+                new AddDataSetting().Run();
             }
             catch (Exception e)
             {
