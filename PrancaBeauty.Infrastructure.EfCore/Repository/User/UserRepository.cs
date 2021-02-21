@@ -23,7 +23,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
 
         public async Task<TblUser> FindByIdAsync(string userId)
         {
-            return await _userManager.FindByEmailAsync(userId);
+            return await _userManager.FindByIdAsync(userId);
         }
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(TblUser user)

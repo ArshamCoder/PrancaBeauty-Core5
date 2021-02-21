@@ -1,14 +1,17 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Application.Services.Email;
+using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
-using PrancaBeauty.Application.Services.Email;
 using PrancaBeauty.Domain.SettingAgg.Contracts;
 using PrancaBeauty.Domain.TemplateAgg.Contracts;
+using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Infrastructure.EfCore.Context;
+using PrancaBeauty.Infrastructure.EfCore.Repository.AccessLevel;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Setting;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Template;
 using PrancaBeauty.Infrastructure.EfCore.Repository.User;
@@ -35,12 +38,14 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
+            services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<ISettingRepository, SettingRepository>();
 
             // Applications
             services.AddScoped<IUserApplication, UserApplication>();
             services.AddScoped<ITemplateApplication, TemplateApplication>();
             services.AddScoped<ISettingApplication, SettingApplication>();
+            services.AddScoped<IAccesslevelApplication, AccesslevelApplication>();
 
         }
     }

@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrancaBeauty.Application.Services.Email
+namespace Framework.Application.Services.Email
 {
     public class GmailSender : IEmailSender
     {
@@ -21,8 +21,8 @@ namespace PrancaBeauty.Application.Services.Email
         {
             _logger = logger;
             _senderTitle = "PrancaBeauty Shop";
-            _userName = "arshambh9@gmail.com";
-            _password = "1234567898";
+            _userName = "testdllearn@gmail.com";
+            _password = "123456789Aabcdefg!";
             _port = 587;
             _useSsl = true;
         }

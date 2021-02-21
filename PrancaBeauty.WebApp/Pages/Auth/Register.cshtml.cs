@@ -1,4 +1,5 @@
 ﻿using Framework.Application.Consts;
+using Framework.Application.Services.Email;
 using Framework.Common.ExMethod;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,7 +7,6 @@ using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.Users;
-using PrancaBeauty.Application.Services.Email;
 using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using System.Globalization;
@@ -96,7 +96,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth
                 return Page();
             }
 
-            return Page();
+
         }
     }
 }

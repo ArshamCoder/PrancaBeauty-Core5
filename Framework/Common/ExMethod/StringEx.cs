@@ -10,7 +10,7 @@ namespace Framework.Common.ExMethod
         /// </summary>
         public static string AesEncrypt(this string text, string key)
         {
-            if (!string.IsNullOrEmpty(key) || !string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException("لطفا مقدار کلید را وارد نمایید.");
 
             string encrypt = EncryptProvider.AESEncrypt(text, key);
@@ -25,7 +25,7 @@ namespace Framework.Common.ExMethod
         /// </summary>
         public static string AesDecrypt(this string text, string key)
         {
-            if (!string.IsNullOrEmpty(key) || !string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException("لطفا مقدار کلید را وارد نمایید.");
 
             string decrypt = EncryptProvider.AESDecrypt(text, key);

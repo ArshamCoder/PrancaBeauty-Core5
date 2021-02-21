@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PrancaBeauty.Application.Services.Email
+namespace Framework.Application.Services.Email
 {
     public interface IEmailSender
     {

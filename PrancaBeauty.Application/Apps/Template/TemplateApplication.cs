@@ -24,7 +24,7 @@ namespace PrancaBeauty.Application.Apps.Template
 
         public async Task<string> GetEmailConfirmationTemplateAsync(string langCode, string url)
         {
-            string template = await GetTemplateAsync(langCode, "");
+            string template = await GetTemplateAsync(langCode, "ConfirmationEmail");
 
             return (await SetGeneralParameters(template, langCode))
                 .Replace("[Url]", url);
