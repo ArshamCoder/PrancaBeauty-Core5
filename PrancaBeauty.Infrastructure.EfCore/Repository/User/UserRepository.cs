@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using PrancaBeauty.Infrastructure.EfCore.Context;
+using System;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
@@ -34,6 +35,25 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
         public bool RequireConfirmEmail()
         {
             return _userManager.Options.SignIn.RequireConfirmedEmail;
+        }
+
+
+        public async Task<IdentityResult> EmailConfirmationAsync(TblUser user, string token)
+        {
+            if (user == null)
+                throw new ArgumentNullException("User can`t be null.");
+
+            if (string.IsNullOrWhiteSpace(token))
+                throw new ArgumentNullException("Token can`t be null.");
+
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+
+
+        public async Task<bool> IsEmailConfirmedAsync(TblUser user)
+        {
+            return await _userManager.IsEmailConfirmedAsync(user);
         }
     }
 }

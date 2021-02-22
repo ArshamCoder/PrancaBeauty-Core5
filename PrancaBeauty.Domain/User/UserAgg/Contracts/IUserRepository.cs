@@ -11,5 +11,8 @@ namespace PrancaBeauty.Domain.User.UserAgg.Contracts
         Task<string> GenerateEmailConfirmationTokenAsync(TblUser user);
         Task<TblUser> FindByIdAsync(string userId);
         bool RequireConfirmEmail();
+
+        Task<IdentityResult> EmailConfirmationAsync(TblUser user, string token);
+        Task<bool> IsEmailConfirmedAsync(TblUser user);
     }
 }
