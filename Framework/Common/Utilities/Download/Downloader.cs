@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,9 +21,12 @@ namespace Framework.Common.Utilities.Download
         {
             try
             {
-                string UrlParemeter = "";
+                string urlParemeter = "";
 
-                string url = pageUrl + UrlParemeter.Trim(new char[] { '&' });
+                if (data != null)
+                    urlParemeter = UrlEncodeParameterGenarator(data);
+
+                string url = pageUrl + urlParemeter.Trim(new char[] { '&' });
 
                 HttpWebRequest objRequest = (HttpWebRequest)WebRequest.Create(url);
 
@@ -56,5 +60,63 @@ namespace Framework.Common.Utilities.Download
                 return null;
             }
         }
+
+
+        private string UrlEncodeParameterGenarator(object data)
+        {
+            if (data == null)
+                return "";
+
+            var parameter = GetModelParameters(data);
+
+            string urlParameter = "?";
+
+            foreach (var item in parameter)
+            {
+                if (item.Value != null)
+                    urlParameter += "&" + item.Key + "=" + item.Value;
+            }
+
+            return urlParameter;
+        }
+
+        private Dictionary<string, string> GetModelParameters(object data)
+        {
+            if (data == null)
+                return new Dictionary<string, string>();
+
+            Type t = data.GetType();
+            PropertyInfo[] props = t.GetProperties();
+
+            Dictionary<string, string> lstParameter = new Dictionary<string, string>();
+
+            foreach (var prop in props)
+            {
+                object value = prop.GetValue(data, new object[] { });
+                if (value != null)
+                {
+                    if (value.GetType() == typeof(string[]))
+                        foreach (var item in (string[])value)
+                            if (item != null)
+                                lstParameter.Add(prop.Name, item);
+
+                    if (value is string)
+                        lstParameter.Add(prop.Name, value.ToString());
+
+                    if (value is int)
+                        lstParameter.Add(prop.Name, value.ToString());
+
+                    if (value is double)
+                        lstParameter.Add(prop.Name, value.ToString());
+
+                    if (value is float)
+                        lstParameter.Add(prop.Name, value.ToString());
+                }
+            }
+
+            return lstParameter;
+        }
+
+
     }
 }
