@@ -137,6 +137,25 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
+        public async Task<OperationResult> LoginByUserNamePasswordAsync(string userName, string pawword)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userName))
+                    throw new ArgumentNullException("UserName cant be null.");
+
+                if (string.IsNullOrWhiteSpace(pawword))
+                    throw new ArgumentNullException("Pawword cant be null.");
+
+                return new OperationResult().Succeed("");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
         public async Task<bool> IsEmailConfirmedAsync(string userId)
         {
             var qUser = await _userRepository.FindByIdAsync(userId);
