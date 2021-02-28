@@ -33,6 +33,7 @@ namespace PrancaBeauty.WebApp
             #endregion
 
 
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
             services.AddRazorPageConfig()
                 .AddCustomViewLocalization("Localization/Resource")

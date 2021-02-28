@@ -1,11 +1,11 @@
-(function($) {
+﻿(function ($) {
     "use strict";
 
     new WOW().init();
 
     /*---background image---*/
     function dataBackgroundImage() {
-        $('[data-bgimg]').each(function() {
+        $('[data-bgimg]').each(function () {
             var bgImgUrl = $(this).data('bgimg');
             $(this).css({
                 'background-image': 'url(' + bgImgUrl + ')', // + meaning concat
@@ -13,13 +13,13 @@
         });
     }
 
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         dataBackgroundImage();
     });
 
 
     /*---stickey menu---*/
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
         var scroll = $(window).scrollTop();
         if (scroll < 100) {
             $(".sticky-header").removeClass("sticky");
@@ -94,7 +94,7 @@
 
         $('.product_dl_column3 .owl-stage .owl-item').removeClass('firstActiveItem lastActiveItem');
 
-        $('.product_dl_column3 .owl-stage .owl-item.active').each(function(index) {
+        $('.product_dl_column3 .owl-stage .owl-item.active').each(function (index) {
             if (index === 0) {
                 // this is the first one
                 $(this).addClass('firstActiveItem');
@@ -106,7 +106,7 @@
         });
     }
     checkClasses();
-    $product_dl_column3.on('translated.owl.carousel', function(event) {
+    $product_dl_column3.on('translated.owl.carousel', function (event) {
         checkClasses();
     });
 
@@ -203,7 +203,7 @@
     /*---brand container activation---*/
     var $brandContainer = $('.brand_container');
     if ($brandContainer.length > 0) {
-        $('.brand_container').on('changed.owl.carousel initialized.owl.carousel', function(event) {
+        $('.brand_container').on('changed.owl.carousel initialized.owl.carousel', function (event) {
             $(event.target).find('.owl-item').removeClass('last').eq(event.item.index + event.page.size - 1).addClass('last')
         }).owlCarousel({
             autoplay: true,
@@ -240,7 +240,7 @@
     /*---banner column4 activation---*/
     var $bannerColumn4 = $('.banner_column4');
     if ($bannerColumn4.length > 0) {
-        $('.banner_column4').on('changed.owl.carousel initialized.owl.carousel', function(event) {
+        $('.banner_column4').on('changed.owl.carousel initialized.owl.carousel', function (event) {
             $(event.target).find('.owl-item').removeClass('last').eq(event.item.index + event.page.size - 1).addClass('last')
         }).owlCarousel({
             autoplay: true,
@@ -273,7 +273,7 @@
     /*---product column4 activation---*/
     var $porductColumn4 = $('.product_column4');
     if ($porductColumn4.length > 0) {
-        $porductColumn4.on('changed.owl.carousel initialized.owl.carousel', function(event) {
+        $porductColumn4.on('changed.owl.carousel initialized.owl.carousel', function (event) {
             $(event.target).find('.owl-item').removeClass('last').eq(event.item.index + event.page.size - 1).addClass('last')
         }).owlCarousel({
             autoplay: true,
@@ -309,7 +309,7 @@
     /*---categories column6 activation---*/
     var $categoriesColumn6 = $('.categories_column6');
     if ($categoriesColumn6.length > 0) {
-        $categoriesColumn6.on('changed.owl.carousel initialized.owl.carousel', function(event) {
+        $categoriesColumn6.on('changed.owl.carousel initialized.owl.carousel', function (event) {
             $(event.target).find('.owl-item').removeClass('last').eq(event.item.index + event.page.size - 1).addClass('last')
         }).owlCarousel({
             autoplay: true,
@@ -348,7 +348,7 @@
     /*---product column3 activation---*/
     var $porductColumn3 = $('.product_column3');
     if ($porductColumn3.length > 0) {
-        $porductColumn3.on('changed.owl.carousel initialized.owl.carousel', function(event) {
+        $porductColumn3.on('changed.owl.carousel initialized.owl.carousel', function (event) {
             $(event.target).find('.owl-item').removeClass('last').eq(event.item.index + event.page.size - 1).addClass('last')
         }).owlCarousel({
             autoplay: true,
@@ -476,11 +476,11 @@
         });
     }
 
-    $('.modal').on('shown.bs.modal', function(e) {
+    $('.modal').on('shown.bs.modal', function (e) {
         $('.product_navactive').resize();
     })
 
-    $('.product_navactive a').on('click', function(e) {
+    $('.product_navactive a').on('click', function (e) {
         e.preventDefault();
 
         var $href = $(this).attr('href');
@@ -521,10 +521,10 @@
     /*---  Accordion---*/
     $(".faequently-accordion").collapse({
         accordion: true,
-        open: function() {
+        open: function () {
             this.slideDown(300);
         },
-        close: function() {
+        close: function () {
             this.slideUp(300);
         }
     });
@@ -541,10 +541,10 @@
 
     /*---countdown activation---*/
 
-    $('[data-countdown]').each(function() {
+    $('[data-countdown]').each(function () {
         var $this = $(this),
             finalDate = $(this).data('countdown');
-        $this.countdown(finalDate, function(event) {
+        $this.countdown(finalDate, function (event) {
             $this.html(event.strftime('<div class="countdown_area"><div class="single_countdown"><div class="countdown_number">%D</div><div class="countdown_title">days</div></div><div class="single_countdown"><div class="countdown_number">%H</div><div class="countdown_title">hours</div></div><div class="single_countdown"><div class="countdown_number">%M</div><div class="countdown_title">mins</div></div><div class="single_countdown"><div class="countdown_number">%S</div><div class="countdown_title">secs</div></div></div>'));
 
         });
@@ -556,7 +556,7 @@
         min: 0,
         max: 500,
         values: [0, 500],
-        slide: function(event, ui) {
+        slide: function (event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         }
     });
@@ -574,7 +574,7 @@
 
 
     /*---addClass/removeClass categories---*/
-    $("#cat_toggle.has-sub > a").on("click", function() {
+    $("#cat_toggle.has-sub > a").on("click", function () {
         $(this).removeAttr('href');
         $(this).toggleClass('open').next('.categorie_sub').toggleClass('open');
         $(this).parents().siblings().find('#cat_toggle.has-sub > a').removeClass('open');
@@ -604,7 +604,7 @@
 
     /*---Category menu---*/
     function categorySubMenuToggle() {
-        $('.categories_menu_toggle li.menu_item_children > a').on('click', function() {
+        $('.categories_menu_toggle li.menu_item_children > a').on('click', function () {
             if ($(window).width() < 991) {
                 $(this).removeAttr('href');
                 var element = $(this).parent('li');
@@ -628,7 +628,7 @@
 
 
     /*---shop grid activation---*/
-    $('.shop_toolbar_btn > button').on('click', function(e) {
+    $('.shop_toolbar_btn > button').on('click', function (e) {
 
         e.preventDefault();
 
@@ -659,9 +659,9 @@
 
     /*---Newsletter Popup activation---*/
 
-    setTimeout(function() {
+    setTimeout(function () {
         if ($.cookie('shownewsletter') == 1) $('.newletter-popup').hide();
-        $('#subscribe_pemail').keypress(function(e) {
+        $('#subscribe_pemail').keypress(function (e) {
             if (e.which == 13) {
                 e.preventDefault();
                 email_subscribepopup();
@@ -669,7 +669,7 @@
             var name = $(this).val();
             $('#subscribe_pname').val(name);
         });
-        $('#subscribe_pemail').change(function() {
+        $('#subscribe_pemail').change(function () {
             var name = $(this).val();
             $('#subscribe_pname').val(name);
         });
@@ -677,7 +677,7 @@
         if ($.cookie("shownewsletter") != 1) {
             $('.newletter-popup').bPopup();
         }
-        $('#newsletter_popup_dont_show_again').on('change', function() {
+        $('#newsletter_popup_dont_show_again').on('change', function () {
             if ($.cookie("shownewsletter") != 1) {
                 $.cookie("shownewsletter", '1')
             } else {
@@ -688,7 +688,7 @@
 
 
     /*---search account slideToggle---*/
-    $(".search_list > a").on("click", function() {
+    $(".search_list > a").on("click", function () {
         $(this).toggleClass('active');
         $('.dropdown_search').slideToggle('medium');
     });
@@ -696,13 +696,13 @@
 
 
     /*---header account slideToggle---*/
-    $(".header_account > a").on("click", function() {
+    $(".header_account > a").on("click", function () {
         $(this).toggleClass('active');
         $('.dropdown_account').slideToggle('medium');
     });
 
     /*---slide toggle activation---*/
-    $('.mini_cart_wrapper > a').on('click', function(event) {
+    $('.mini_cart_wrapper > a').on('click', function (event) {
         if ($(window).width() < 991) {
             $('.mini_cart').slideToggle('medium');
         }
@@ -710,11 +710,11 @@
 
 
     /*---canvas menu activation---*/
-    $('.canvas_open').on('click', function() {
+    $('.canvas_open').on('click', function () {
         $('.offcanvas_menu_wrapper,.off_canvars_overlay').addClass('active')
     });
 
-    $('.canvas_close,.off_canvars_overlay').on('click', function() {
+    $('.canvas_close,.off_canvars_overlay').on('click', function () {
         $('.offcanvas_menu_wrapper,.off_canvars_overlay').removeClass('active')
     });
 
@@ -727,7 +727,7 @@
 
     $offcanvasNavSubMenu.slideUp();
 
-    $offcanvasNav.on('click', 'li a, li .menu-expand', function(e) {
+    $offcanvasNav.on('click', 'li a, li .menu-expand', function (e) {
         var $this = $(this);
         if (($this.parent().attr('class').match(/\b(menu-item-has-children|has-children|has-sub-menu)\b/)) && ($this.attr('href') === '#' || $this.hasClass('menu-expand'))) {
             e.preventDefault();
@@ -753,3 +753,31 @@
 
 
 })(jQuery);
+
+
+
+function SendForm(url, formId, funcsSuccess = function (res) { }) {
+    var form = $('#' + formId)[0];
+    var formdata = new FormData(form);
+
+    $.ajax({
+        type: "post",
+        enctype: 'multipart/form-data',
+        url: url,
+        data: formdata,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        beforeSend: function (xhr) {
+            var securityToken = $("[name=__RequestVerificationToken]").val();
+            xhr.setRequestHeader("XSRF-TOKEN", securityToken);
+        },
+        success: function (response) {
+            funcsSuccess(response);
+        },
+        complete: function (data) {
+
+        }
+    });
+}

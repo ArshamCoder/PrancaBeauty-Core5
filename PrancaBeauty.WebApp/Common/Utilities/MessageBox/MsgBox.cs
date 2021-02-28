@@ -1,4 +1,5 @@
-﻿using PrancaBeauty.WebApp.Localization;
+﻿using PrancaBeauty.WebApp.Common.Utilities.Types;
+using PrancaBeauty.WebApp.Localization;
 
 namespace PrancaBeauty.WebApp.Common.Utilities.MessageBox
 {
@@ -17,19 +18,19 @@ namespace PrancaBeauty.WebApp.Common.Utilities.MessageBox
                                         title: '{title.Replace("'", "`")}',
                                         html: '{message.Replace("'", "`")}',
                                         icon: '{type.ToString()}',
-        `                               confirmButtonText: '{okBtnText}'
-                                     }}).then((result)=> {{
-                                                            if(result.isConfirmed){{
-                                                                {callBackFunction}
-                                                            }}
-                                                         }});";
+                                        confirmButtonText: '{okBtnText}',
+                                    }}).then((result) => {{
+                                        if (result.isConfirmed) {{
+                                          {callBackFunction};
+                                        }}
+                                    }});";
 
             return js;
         }
 
-        public string ModelStateMsg(string modelErrors, string callBackFuncs = null)
+        public JsResult ModelStateMsg(string modelErrors, string callBackFuncs = null)
         {
-            return Show("", modelErrors, MsgBoxType.error, _localizer["OK"], callBackFuncs);
+            return new JsResult(Show("", modelErrors, MsgBoxType.error, _localizer["OK"], callBackFuncs));
         }
     }
 

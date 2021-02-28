@@ -37,6 +37,7 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             services.AddScoped<IEmailSender, GmailSender>();
             services.AddScoped<IDownloader, Downloader>();
 
+
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
