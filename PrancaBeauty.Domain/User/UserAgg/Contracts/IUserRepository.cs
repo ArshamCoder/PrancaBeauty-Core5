@@ -14,5 +14,9 @@ namespace PrancaBeauty.Domain.User.UserAgg.Contracts
 
         Task<IdentityResult> EmailConfirmationAsync(TblUser user, string token);
         Task<bool> IsEmailConfirmedAsync(TblUser user);
+        Task<SignInResult> PasswordSignInAsync(TblUser user, string password, bool isPersistent, bool lockoutOnFailure);
+        Task<string> GetUserIdByUserNameAsync(string userName);
+        Task<string> GetUserIdByEmailAsync(string email);
+        Task<string> GetUserIdByPhoneNumberAsync(string phoneNumber);
     }
 }

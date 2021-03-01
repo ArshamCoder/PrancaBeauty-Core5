@@ -1,4 +1,5 @@
 ﻿using Framework.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Contracts.Users;
@@ -147,7 +148,52 @@ namespace PrancaBeauty.Application.Apps.Users
                 if (string.IsNullOrWhiteSpace(pawword))
                     throw new ArgumentNullException("Pawword cant be null.");
 
-                return new OperationResult().Succeed("");
+                var userId = await _userRepository.GetUserIdByUserNameAsync(userName);
+
+                return await LoginAsync(userId, pawword);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+        public async Task<OperationResult> LoginAsync(string userId, string password)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                    throw new ArgumentNullException("UserId cant be null.");
+
+                if (string.IsNullOrWhiteSpace(password))
+                    throw new ArgumentNullException("Password cant be null.");
+
+                var qUser = await _userRepository.FindByIdAsync(userId);
+
+                if (qUser == null)
+                    return new OperationResult().Failed("");
+
+                if (qUser.EmailConfirmed == false)
+                    return new OperationResult().Failed("");
+
+                if (qUser.IsActive == false)
+                    return new OperationResult().Failed("");
+
+                var result = await _userRepository.PasswordSignInAsync(qUser, password, true, true);
+                if (result.Succeeded)
+                {
+                    return new OperationResult().Succeed(qUser.Id.ToString());
+                }
+                else
+                {
+                    if (result.IsLockedOut)
+                        return new OperationResult().Failed("UserIsLockedOut");
+                    else if (result.IsNotAllowed)
+                        return new OperationResult().Failed("UserIsLockedOut");
+                    else
+                        return new OperationResult().Failed("UserNameOrPasswordIsInvalid");
+                }
             }
             catch (Exception ex)
             {
@@ -161,6 +207,41 @@ namespace PrancaBeauty.Application.Apps.Users
             var qUser = await _userRepository.FindByIdAsync(userId);
 
             return await _userRepository.IsEmailConfirmedAsync(qUser);
+        }
+
+
+        public async Task<OutGetAllUserDetails> GetAllUserDetailsAsync(string UserId)
+        {
+            try
+            {
+                var qData = await _userRepository.Get
+                    .Where(a => a.Id == Guid.Parse(UserId))
+                    .Select(a => new OutGetAllUserDetails
+                    {
+                        Id = a.Id.ToString(),
+                        UserName = a.UserName,
+                        Email = a.Email,
+                        PhoneNumber = a.PhoneNumber,
+                        AccessLevelId = a.AccessLevelId.ToString(),
+                        AccessLevelTitle = a.TblAccessLevels.Name,
+                        FirstName = a.FirstName,
+                        LastName = a.LastName,
+                        Date = a.Date,
+                        IsActive = a.IsActive
+                    })
+                    .SingleOrDefaultAsync();
+
+                if (qData == null)
+                    return null;
+
+
+                return qData;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return null;
+            }
         }
 
     }

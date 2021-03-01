@@ -42,7 +42,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
             }
             else
             {
-
+                return _msgBox.InfoMsg(result.Message);
             }
 
             return Page();
