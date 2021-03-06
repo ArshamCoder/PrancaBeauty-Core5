@@ -1,5 +1,6 @@
 ﻿using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Contracts.Users;
+using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.Application.Apps.Users
@@ -13,5 +14,6 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<bool> IsEmailConfirmedAsync(string userId);
 
         Task<OutGetAllUserDetails> GetAllUserDetailsAsync(string UserId);
+        Task<TblUser> GetUserAsync(string userId);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.WebEncoders;
+using PrancaBeauty.WebApp.Authentication.Jwt;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
 using System;
@@ -81,6 +82,7 @@ namespace PrancaBeauty.WebApp.Config
             //تزریق وابستگی
             services.AddSingleton<ILocalizer, Localizer>();
             services.AddScoped<IMsgBox, MsgBox>();
+            services.AddScoped<IJwtBuilder, JwtBuilder>();
 
             return services;
         }

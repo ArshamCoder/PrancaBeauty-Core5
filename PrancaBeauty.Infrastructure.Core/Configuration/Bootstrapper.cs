@@ -4,15 +4,18 @@ using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PrancaBeauty.Application.Apps.Accesslevel;
+using PrancaBeauty.Application.Apps.Role;
 using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Domain.SettingAgg.Contracts;
 using PrancaBeauty.Domain.TemplateAgg.Contracts;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
+using PrancaBeauty.Domain.User.RoleAgg.Contracts;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 using PrancaBeauty.Infrastructure.EfCore.Repository.AccessLevel;
+using PrancaBeauty.Infrastructure.EfCore.Repository.Role;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Setting;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Template;
 using PrancaBeauty.Infrastructure.EfCore.Repository.User;
@@ -38,17 +41,20 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             services.AddScoped<IDownloader, Downloader>();
 
 
+
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<ISettingRepository, SettingRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             // Applications
             services.AddScoped<IUserApplication, UserApplication>();
             services.AddScoped<ITemplateApplication, TemplateApplication>();
             services.AddScoped<ISettingApplication, SettingApplication>();
             services.AddScoped<IAccesslevelApplication, AccesslevelApplication>();
+            services.AddScoped<IRoleApplication, RoleApplication>();
 
         }
     }
