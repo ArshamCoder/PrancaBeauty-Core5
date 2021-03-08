@@ -27,7 +27,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
 
         public IActionResult OnGet(string returnUrl)
         {
-            ViewData["returnUrl"] = returnUrl;
+            ViewData["returnUrl"] = returnUrl ?? "/Auth/User/Index";
             return Page();
         }
 
@@ -47,6 +47,8 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
 
                 Response.CreateAuthCookie(generatedToken, Input.RemmeberMe);
 
+
+
                 return new JsResult("GotoReturnUrl()");
             }
             else
@@ -54,7 +56,8 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
                 return _msgBox.InfoMsg(result.Message);
             }
 
-            return Page();
+
+
 
         }
     }

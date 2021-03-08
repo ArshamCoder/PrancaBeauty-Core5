@@ -81,7 +81,7 @@ namespace PrancaBeauty.WebApp.Config
         {
             //تزریق وابستگی
             services.AddSingleton<ILocalizer, Localizer>();
-            services.AddScoped<IMsgBox, MsgBox>();
+            services.AddSingleton<IMsgBox, MsgBox>();
             services.AddScoped<IJwtBuilder, JwtBuilder>();
 
             return services;
