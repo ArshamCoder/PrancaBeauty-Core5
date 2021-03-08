@@ -14,6 +14,8 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<bool> IsEmailConfirmedAsync(string userId);
 
         Task<OutGetAllUserDetails> GetAllUserDetailsAsync(string UserId);
-        Task<TblUser> GetUserAsync(string userId);
+        Task<TblUser> GetUserByIdAsync(string userId);
+        Task<TblUser> GetUserByEmailAsync(string email);
+        Task<bool> RemoveUnConfirmedUserAsync(string email);
     }
 }

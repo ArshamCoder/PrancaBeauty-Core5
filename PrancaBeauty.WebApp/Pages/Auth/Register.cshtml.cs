@@ -50,6 +50,10 @@ namespace PrancaBeauty.WebApp.Pages.Auth
             if (!ModelState.IsValid)
                 return Page();
 
+
+            //حذف کاربرانی که ایمیل آن ها تایید نشده است
+            await _userApplication.RemoveUnConfirmedUserAsync(Input.Email);
+
             var result = await _userApplication.AddUserAsync(new InpAddUser()
             {
                 Email = Input.Email,
@@ -77,7 +81,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth
                         await _templateApplication.GetEmailConfirmationTemplateAsync(CultureInfo.CurrentCulture.Name, url));
                     #endregion
 
-                    return Page();
+                    return Redirect("/Auth/UserCreatedSuccessfully");
                 }
                 else
                 {

@@ -18,5 +18,7 @@ namespace PrancaBeauty.Domain.User.UserAgg.Contracts
         Task<string> GetUserIdByUserNameAsync(string userName);
         Task<string> GetUserIdByEmailAsync(string email);
         Task<string> GetUserIdByPhoneNumberAsync(string phoneNumber);
+        Task<TblUser> FindByEmailAsync(string email);
+        Task<IdentityResult> DeleteAsync(TblUser entity);
     }
 }

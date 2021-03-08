@@ -244,7 +244,7 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
-        public async Task<TblUser> GetUserAsync(string userId)
+        public async Task<TblUser> GetUserByIdAsync(string userId)
         {
             try
             {
@@ -256,6 +256,42 @@ namespace PrancaBeauty.Application.Apps.Users
                 return null;
             }
         }
+
+
+
+        public async Task<TblUser> GetUserByEmailAsync(string email)
+        {
+            var qUser = await _userRepository.FindByEmailAsync(email);
+            return qUser;
+        }
+
+        public async Task<bool> RemoveUnConfirmedUserAsync(string email)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(email))
+                    throw new ArgumentNullException("UserId cant be null.");
+
+                var qUser = await GetUserByEmailAsync(email);
+                if (qUser == null)
+                    return true;
+
+                if (qUser.EmailConfirmed)
+                    return true;
+
+                var result = await _userRepository.DeleteAsync(qUser);
+                if (result.Succeeded)
+                    return true;
+                else
+                    throw new Exception(string.Join(", ", result.Errors.Select(a => a.Code + "-" + a.Description)));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return false;
+            }
+        }
+
 
     }
 

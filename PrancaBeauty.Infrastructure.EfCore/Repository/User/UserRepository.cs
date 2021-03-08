@@ -80,5 +80,16 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
         {
             return await GetNoTraking.Where(a => a.PhoneNumber == phoneNumber).Select(a => a.Id.ToString()).SingleOrDefaultAsync();
         }
+
+        public async Task<TblUser> FindByEmailAsync(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<IdentityResult> DeleteAsync(TblUser entity)
+        {
+            return await _userManager.DeleteAsync(entity);
+        }
+
     }
 }

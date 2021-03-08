@@ -32,7 +32,7 @@ namespace PrancaBeauty.WebApp.Authentication.Jwt
             if (userDetails == null)
                 throw new Exception();
 
-            var userRoles = await _roleApplication.GetRolesByUserAsync(await _userApplication.GetUserAsync(userId));
+            var userRoles = await _roleApplication.GetRolesByUserAsync(await _userApplication.GetUserByIdAsync(userId));
             if (userRoles == null)
                 throw new Exception();
 
