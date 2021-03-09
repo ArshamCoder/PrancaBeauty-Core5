@@ -781,3 +781,15 @@ function SendForm(url, formId, funcsSuccess = function (res) { }) {
         }
     });
 }
+
+
+function LoadComponenet(url, data, callbackFuncs = function (data) { }) {
+    $.ajax({
+        url: url,
+        type: 'get',
+        data: data,
+        beforeSend: function (xhr) { }
+    }).done(function (data) {
+        callbackFuncs(data);
+    });
+}

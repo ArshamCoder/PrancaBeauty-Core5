@@ -159,6 +159,58 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
+        public async Task<OperationResult> LoginByEmailLinkStep1Async(string email)
+        {
+            try
+            {
+                // لایگن با لینک یکبار مصرف
+                // مرحله اول
+                // ارسال لینک به ایمیل کاربر
+
+
+                if (string.IsNullOrWhiteSpace(email))
+                    throw new ArgumentNullException("Email cant be null.");
+
+                var qUser = await GetUserByEmailAsync(email);
+
+                if (qUser == null)
+                    return new OperationResult().Failed("EmailNotFound");
+
+                if (qUser.EmailConfirmed == false)
+                    return new OperationResult().Failed("PleaseConfirmYourEmail");
+
+                if (qUser.IsActive == false)
+                    return new OperationResult().Failed("YourAccountIsDisabled");
+
+                #region حذف پسورد قبلی کاربر
+                if (await _userRepository.HasPasswordAsync(qUser))
+                {
+                    var result = await _userRepository.RemovePasswordAsync(qUser);
+                    if (!result.Succeeded)
+                    {
+                        _logger.Error(string.Join(", ", result.Errors.Select(a => a.Description)));
+                        return new OperationResult().Failed("EmailNotFound");
+                    }
+                }
+                #endregion
+
+                #region تنظیم پسورد جدید برای کاربر
+                string newPassword = new Random().Next(100000, 999999).ToString();
+                #endregion
+
+
+
+
+                return new OperationResult().Succeed(1, qUser.Id + ", " + newPassword);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
         public async Task<OperationResult> LoginAsync(string userId, string password)
         {
             try

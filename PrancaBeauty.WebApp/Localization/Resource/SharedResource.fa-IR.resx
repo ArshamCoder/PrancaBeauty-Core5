@@ -156,6 +156,9 @@
   <data name="EmailConfirmationSuccesfully" xml:space="preserve">
     <value>حساب کاربری با موفقیت تایید شد.</value>
   </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>کاربری با این ایمیل یافت نشد</value>
+  </data>
   <data name="EmailPattern" xml:space="preserve">
     <value>^[a-zA-Z0-9\-\._]{3,100}[@][a-zA-Z0-9\-\._]{3,100}$</value>
   </data>
@@ -192,11 +195,23 @@
   <data name="LoginAlreadyAssociated" xml:space="preserve">
     <value>این کاربر قبلأ اضافه شده‌است</value>
   </data>
+  <data name="LoginByEmailLink" xml:space="preserve">
+    <value>لاگین با لینک یکبار مصرف</value>
+  </data>
+  <data name="LoginByPhoneNumber" xml:space="preserve">
+    <value>لاگین با تلفن همراه</value>
+  </data>
+  <data name="LoginByPhoneNumber?" xml:space="preserve">
+    <value>لاگین با شماره همراه</value>
+  </data>
   <data name="LostYourPassword?" xml:space="preserve">
     <value>کلمه عبور را فراموش کرده اید؟</value>
   </data>
   <data name="MobilePattern" xml:space="preserve">
     <value>^[0][9][0-9]{9}$</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>باشه</value>
   </data>
   <data name="PassCompareMsg" xml:space="preserve">
     <value>کلمه عبور با تکرار آن یکسان نیست.</value>
@@ -227,6 +242,9 @@
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>شماره موبایل</value>
+  </data>
+  <data name="PleaseConfirmYourEmail" xml:space="preserve">
+    <value>لطفا بر روی لینک ارسال شده کلیک نمایید. درصورتی که ایمیلی را دریافت نکرده اید لطفا با همان مشخصات، یکبار دیگر اقدام به ثبت نام کنید</value>
   </data>
   <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
     <value>بازیابی ناموفق بود</value>
@@ -266,5 +284,8 @@
   </data>
   <data name="UserNotInRole" xml:space="preserve">
     <value>کاربر عضو این Role نمیباشد</value>
+  </data>
+  <data name="YourAccountIsDisabled" xml:space="preserve">
+    <value>حساب کاربری شما غیرفعال شده است. لطفا با مدیریت در ارتباط باشید.</value>
   </data>
 </root>

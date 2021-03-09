@@ -11,11 +11,13 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<string> GenerateEmailConfirmationTokenAsync(string userId);
         Task<OperationResult> EmailConfirmationAsync(string userId, string token);
         Task<OperationResult> LoginByUserNamePasswordAsync(string userName, string pawword);
+        Task<OperationResult> LoginByEmailLinkStep1Async(string email);
         Task<bool> IsEmailConfirmedAsync(string userId);
 
         Task<OutGetAllUserDetails> GetAllUserDetailsAsync(string UserId);
         Task<TblUser> GetUserByIdAsync(string userId);
         Task<TblUser> GetUserByEmailAsync(string email);
         Task<bool> RemoveUnConfirmedUserAsync(string email);
+
     }
 }
