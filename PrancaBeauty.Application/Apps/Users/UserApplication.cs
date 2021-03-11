@@ -196,12 +196,18 @@ namespace PrancaBeauty.Application.Apps.Users
 
                 #region تنظیم پسورد جدید برای کاربر
                 string newPassword = new Random().Next(100000, 999999).ToString();
+                var addPassResult = await _userRepository.AddPasswordAsync(qUser, newPassword);
+                if (!addPassResult.Succeeded)
+                {
+                    _logger.Error(string.Join(", ", addPassResult.Errors.Select(a => a.Description)));
+                    return new OperationResult().Failed("EmailNotFound");
+                }
                 #endregion
 
 
 
 
-                return new OperationResult().Succeed(1, qUser.Id + ", " + newPassword);
+                return new OperationResult().Succeed(qUser.Id + ", " + newPassword);
             }
             catch (Exception ex)
             {
@@ -210,6 +216,10 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
+        public async Task<OperationResult> LoginByEmailLinkStep2Async(string userId, string password)
+        {
+            return await LoginAsync(userId, password);
+        }
 
         public async Task<OperationResult> LoginAsync(string userId, string password)
         {

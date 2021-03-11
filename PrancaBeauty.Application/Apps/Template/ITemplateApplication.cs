@@ -8,5 +8,6 @@ namespace PrancaBeauty.Application.Apps.Template
         Task<string> GetEmailConfirmationTemplateAsync(string langCode, string url);
         Task<string> GetTemplateAsync(string langCode, string name);
         void ClearCache();
+        Task<string> GetEmailLoginTemplateAsync(string langCode, string url);
     }
 }

@@ -7,5 +7,6 @@ namespace PrancaBeauty.WebApp.Common.Utilities.MessageBox
         JsResult ModelStateMsg(string modelErrors, string callBackFuncs = null);
         JsResult FaildMsg(string message, string callBackFuncs = null);
         JsResult InfoMsg(string message, string callBackFuncs = null);
+        JsResult SuccessMsg(string message, string callBackFuncs = null);
     }
 }
