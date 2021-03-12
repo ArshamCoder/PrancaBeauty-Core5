@@ -22,7 +22,7 @@ namespace Framework.Application.Services.Email
             _logger = logger;
             _senderTitle = "PrancaBeauty Shop";
             _userName = "testdllearn@gmail.com";
-            _password = "123456789Aabcdefg!";
+            _password = "123456789Aabcdefg!@";
             _port = 587;
             _useSsl = true;
         }

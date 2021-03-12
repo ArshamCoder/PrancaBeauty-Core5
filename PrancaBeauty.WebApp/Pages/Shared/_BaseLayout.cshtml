@@ -8,8 +8,7 @@
     <meta name="description" content="@ViewData["description"]">
     @if (@ViewData["canonical"] != null)
     {
-<meta name="canonical" content="@ViewData["canonical"]">
-}
+<meta name="canonical" content="@ViewData["canonical"]">}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -53,9 +52,12 @@
 
     @RenderBody()
 
+    <div class="loading">
+        <img src="~/Main/img/loading.gif" />
+    </div>
 
     <!-- JS
-        ============================================ -->
+            ============================================ -->
     <!--popper min js-->
     <script src="~/Main/js/popper.js"></script>
     <!--bootstrap min js-->

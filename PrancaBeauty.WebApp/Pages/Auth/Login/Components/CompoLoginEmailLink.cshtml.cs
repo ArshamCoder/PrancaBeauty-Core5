@@ -53,10 +53,12 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
 
             Thread.Sleep(3000);
 
-            var result = await _userApplication.LoginByEmailLinkStep1Async(Input.Email);
-            if (result.IsSucceed)
+            var Result = await _userApplication.LoginByEmailLinkStep1Async(Input.Email);
+            if (Result.IsSucceed)
             {
-                string token = (result.Message + ", " + Input.RemmeberMe).AesEncrypt(AuthConst.SecretKey);
+                string token = (Result.Message + ", " + Input.RemmeberMe).AesEncrypt(AuthConst.SecretKey);
+
+
                 string url = (await _settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl
                               + $"/EmailLogin?token={WebUtility.UrlEncode(token)}";
 
@@ -67,13 +69,11 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
             }
             else
             {
-                return _msgBox.FaildMsg(_localizer[result.Message]);
+                return _msgBox.FaildMsg(_localizer[Result.Message]);
             }
 
 
 
-
-            return Page();
         }
 
 

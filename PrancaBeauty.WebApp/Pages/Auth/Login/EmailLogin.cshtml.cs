@@ -27,7 +27,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login
 
         public async Task<IActionResult> OnGetAsync(string token)
         {
-            if (!string.IsNullOrWhiteSpace(token))
+            if (string.IsNullOrWhiteSpace(token))
                 return StatusCode(400);
 
             string decryptedToken = token.AesDecrypt(AuthConst.SecretKey);
