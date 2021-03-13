@@ -1,6 +1,7 @@
 ﻿using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.Application.Apps.Users
@@ -11,8 +12,10 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<string> GenerateEmailConfirmationTokenAsync(string userId);
         Task<OperationResult> EmailConfirmationAsync(string userId, string token);
         Task<OperationResult> LoginByUserNamePasswordAsync(string userName, string pawword);
-        Task<OperationResult> LoginByEmailLinkStep1Async(string email);
-        Task<OperationResult> LoginByEmailLinkStep2Async(string userId, string password);
+        Task<OperationResult> LoginByEmailLinkStep1Async(string email, string ip);
+        Task<OperationResult> LoginByEmailLinkStep2Async(string userId, string password, string linkIp, string userIp, DateTime date);
+        Task<OperationResult> LoginByPhoneNumberStep1Async(string phoneNumber);
+        Task<OperationResult> LoginAsync(string userId, string password);
         Task<bool> IsEmailConfirmedAsync(string userId);
 
         Task<OutGetAllUserDetails> GetAllUserDetailsAsync(string UserId);

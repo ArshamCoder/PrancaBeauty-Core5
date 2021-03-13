@@ -159,7 +159,7 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
-        public async Task<OperationResult> LoginByEmailLinkStep1Async(string email)
+        public async Task<OperationResult> LoginByEmailLinkStep1Async(string email, string ip)
         {
             try
             {
@@ -206,8 +206,11 @@ namespace PrancaBeauty.Application.Apps.Users
 
 
 
+                return new OperationResult().Succeed(qUser.Id + ", "
+                                                              + newPassword + ", "
+                                                              + ip + ", "
+                                                              + DateTime.Now.ToString("yy/MM/dd HH:mm"));
 
-                return new OperationResult().Succeed(qUser.Id + ", " + newPassword);
             }
             catch (Exception ex)
             {
@@ -216,10 +219,65 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
-        public async Task<OperationResult> LoginByEmailLinkStep2Async(string userId, string password)
+        public async Task<OperationResult> LoginByEmailLinkStep2Async(string userId, string password, string linkIp, string userIp, DateTime date)
         {
+
+            if (linkIp != userIp)
+                return new OperationResult().Failed("LinkExipred");
+
+            if (date.AddMinutes(60) < DateTime.Now)
+                return new OperationResult().Failed("LinkExipred");
+
             return await LoginAsync(userId, password);
         }
+
+        public async Task<OperationResult> LoginByPhoneNumberStep1Async(string phoneNumber)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(phoneNumber))
+                    throw new ArgumentNullException("PhoneNumber cant be null");
+
+                var qUser = await GetUserByPhoneNumberAsync(phoneNumber);
+
+                if (qUser == null)
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+
+                if (qUser.PhoneNumberConfirmed == false)
+                    return new OperationResult().Failed("PleaseConfirmYourPhoneNumber");
+
+                if (qUser.IsActive == false)
+                    return new OperationResult().Failed("YourAccountIsDisabled");
+
+                #region حذف پسورد قبلی کاربر
+                var result = await _userRepository.RemovePhoneNumberPasswordAsync(qUser);
+                if (!result.Succeeded)
+                {
+                    _logger.Error(string.Join(", ", result.Errors.Select(a => a.Description)));
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+                }
+                #endregion
+
+                #region تنظیم پسورد جدید برای کاربر
+                string newPassword = new Random().Next(10000, 99999).ToString();
+                var addPassResult = await _userRepository.AddPhoneNumberPasswordAsync(qUser, newPassword);
+                if (!addPassResult.Succeeded)
+                {
+                    _logger.Error(string.Join(", ", addPassResult.Errors.Select(a => a.Description)));
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+                }
+                #endregion
+
+                return new OperationResult().Succeed(newPassword);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
 
         public async Task<OperationResult> LoginAsync(string userId, string password)
         {

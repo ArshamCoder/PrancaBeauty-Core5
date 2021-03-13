@@ -7,6 +7,7 @@ using PrancaBeauty.Infrastructure.EfCore.Context;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Common.ExMethod;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
 {
@@ -105,6 +106,23 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
         public async Task<IdentityResult> AddPasswordAsync(TblUser entity, string password)
         {
             return await _userManager.AddPasswordAsync(entity, password);
+        }
+
+        public async Task<IdentityResult> RemovePhoneNumberPasswordAsync(TblUser entity)
+        {
+            entity.PasswordPhoneNumber = null;
+            entity.LastTrySentSms = null;
+
+            return await _userManager.UpdateAsync(entity);
+        }
+
+
+        public async Task<IdentityResult> AddPhoneNumberPasswordAsync(TblUser entity, string password)
+        {
+            entity.PasswordPhoneNumber = password.ToMd5();
+            entity.LastTrySentSms = DateTime.Now;
+
+            return await _userManager.UpdateAsync(entity);
         }
 
     }

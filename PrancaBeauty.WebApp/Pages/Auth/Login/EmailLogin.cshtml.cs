@@ -6,6 +6,7 @@ using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.WebApp.Authentication.Jwt;
 using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Localization;
+using System;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.Auth.Login
@@ -33,9 +34,14 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login
             string decryptedToken = token.AesDecrypt(AuthConst.SecretKey);
             string userId = decryptedToken.Split(", ")[0];
             string password = decryptedToken.Split(", ")[1];
-            bool remmeberMe = bool.Parse(decryptedToken.Split(", ")[2]);
+            string ip = decryptedToken.Split(", ")[2];
+            string date = decryptedToken.Split(", ")[3];
+            bool remmeberMe = bool.Parse(decryptedToken.Split(", ")[4]);
 
-            var result = await _userApplication.LoginByEmailLinkStep2Async(userId, password);
+            var result = await _userApplication
+                .LoginByEmailLinkStep2Async(userId, password, ip,
+                    HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    DateTime.Parse(date));
             if (result.IsSucceed)
             {
                 string generatedToken = await _jwtBuilder.CreateTokenAync(result.Message);

@@ -34,5 +34,11 @@ namespace Framework.Common.ExMethod
 
 
         }
+
+        public static string ToMd5(this string text)
+        {
+            string md5Hash = EncryptProvider.Md5(text);
+            return md5Hash;
+        }
     }
 }
