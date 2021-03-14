@@ -1,4 +1,5 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Common.ExMethod;
+using Framework.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
@@ -7,7 +8,6 @@ using PrancaBeauty.Infrastructure.EfCore.Context;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Framework.Common.ExMethod;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
 {
@@ -124,6 +124,9 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
 
             return await _userManager.UpdateAsync(entity);
         }
-
+        public async Task<TblUser> FindByPhoneNumberAsync(string phoneNumber)
+        {
+            return await Get.Where(a => a.PhoneNumber == phoneNumber).SingleOrDefaultAsync();
+        }
     }
 }

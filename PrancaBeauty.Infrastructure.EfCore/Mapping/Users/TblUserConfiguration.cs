@@ -17,6 +17,10 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(a => a.PasswordPhoneNumber)
+                .IsRequired(false)
+                .HasMaxLength(5000);
+
 
             //fluent api join
             // join between user and accessLevel

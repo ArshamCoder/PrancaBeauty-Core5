@@ -240,6 +240,7 @@ namespace PrancaBeauty.Application.Apps.Users
 
                 var qUser = await GetUserByPhoneNumberAsync(phoneNumber);
 
+
                 if (qUser == null)
                     return new OperationResult().Failed("PhoneNumberNotFound");
 
@@ -412,7 +413,11 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
-
+        public async Task<TblUser> GetUserByPhoneNumberAsync(string phoneNumber)
+        {
+            var qUser = await _userRepository.FindByPhoneNumberAsync(phoneNumber);
+            return qUser;
+        }
     }
 
 
