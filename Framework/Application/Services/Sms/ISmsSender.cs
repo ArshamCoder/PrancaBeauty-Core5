@@ -2,6 +2,7 @@
 {
     public interface ISmsSender
     {
-        public bool Send(string phoneNumber, string message);
+        bool Send(string phoneNumber, string message);
+        bool SendLoginCode(string phoneNumber, string code);
     }
 }

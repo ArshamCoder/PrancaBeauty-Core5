@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Framework.Application.Services.Sms;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.WebApp.Common.ExMethod;
@@ -14,12 +15,14 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components.PhoneNumberLogin
         private readonly IMsgBox _msgBox;
         private readonly ILocalizer _localizer;
         private readonly IUserApplication _userApplication;
+        private readonly ISmsSender _smsSender;
 
-        public CompoPhoneNumberModel(IMsgBox msgBox, ILocalizer localizer, IUserApplication userApplication)
+        public CompoPhoneNumberModel(IMsgBox msgBox, ILocalizer localizer, IUserApplication userApplication, ISmsSender smsSender)
         {
             _msgBox = msgBox;
             _localizer = localizer;
             _userApplication = userApplication;
+            _smsSender = smsSender;
         }
 
         [BindProperty]
@@ -40,14 +43,18 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components.PhoneNumberLogin
             var result = await _userApplication.LoginByPhoneNumberStep1Async(Input.PhoneNumber);
             if (result.IsSucceed)
             {
-
+                var isSend = _smsSender.SendLoginCode(Input.PhoneNumber, result.Message);
+                if (isSend)
+                    return _msgBox.SuccessMsg(_localizer["LoginCodeIsSent"], "GotoOtpPage()");
+                else
+                    return _msgBox.FaildMsg(_localizer["SmsSenderNotRespond"]);
             }
             else
             {
                 return _msgBox.FaildMsg(_localizer[result.Message]);
             }
 
-            return Page();
+
         }
 
     }
