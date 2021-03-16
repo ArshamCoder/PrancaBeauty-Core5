@@ -15,6 +15,7 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<OperationResult> LoginByEmailLinkStep1Async(string email, string ip);
         Task<OperationResult> LoginByEmailLinkStep2Async(string userId, string password, string linkIp, string userIp, DateTime date);
         Task<OperationResult> LoginByPhoneNumberStep1Async(string phoneNumber);
+        Task<OperationResult> LoginByPhoneNumberStep2Async(string phoneNumber, string code);
         Task<OperationResult> LoginAsync(string userId, string password);
         Task<bool> IsEmailConfirmedAsync(string userId);
 

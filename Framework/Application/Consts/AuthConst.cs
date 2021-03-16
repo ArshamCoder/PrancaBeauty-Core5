@@ -7,5 +7,6 @@
         public const string Audience = "PransaBeauty Online Shop";
         public const string Issuer = "PransaBeauty Online Shop";
         public const string CookieName = "PransaBeautyAuth";
+        public const int LimitToResendSmsInMinute = 2;
     }
 }

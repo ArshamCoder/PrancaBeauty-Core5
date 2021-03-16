@@ -1,4 +1,6 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Application.Consts;
+using Framework.Common.ExMethod;
+using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.Application.Contracts.Result;
@@ -250,6 +252,11 @@ namespace PrancaBeauty.Application.Apps.Users
                 if (qUser.IsActive == false)
                     return new OperationResult().Failed("YourAccountIsDisabled");
 
+                if (qUser.LastTrySentSms.HasValue)
+                    if (qUser.LastTrySentSms.Value.AddMinutes(AuthConst.LimitToResendSmsInMinute) > DateTime.Now)
+                        return new OperationResult().Failed("LimitToResendSms2Minute");
+
+
                 #region حذف پسورد قبلی کاربر
                 var result = await _userRepository.RemovePhoneNumberPasswordAsync(qUser);
                 if (!result.Succeeded)
@@ -278,7 +285,43 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
+        public async Task<OperationResult> LoginByPhoneNumberStep2Async(string phoneNumber, string code)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(phoneNumber))
+                    throw new ArgumentNullException("PhoneNumber cant be null");
 
+                if (string.IsNullOrWhiteSpace(code))
+                    throw new ArgumentNullException("Code cant be null");
+
+                var qUser = await GetUserByPhoneNumberAsync(phoneNumber);
+
+                if (qUser == null)
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+
+                if (qUser.PhoneNumberConfirmed == false)
+                    return new OperationResult().Failed("PleaseConfirmYourPhoneNumber");
+
+                if (qUser.IsActive == false)
+                    return new OperationResult().Failed("YourAccountIsDisabled");
+
+                if (qUser.PasswordPhoneNumber != code.ToMd5())
+                    return new OperationResult().Failed("CodeIsInvalid");
+
+                //بررسی منقضی نشده کدی که پیامک شده است
+                if (qUser.LastTrySentSms.HasValue)
+                    if (qUser.LastTrySentSms.Value.AddMinutes(10) > DateTime.Now)
+                        return new OperationResult().Failed("CodeIsExpired");
+
+                return new OperationResult().Succeed(qUser.Id.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
 
         public async Task<OperationResult> LoginAsync(string userId, string password)
         {
