@@ -184,34 +184,21 @@ namespace PrancaBeauty.Application.Apps.Users
                 if (qUser.IsActive == false)
                     return new OperationResult().Failed("YourAccountIsDisabled");
 
-                #region حذف پسورد قبلی کاربر
-                if (await _userRepository.HasPasswordAsync(qUser))
+
+
+
+                var reNewPasswordResult = await ReCreatePasswordAsync(qUser);
+                if (reNewPasswordResult.IsSucceed)
                 {
-                    var result = await _userRepository.RemovePasswordAsync(qUser);
-                    if (!result.Succeeded)
-                    {
-                        _logger.Error(string.Join(", ", result.Errors.Select(a => a.Description)));
-                        return new OperationResult().Failed("EmailNotFound");
-                    }
+                    return new OperationResult().Succeed(qUser.Id + ", "
+                                                                  + reNewPasswordResult.Message
+                                                                  + ", " + ip + ", "
+                                                                  + DateTime.Now.ToString("yy/MM/dd HH:mm"));
                 }
-                #endregion
-
-                #region تنظیم پسورد جدید برای کاربر
-                string newPassword = new Random().Next(100000, 999999).ToString();
-                var addPassResult = await _userRepository.AddPasswordAsync(qUser, newPassword);
-                if (!addPassResult.Succeeded)
+                else
                 {
-                    _logger.Error(string.Join(", ", addPassResult.Errors.Select(a => a.Description)));
-                    return new OperationResult().Failed("EmailNotFound");
+                    return new OperationResult().Failed(reNewPasswordResult.Message);
                 }
-                #endregion
-
-
-
-                return new OperationResult().Succeed(qUser.Id + ", "
-                                                              + newPassword + ", "
-                                                              + ip + ", "
-                                                              + DateTime.Now.ToString("yy/MM/dd HH:mm"));
 
             }
             catch (Exception ex)
@@ -230,7 +217,27 @@ namespace PrancaBeauty.Application.Apps.Users
             if (date.AddMinutes(60) < DateTime.Now)
                 return new OperationResult().Failed("LinkExipred");
 
-            return await LoginAsync(userId, password);
+            if (string.IsNullOrWhiteSpace(userId))
+                throw new ArgumentNullException("UserId cant be null.");
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException("Password cant be null.");
+
+            var qUser = await _userRepository.FindByIdAsync(userId);
+
+            if (qUser == null)
+                return new OperationResult().Failed("LinkExipred");
+
+            if (qUser.EmailConfirmed == false)
+                return new OperationResult().Failed("LinkExipred");
+
+            if (qUser.IsActive == false)
+                return new OperationResult().Failed("YourAccountIsDisabled");
+
+            if (qUser.PasswordPhoneNumber != password.ToMd5())
+                return new OperationResult().Failed("LinkExipred");
+
+            return new OperationResult().Succeed(qUser.Id.ToString());
         }
 
         public async Task<OperationResult> LoginByPhoneNumberStep1Async(string phoneNumber)
@@ -256,27 +263,15 @@ namespace PrancaBeauty.Application.Apps.Users
                     if (qUser.LastTrySentSms.Value.AddMinutes(AuthConst.LimitToResendSmsInMinute) > DateTime.Now)
                         return new OperationResult().Failed("LimitToResendSms2Minute");
 
-
-                #region حذف پسورد قبلی کاربر
-                var result = await _userRepository.RemovePhoneNumberPasswordAsync(qUser);
-                if (!result.Succeeded)
+                var reNewPasswordResult = await ReCreatePasswordAsync(qUser);
+                if (reNewPasswordResult.IsSucceed)
                 {
-                    _logger.Error(string.Join(", ", result.Errors.Select(a => a.Description)));
-                    return new OperationResult().Failed("PhoneNumberNotFound");
+                    return new OperationResult().Succeed(reNewPasswordResult.Message);
                 }
-                #endregion
-
-                #region تنظیم پسورد جدید برای کاربر
-                string newPassword = new Random().Next(10000, 99999).ToString();
-                var addPassResult = await _userRepository.AddPhoneNumberPasswordAsync(qUser, newPassword);
-                if (!addPassResult.Succeeded)
+                else
                 {
-                    _logger.Error(string.Join(", ", addPassResult.Errors.Select(a => a.Description)));
-                    return new OperationResult().Failed("PhoneNumberNotFound");
+                    return new OperationResult().Failed(reNewPasswordResult.Message);
                 }
-                #endregion
-
-                return new OperationResult().Succeed(newPassword);
             }
             catch (Exception ex)
             {
@@ -311,7 +306,7 @@ namespace PrancaBeauty.Application.Apps.Users
 
                 //بررسی منقضی نشده کدی که پیامک شده است
                 if (qUser.LastTrySentSms.HasValue)
-                    if (qUser.LastTrySentSms.Value.AddMinutes(10) > DateTime.Now)
+                    if (qUser.LastTrySentSms.Value.AddMinutes(10) < DateTime.Now)
                         return new OperationResult().Failed("CodeIsExpired");
 
                 return new OperationResult().Succeed(qUser.Id.ToString());
@@ -461,6 +456,38 @@ namespace PrancaBeauty.Application.Apps.Users
             var qUser = await _userRepository.FindByPhoneNumberAsync(phoneNumber);
             return qUser;
         }
+
+
+        public async Task<OperationResult> ReCreatePasswordAsync(TblUser user)
+        {
+            if (user.LastTrySentSms.HasValue)
+                if (user.LastTrySentSms.Value.AddMinutes(AuthConst.LimitToResendSmsInMinute) > DateTime.Now)
+                    return new OperationResult().Failed("LimitToResendSms2Minute");
+
+            #region حذف پسورد قبلی کاربر
+            var result = await _userRepository.RemovePhoneNumberPasswordAsync(user);
+            if (!result.Succeeded)
+            {
+                _logger.Error(string.Join(", ", result.Errors.Select(a => a.Description)));
+                return new OperationResult().Failed("UserNotFound");
+            }
+            #endregion
+
+            #region تنظیم پسورد جدید برای کاربر
+            string newPassword = new Random().Next(10000, 99999).ToString();
+            var addPassResult = await _userRepository.AddPhoneNumberPasswordAsync(user, newPassword);
+            if (!addPassResult.Succeeded)
+            {
+                _logger.Error(string.Join(", ", addPassResult.Errors.Select(a => a.Description)));
+                return new OperationResult().Failed("UserNotFound");
+            }
+            #endregion
+
+            return new OperationResult().Succeed(newPassword);
+        }
+
+
+
     }
 
 

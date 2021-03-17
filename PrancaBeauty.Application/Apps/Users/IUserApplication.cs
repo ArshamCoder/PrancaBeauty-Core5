@@ -25,5 +25,6 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<bool> RemoveUnConfirmedUserAsync(string email);
 
         Task<TblUser> GetUserByPhoneNumberAsync(string phoneNumber);
+        Task<OperationResult> ReCreatePasswordAsync(TblUser user);
     }
 }
