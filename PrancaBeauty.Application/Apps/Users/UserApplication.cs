@@ -460,6 +460,7 @@ namespace PrancaBeauty.Application.Apps.Users
 
         public async Task<OperationResult> ReCreatePasswordAsync(TblUser user)
         {
+            //کاربر هر دو دقیقه یکبار بتواند ارسال انجام بدهد
             if (user.LastTrySentSms.HasValue)
                 if (user.LastTrySentSms.Value.AddMinutes(AuthConst.LimitToResendSmsInMinute) > DateTime.Now)
                     return new OperationResult().Failed("LimitToResendSms2Minute");

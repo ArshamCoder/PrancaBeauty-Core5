@@ -121,3 +121,17 @@ err500 {
         top: calc(50vh - 100px);
     }
 }
+
+
+.timer {
+    direction: ltr;
+    text-align: right;
+
+    div {
+        display: inline-block;
+    }
+}
+
+.resendbtn {
+    display: none;
+}

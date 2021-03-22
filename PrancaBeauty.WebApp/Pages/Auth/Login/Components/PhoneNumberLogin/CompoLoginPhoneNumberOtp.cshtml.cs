@@ -71,7 +71,7 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components.PhoneNumberLogin
             if (qUser == null)
                 return _msgBox.ModelStateMsg(_localizer["PhoneNumberIsInvalid"]);
 
-            var result = await _userApplication.ReCreatePasswordAsync(default);
+            var result = await _userApplication.ReCreatePasswordAsync(qUser);
             if (result.IsSucceed)
             {
                 var isSend = _smsSender.SendLoginCode(Input.PhoneNumber, result.Message);

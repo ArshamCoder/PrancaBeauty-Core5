@@ -756,9 +756,33 @@
 
 })(jQuery);
 
+function SendData(url, data, funcsSuccess = function (res) { }) {
+    //ارسال به صورت جی سان
+    //صفحه رفرش نمیشود
+    $.ajax({
+        type: "post",
+        enctype: 'multipart/form-data',
+        url: url,
+        data: data,
+        timeout: 600000,
+        beforeSend: function (xhr) {
+            $('.loading').show();
 
+            var securityToken = $("[name=__RequestVerificationToken]").val();
+            xhr.setRequestHeader("XSRF-TOKEN", securityToken);
+        },
+        success: function (response) {
+            funcsSuccess(response);
+        },
+        complete: function (data) {
+            $('.loading').hide(100);
+        }
+    });
+}
 
 function SendForm(url, formId, funcsSuccess = function (res) { }) {
+    // ارسال به صورت فورم
+    // صفحه رفرش می شود
     var form = $('#' + formId)[0];
     var formdata = new FormData(form);
 
