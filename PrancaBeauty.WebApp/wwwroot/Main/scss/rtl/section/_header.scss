@@ -571,6 +571,10 @@
         @media #{$large-mobile} {
             max-width: 120px;
         }
+
+        @media #{$tablet-device} {
+            left: 140px;
+        }
     }
 }
 

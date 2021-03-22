@@ -1,6 +1,7 @@
 ﻿@page "/Auth/Login"
 @model PrancaBeauty.WebApp.Pages.Auth.Login.LoginModel
-@{ Layout = "Shared/_MainLayout"; }
+@{ ViewData["Title"] = Localizer["Login"];
+                Layout = "Shared/_MainLayout"; }
 
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
@@ -9,8 +10,8 @@
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li>Login</li>
+                        <li><a href="/">@Localizer["Home"]</a></li>
+                        <li>@ViewData["Title"]</li>
                     </ul>
                 </div>
             </div>

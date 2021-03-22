@@ -48,8 +48,9 @@ namespace PrancaBeauty.WebApp.Config
                 SupportedUICultures = supportedLangs,
                 RequestCultureProviders = new List<IRequestCultureProvider>()
                 {
-                    new CookieRequestCultureProvider(),
-                    new QueryStringRequestCultureProvider()
+                    //new CookieRequestCultureProvider(),
+                    //new QueryStringRequestCultureProvider()
+                    new PathRequestCultureProvider()
                 }
             };
 

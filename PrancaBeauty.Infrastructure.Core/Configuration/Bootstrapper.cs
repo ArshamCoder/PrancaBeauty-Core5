@@ -5,10 +5,12 @@ using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PrancaBeauty.Application.Apps.Accesslevel;
+using PrancaBeauty.Application.Apps.Language;
 using PrancaBeauty.Application.Apps.Role;
 using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
+using PrancaBeauty.Domain.Region.LanguageAgg.Contracts;
 using PrancaBeauty.Domain.SettingAgg.Contracts;
 using PrancaBeauty.Domain.TemplateAgg.Contracts;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
@@ -16,6 +18,7 @@ using PrancaBeauty.Domain.User.RoleAgg.Contracts;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 using PrancaBeauty.Infrastructure.EfCore.Repository.AccessLevel;
+using PrancaBeauty.Infrastructure.EfCore.Repository.Region;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Role;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Setting;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Template;
@@ -50,6 +53,7 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<ISettingRepository, SettingRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
 
             // Applications
             services.AddScoped<IUserApplication, UserApplication>();
@@ -57,6 +61,7 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             services.AddScoped<ISettingApplication, SettingApplication>();
             services.AddScoped<IAccesslevelApplication, AccesslevelApplication>();
             services.AddScoped<IRoleApplication, RoleApplication>();
+            services.AddScoped<ILanguageApplication, LanguageApplication>();
 
         }
     }
