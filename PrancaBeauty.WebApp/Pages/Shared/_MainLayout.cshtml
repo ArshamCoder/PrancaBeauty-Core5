@@ -23,12 +23,7 @@
                     <div class="language_currency top">
                         <ul>
                             <li class="language">
-                                <a href="#"><img src="Main/img/icon/language.png" alt=""> English <i class="icon-right ion-ios-arrow-down"></i></a>
-                                <ul class="dropdown_language">
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">Spanish</a></li>
-                                    <li><a href="#">Russian</a></li>
-                                </ul>
+                                @(await Html.PartialAsync("Partials/P_ChangeLanguage"))
                             </li>
                             <li class="currency">
                                 <a href="#"> $ <i class="icon-right ion-ios-arrow-down"></i></a>
@@ -225,12 +220,7 @@
                         <div class="language_currency ">
                             <ul>
                                 <li class="language">
-                                    <a href="#"><img src="Main/img/icon/language.png" alt=""> زبان <i class="icon-right ion-ios-arrow-down"></i></a>
-                                    <ul class="dropdown_language">
-                                        <li><a href="#">انگلیسی</a></li>
-                                        <li><a href="#">فارسی</a></li>
-                                        <li><a href="#">عربی</a></li>
-                                    </ul>
+                                    @(await Html.PartialAsync("Partials/P_ChangeLanguage"))
                                 </li>
                                 <li class="currency">
                                     <a href="#"> $ <i class="icon-right ion-ios-arrow-down"></i></a>
