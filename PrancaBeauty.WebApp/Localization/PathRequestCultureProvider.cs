@@ -8,24 +8,21 @@ namespace PrancaBeauty.WebApp.Localization
 {
     public class PathRequestCultureProvider : RequestCultureProvider
     {
-        private readonly ILanguageApplication _languageApplication;
-
-        public PathRequestCultureProvider(ILanguageApplication languageApplication)
-        {
-            _languageApplication = languageApplication;
-        }
-
-        public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
+        public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
         {
             if (httpContext == null)
                 throw new ArgumentNullException();
 
-            string Path = httpContext.Request.Path;
-            string CultureName = Path.Trim('/').Split("/")[0];
+            var languageApplication = (ILanguageApplication)httpContext.RequestServices.GetService(typeof(ILanguageApplication));
 
+            string path = httpContext.Request.Path;
+            string cultureName = path.Trim('/').Split("/")[0];
 
+            var langCode = await languageApplication.GetCodeByAbbrAsync(cultureName);
+            if (langCode == null)
+                langCode = "fa-IR";
 
-            return Task.FromResult(new ProviderCultureResult(CultureName, CultureName));
+            return new ProviderCultureResult(langCode, langCode);
         }
     }
 }

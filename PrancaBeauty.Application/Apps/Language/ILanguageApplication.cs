@@ -1,7 +1,13 @@
-﻿namespace PrancaBeauty.Application.Apps.Language
+﻿using PrancaBeauty.Application.Contracts.Language;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace PrancaBeauty.Application.Apps.Language
 {
     public interface ILanguageApplication
     {
-
+        Task<string> GetCodeByAbbrAsync(string Abbr);
+        Task<string> GetNativeNameByCodeAsync(string Code);
+        Task<List<OutSiteLangCache>> GetAllLanguageForSiteLangAsync();
     }
 }

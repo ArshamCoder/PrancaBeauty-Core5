@@ -14,6 +14,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Region.Language
             builder.Property(a => a.Name).IsRequired().HasMaxLength(100);
             builder.Property(a => a.Code).IsRequired().HasMaxLength(20);
             builder.Property(a => a.NativeName).IsRequired().HasMaxLength(100);
+            builder.Property(a => a.Abbr).IsRequired().HasMaxLength(50);
 
         }
     }

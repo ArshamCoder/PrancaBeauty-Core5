@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20210326121037_mig8")]
+    partial class mig8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +130,6 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Abbr")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -152,9 +153,6 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("UseForSiteLanguage")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -326,8 +324,8 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("352657f4-4762-455f-8bb0-acf7011a0d97"),
-                            ConcurrencyStamp = "5bf79a5e-c696-40e9-a37d-1faf58da5dde",
+                            Id = new Guid("18d98e1a-0f7b-434c-a7dc-acf70112d292"),
+                            ConcurrencyStamp = "b1b265ae-2c8e-4e57-9b49-ca9baebd4753",
                             Description = "دسترسی مدیر کل",
                             Name = "FullControl",
                             NormalizedName = "FULLCONTROL",
