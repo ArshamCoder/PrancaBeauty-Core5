@@ -1,4 +1,5 @@
 ﻿using Framework.Domain;
+using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
 using PrancaBeauty.Domain.SettingAgg.Entities;
 using PrancaBeauty.Domain.TemplateAgg.Entities;
 using System;
@@ -9,7 +10,7 @@ namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
     public class TblLanguage : IEntity
     {
         public Guid Id { get; set; }
-        public string FlagImgId { get; set; }
+        public Guid FlagImgId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public string NativeName { get; set; }
@@ -33,5 +34,6 @@ namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
 
         public virtual ICollection<TblTemplate> TblTemplates { get; set; }
         public virtual ICollection<TblSetting> TblSettings { get; set; }
+        public virtual TblFile TblFile { get; set; }
     }
 }

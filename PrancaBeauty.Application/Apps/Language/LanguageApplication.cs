@@ -37,6 +37,7 @@ namespace PrancaBeauty.Application.Apps.Language
                 .SingleOrDefault();
         }
 
+
         private async Task LoadCacheAsync()
         {
             if (_siteLangCache == null)
@@ -51,7 +52,11 @@ namespace PrancaBeauty.Application.Apps.Language
                         Code = a.Code,
                         IsRtl = a.IsRtl,
                         Name = a.Name,
-                        NativeName = a.NativeName
+                        NativeName = a.NativeName,
+                        FlagUrl = a.TblFile.TblFileServer.HttpDomin +
+                                  a.TblFile.TblFileServer.HttpPath +
+                                  a.TblFile.Path +
+                                  a.TblFile.FileName
                     })
                     .ToListAsync();
             }
@@ -65,6 +70,26 @@ namespace PrancaBeauty.Application.Apps.Language
             return _siteLangCache;
         }
 
+
+        public async Task<string> GetFlagUrlByCodeAsync(string code)
+        {
+            await LoadCacheAsync();
+
+            return _siteLangCache
+                .Where(a => a.Code == code)
+                .Select(a => a.FlagUrl)
+                .SingleOrDefault();
+        }
+
+        public async Task<string> GetDirectionByCodeAsync(string code)
+        {
+            await LoadCacheAsync();
+
+            return _siteLangCache
+                .Where(a => a.Code == code)
+                .Select(a => a.IsRtl ? "rtl" : "ltr")
+                .SingleOrDefault();
+        }
 
     }
 }

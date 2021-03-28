@@ -7704,3 +7704,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
         margin-bottom: 12px; } }
 
 /*privacy policy css end*/
+.lang-flag {
+  width: 24px;
+  position: relative;
+  top: 6px; }

@@ -7920,3 +7920,8 @@ err500 {
 
 .resendbtn {
   display: none; }
+
+.lang-flag {
+  width: 24px;
+  position: relative;
+  top: 6px; }

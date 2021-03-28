@@ -1,7 +1,9 @@
 ﻿using Framework.Domain;
 using PrancaBeauty.Domain.FileServer.ServerAgg.Entities;
+using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace PrancaBeauty.Domain.FileServer.FileAgg.Entities
 {
@@ -21,7 +23,7 @@ namespace PrancaBeauty.Domain.FileServer.FileAgg.Entities
         public virtual TblFileServer TblFileServer { get; set; }
         public virtual TblUser TblUser { get; set; }
 
-
+        public virtual ICollection<TblLanguage> TblLanguages { get; set; }
 
     }
 }
