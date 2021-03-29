@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.WebEncoders;
 using PrancaBeauty.WebApp.Authentication.Jwt;
+using PrancaBeauty.WebApp.Common.Utilities.IpAddress;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
 using System;
@@ -81,9 +82,13 @@ namespace PrancaBeauty.WebApp.Config
         public static IServiceCollection AddInject(this IServiceCollection services)
         {
             //تزریق وابستگی
+            /*
+             * AddSingleton == یکبار اجرا می شود و به تمامی کاربران اختصاص داده می شود
+             */
             services.AddSingleton<ILocalizer, Localizer>();
             services.AddSingleton<IMsgBox, MsgBox>();
             services.AddScoped<IJwtBuilder, JwtBuilder>();
+            services.AddSingleton<IIpAddressChecker, IpAddressChecker>();
 
             return services;
         }

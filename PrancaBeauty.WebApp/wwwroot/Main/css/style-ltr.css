@@ -377,7 +377,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     overflow-y: auto; }
   .offcanvas_menu_wrapper .search_container {
     display: block; }
-  .offcanvas_menu_wrapper .language_currency {
+  .offcanvas_menu_wrapper .language_currency, .offcanvas_menu_wrapper .setting_compare {
     display: block; }
   .offcanvas_menu_wrapper .header_account_area {
     display: flex; }
@@ -552,48 +552,48 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
       display: none; } }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .language_currency {
+  .language_currency, .setting_compare {
     display: none;
     margin-bottom: 18px;
     text-align: center; } }
 
 @media only screen and (max-width: 767px) {
-  .language_currency {
+  .language_currency, .setting_compare {
     display: none;
     margin-bottom: 18px;
     text-align: center; } }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .language_currency.bottom {
+  .language_currency.bottom, .bottom.setting_compare {
     margin-bottom: 20px; } }
 
 @media only screen and (max-width: 767px) {
-  .language_currency.bottom {
+  .language_currency.bottom, .bottom.setting_compare {
     margin-bottom: 20px; } }
 
-.language_currency > ul > li {
+.language_currency > ul > li, .setting_compare > ul > li {
   display: inline-block;
   position: relative;
   margin-right: 14px;
   padding-right: 15px; }
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .language_currency > ul > li {
+    .language_currency > ul > li, .setting_compare > ul > li {
       margin-right: 11px;
       padding-right: 12px; } }
-  .language_currency > ul > li:last-child {
+  .language_currency > ul > li:last-child, .setting_compare > ul > li:last-child {
     margin-right: 0;
     padding-right: 0; }
-    .language_currency > ul > li:last-child::before {
+    .language_currency > ul > li:last-child::before, .setting_compare > ul > li:last-child::before {
       display: none; }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .language_currency > ul > li {
+    .language_currency > ul > li, .setting_compare > ul > li {
       margin-right: 7px;
       padding-right: 8px; } }
   @media only screen and (max-width: 767px) {
-    .language_currency > ul > li {
+    .language_currency > ul > li, .setting_compare > ul > li {
       margin-right: 7px;
       padding-right: 8px; } }
-  .language_currency > ul > li::before {
+  .language_currency > ul > li::before, .setting_compare > ul > li::before {
     content: "";
     width: 1px;
     height: 16px;
@@ -602,65 +602,65 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     top: 50%;
     transform: translatey(-50%);
     right: 0; }
-  .language_currency > ul > li:hover ul.dropdown_currency, .language_currency > ul > li:hover ul.dropdown_language {
+  .language_currency > ul > li:hover ul.dropdown_currency, .setting_compare > ul > li:hover ul.dropdown_currency, .language_currency > ul > li:hover ul.dropdown_language, .setting_compare > ul > li:hover ul.dropdown_language {
     visibility: visible;
     max-height: 200px; }
-  .language_currency > ul > li:hover > a {
+  .language_currency > ul > li:hover > a, .setting_compare > ul > li:hover > a {
     color: #d52121; }
-  .language_currency > ul > li span {
+  .language_currency > ul > li span, .setting_compare > ul > li span {
     text-transform: uppercase;
     line-height: 16px;
     font-size: 16px; }
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
-      .language_currency > ul > li span {
+      .language_currency > ul > li span, .setting_compare > ul > li span {
         line-height: 14px;
         font-size: 14px; } }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
-      .language_currency > ul > li span {
+      .language_currency > ul > li span, .setting_compare > ul > li span {
         line-height: 26px;
         font-size: 13px; } }
     @media only screen and (max-width: 767px) {
-      .language_currency > ul > li span {
+      .language_currency > ul > li span, .setting_compare > ul > li span {
         line-height: 26px;
         font-size: 13px; } }
-  .language_currency > ul > li > a {
+  .language_currency > ul > li > a, .setting_compare > ul > li > a {
     text-transform: uppercase;
     line-height: 16px;
     font-size: 16px;
     display: inline-block;
     font-weight: 400; }
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
-      .language_currency > ul > li > a {
+      .language_currency > ul > li > a, .setting_compare > ul > li > a {
         line-height: 14px;
         font-size: 14px; } }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
-      .language_currency > ul > li > a {
+      .language_currency > ul > li > a, .setting_compare > ul > li > a {
         line-height: 26px;
         font-size: 13px; } }
     @media only screen and (max-width: 767px) {
-      .language_currency > ul > li > a {
+      .language_currency > ul > li > a, .setting_compare > ul > li > a {
         line-height: 26px;
         font-size: 13px; } }
-    .language_currency > ul > li > a i.ion-ios-arrow-down {
+    .language_currency > ul > li > a i.ion-ios-arrow-down, .setting_compare > ul > li > a i.ion-ios-arrow-down {
       margin-left: 3px;
       font-size: 13px; }
       @media only screen and (min-width: 768px) and (max-width: 991px) {
-        .language_currency > ul > li > a i.ion-ios-arrow-down {
+        .language_currency > ul > li > a i.ion-ios-arrow-down, .setting_compare > ul > li > a i.ion-ios-arrow-down {
           margin-left: 0px; } }
       @media only screen and (max-width: 767px) {
-        .language_currency > ul > li > a i.ion-ios-arrow-down {
+        .language_currency > ul > li > a i.ion-ios-arrow-down, .setting_compare > ul > li > a i.ion-ios-arrow-down {
           margin-left: 0px; } }
-    .language_currency > ul > li > a img {
+    .language_currency > ul > li > a img, .setting_compare > ul > li > a img {
       margin-right: 5px;
       vertical-align: 0; }
       @media only screen and (min-width: 768px) and (max-width: 991px) {
-        .language_currency > ul > li > a img {
+        .language_currency > ul > li > a img, .setting_compare > ul > li > a img {
           margin-right: 2px; } }
       @media only screen and (max-width: 767px) {
-        .language_currency > ul > li > a img {
+        .language_currency > ul > li > a img, .setting_compare > ul > li > a img {
           margin-right: 2px; } }
 
-.language_currency > ul > li:hover a:not([href]):not([tabindex]) {
+.language_currency > ul > li:hover a:not([href]):not([tabindex]), .setting_compare > ul > li:hover a:not([href]):not([tabindex]) {
   color: #d52121; }
 
 .dropdown_currency, .dropdown_language {
@@ -732,6 +732,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   @media only screen and (max-width: 767px) {
     .header_middle {
       padding: 0; } }
+
+.setting_compare > ul {
+  text-align: right; }
+  .setting_compare > ul li {
+    display: inline; }
 
 .header_right_info {
   display: flex;

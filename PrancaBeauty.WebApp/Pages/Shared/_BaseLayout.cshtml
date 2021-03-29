@@ -8,7 +8,8 @@
     <meta name="description" content="@ViewData["description"]">
     @if (@ViewData["canonical"] != null)
     {
-<meta name="canonical" content="@ViewData["canonical"]">}
+<meta name="canonical" content="@ViewData["canonical"]">
+}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -39,8 +40,15 @@
     <!--plugins css-->
     <link rel="stylesheet" href="~/Main/css/plugins.css">
     @await RenderSectionAsync("styles", false)
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="~/Main/css/style-rtl.min.css">
+
+
+    @if (TempData["LangDir"].ToString() == "rtl")
+    {<!-- Main Style CSS -->
+                <link rel="stylesheet" href="~/Main/css/style-rtl.min.css"> }
+                            else
+                            { <!-- Main Style CSS -->
+                                <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">}
+
     <!--jquery min js-->
     <script src="~/Main/js/vendor/jquery-3.4.1.min.js"></script>
     <!--modernizr min js here-->

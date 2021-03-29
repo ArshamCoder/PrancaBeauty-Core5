@@ -1,7 +1,12 @@
 ﻿@inject ILanguageApplication _LanguageApplication;
 @using PrancaBeauty.Application.Apps.Language
 
-@{ var qLang = await _LanguageApplication.GetAllLanguageForSiteLangAsync(); }
+@{ var qLang = await _LanguageApplication.GetAllLanguageForSiteLangAsync();
+
+    TempData["LangDir"] = await _LanguageApplication
+        .GetDirectionByCodeAsync(await _LanguageApplication.GetCodeByAbbrAsync(GetAbbr()));
+
+    TempData.Keep(); }
 
 <a href="#">
     <img class="lang-flag" src="@(await _LanguageApplication.GetFlagUrlByCodeAsync(await _LanguageApplication.GetCodeByAbbrAsync(GetAbbr())))" />

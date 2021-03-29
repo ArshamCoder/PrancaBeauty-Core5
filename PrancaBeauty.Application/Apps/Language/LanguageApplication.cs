@@ -83,6 +83,8 @@ namespace PrancaBeauty.Application.Apps.Language
 
         public async Task<string> GetDirectionByCodeAsync(string code)
         {
+            //راست به چپ یا چپ به راست
+            // قالب را مشخص می کند
             await LoadCacheAsync();
 
             return _siteLangCache
