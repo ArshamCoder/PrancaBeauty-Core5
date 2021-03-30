@@ -65,7 +65,7 @@ namespace PrancaBeauty.WebApp
             app.UseJwtAuthentication(AuthConst.CookieName);
 
 
-
+            app.UseRedirectNotRobots();// ایا کاربر اومده تو سایت یا ربات هست
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

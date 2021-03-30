@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using PrancaBeauty.WebApp.Middlewares;
 
 namespace PrancaBeauty.WebApp.Config
 {
@@ -29,7 +30,7 @@ namespace PrancaBeauty.WebApp.Config
         {
             return services.AddRazorPages(x =>
             {
-                x.Conventions.AddPageRoute("/Home/Index", "");
+                x.Conventions.AddPageRoute("/Home/RobotIndex", "");
             });
 
         }
@@ -93,7 +94,10 @@ namespace PrancaBeauty.WebApp.Config
             return services;
         }
 
-
+        public static IApplicationBuilder UseRedirectNotRobots(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<RedirectWhenNotRobotsMiddleware>();
+        }
 
     }
 }

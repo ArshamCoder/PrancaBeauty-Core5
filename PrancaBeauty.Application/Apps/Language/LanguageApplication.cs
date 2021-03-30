@@ -93,5 +93,15 @@ namespace PrancaBeauty.Application.Apps.Language
                 .SingleOrDefault();
         }
 
+        public async Task<string> GetAbbrByCodeAsync(string code)
+        {
+            await LoadCacheAsync();
+
+            return _siteLangCache
+                .Where(a => a.Code == code)
+                .Select(a => a.Abbr)
+                .SingleOrDefault();
+        }
+
     }
 }
