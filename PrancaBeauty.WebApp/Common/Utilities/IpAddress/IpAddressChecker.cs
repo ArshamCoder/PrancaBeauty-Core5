@@ -5,12 +5,11 @@ namespace PrancaBeauty.WebApp.Common.Utilities.IpAddress
     public class IpAddressChecker : IIpAddressChecker
     {
         private IPList IranianIpList = null;
-        private readonly IPList UsIpList = null;
+        private IPList UsIpList = null;
 
         public IpAddressChecker()
         {
-            IranianIpList = new IPList();
-            UsIpList = new IPList();
+
         }
 
         private void AddIranIpList()
@@ -1397,7 +1396,7 @@ namespace PrancaBeauty.WebApp.Common.Utilities.IpAddress
 
         private void AddUsIpList()
         {
-
+            UsIpList = new IPList();
         }
 
         public string CheckIp(string ip)
