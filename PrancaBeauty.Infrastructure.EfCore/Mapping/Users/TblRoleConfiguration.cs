@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PrancaBeauty.Domain.User.RoleAgg.Entities;
 using PrancaBeauty.Infrastructure.EfCore.Contracts;
-using PrancaBeauty.Infrastructure.EfCore.Seed;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
 {
@@ -15,7 +14,6 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
             builder.Property(a => a.PageName).IsRequired().HasMaxLength(100);
             builder.Property(a => a.Description).IsRequired().HasMaxLength(500);
 
-            new SeedRoles().Run(builder);
         }
 
 

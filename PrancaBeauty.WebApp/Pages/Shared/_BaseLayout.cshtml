@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="@System.Globalization.CultureInfo.CurrentCulture.Parent.Name">
 
 <head>
     <meta charset="utf-8">
@@ -8,8 +8,7 @@
     <meta name="description" content="@ViewData["description"]">
     @if (@ViewData["canonical"] != null)
     {
-<meta name="canonical" content="@ViewData["canonical"]">
-}
+<meta name="canonical" content="@ViewData["canonical"]">}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -44,10 +43,12 @@
 
     @if (TempData["LangDir"].ToString() == "rtl")
     {<!-- Main Style CSS -->
-                <link rel="stylesheet" href="~/Main/css/style-rtl.min.css"> }
-                            else
-                            { <!-- Main Style CSS -->
-                                <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">}
+                        <link rel="stylesheet" href="~/Main/css/style-rtl.min.css">
+ }
+                    else
+                    { <!-- Main Style CSS -->
+                                        <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">
+}
 
     <!--jquery min js-->
     <script src="~/Main/js/vendor/jquery-3.4.1.min.js"></script>
