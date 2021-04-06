@@ -81,11 +81,12 @@ namespace PrancaBeauty.WebApp.Pages.Auth
                         await _templateApplication.GetEmailConfirmationTemplateAsync(CultureInfo.CurrentCulture.Name, url));
                     #endregion
 
-                    return Redirect("/Auth/UserCreatedSuccessfully");
+                    return Redirect($"/{CultureInfo.CurrentCulture.Parent.Name}/Auth/UserCreatedSuccessfully");
                 }
                 else
                 {
-                    return Redirect("/Auth/UserCreatedSuccessfully");
+                    return Redirect($"/{CultureInfo.CurrentCulture.Parent.Name}/Auth/UserCreatedSuccessfully");
+
                 }
 
 

@@ -42,7 +42,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                     Email = "reza9025@gmail.com",
                     NormalizedEmail = "reza9025@gmail.com".ToUpper(),
                     EmailConfirmed = true,
-                    PasswordHash = "AQAAAAEAACcQAAAAELVlHmEilr3l0mizs5GxKWdCQIL8ys6zuHdVro+hNsU7RxYC9HtJqdajundVGRFC5Q==",
+                    PasswordHash = "AQAAAAEAACcQAAAAEO4DDm//CF91OA/DWo5+TkznvEzE0UshISWpEGkOTKNCHtV2fXosKhfN3Mw3TSegAA==",
                     SecurityStamp = "QHZXXDN4PZUNNXGC6LQRVNOZ5EGGIKWH",
                     ConcurrencyStamp = "37116a3b-0da5-460e-b266-d5243f62e5c8",
                     PhoneNumber = "9010112829",

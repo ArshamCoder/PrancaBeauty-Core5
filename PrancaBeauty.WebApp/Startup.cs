@@ -35,6 +35,13 @@ namespace PrancaBeauty.WebApp
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
+            /*
+             * سطح دسترسی ها را برای فولدر هایی که در بخش
+             * Page
+             * هست تعیین می کنیم
+             */
+            services.AddCustomAuthorization();
+
             services.AddRazorPageConfig()
                 .AddCustomViewLocalization("Localization/Resource")
                 .AddCustomDataAnnotationLocalization(services, typeof(SharedResource));

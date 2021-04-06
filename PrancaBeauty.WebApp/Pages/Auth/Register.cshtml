@@ -1,4 +1,4 @@
-﻿@page "/{Culture=fa}/Auth/Register"
+﻿@page "/{culture=fa}/Auth/Register"
 @model PrancaBeauty.WebApp.Pages.Auth.RegisterModel
 @{ ViewData["Title"] = Localizer["Register"];
     Layout = "Shared/_MainLayout"; }
@@ -35,7 +35,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="account_form register">
                     <h2>@Localizer["Register"]</h2>
-                    <form action="/Auth/Register" method="post">
+                    <form action="/@System.Globalization.CultureInfo.CurrentCulture.Parent.Name/Auth/Register" method="post">
                         @Html.AntiForgeryToken()
 
                         @if (!ModelState.IsValid)

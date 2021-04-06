@@ -7,12 +7,12 @@ using PrancaBeauty.WebApp.Authentication.Jwt;
 using PrancaBeauty.WebApp.Common.Utilities.IpAddress;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
+using PrancaBeauty.WebApp.Middlewares;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using PrancaBeauty.WebApp.Middlewares;
 
 namespace PrancaBeauty.WebApp.Config
 {
@@ -26,11 +26,25 @@ namespace PrancaBeauty.WebApp.Config
              });
         }
 
+        public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
+        {
+            return services.AddAuthorization(opt =>
+            {
+                /*
+                 * AdminPage
+                 * در اینجا رول کاربری است که می تواند به صفحه ادمین دسترسی پیدا کند
+                 * و به صورت آرایه ای از رول ها هست و میتواند چندتا رول برای یک پالسی
+                 * تعریف کنیم
+                 */
+                opt.AddPolicy("AdminPanelPolicy", pol => pol.RequireRole(new string[] { "AdminPage" }));
+            });
+        }
         public static IMvcBuilder AddRazorPageConfig(this IServiceCollection services)
         {
             return services.AddRazorPages(x =>
             {
                 x.Conventions.AddPageRoute("/Home/RobotIndex", "");
+                x.Conventions.AuthorizeFolder("/Admin/", "AdminPanelPolicy");
             });
 
         }
