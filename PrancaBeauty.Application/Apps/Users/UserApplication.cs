@@ -148,9 +148,11 @@ namespace PrancaBeauty.Application.Apps.Users
                     throw new ArgumentNullException("UserName cant be null.");
 
                 if (string.IsNullOrWhiteSpace(pawword))
-                    throw new ArgumentNullException("Pawword cant be null.");
+                    throw new ArgumentNullException("Password cant be null.");
 
                 var userId = await _userRepository.GetUserIdByUserNameAsync(userName);
+                if (userId == null)
+                    return new OperationResult().Failed("UserNameOrPasswordIsInvalid");
 
                 return await LoginAsync(userId, pawword);
             }
@@ -331,13 +333,13 @@ namespace PrancaBeauty.Application.Apps.Users
                 var qUser = await _userRepository.FindByIdAsync(userId);
 
                 if (qUser == null)
-                    return new OperationResult().Failed("");
+                    return new OperationResult().Failed("UserNameOrPasswordIsInvalid");
 
                 if (qUser.EmailConfirmed == false)
-                    return new OperationResult().Failed("");
+                    return new OperationResult().Failed("PleaseConfirmYourEmail");
 
                 if (qUser.IsActive == false)
-                    return new OperationResult().Failed("");
+                    return new OperationResult().Failed("YourAccountIsDisabled");
 
                 var result = await _userRepository.PasswordSignInAsync(qUser, password, true, true);
                 if (result.Succeeded)

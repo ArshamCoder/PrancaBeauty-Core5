@@ -61,6 +61,20 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                         Description = "توانایی مشاهده لیست سطوح دسترسی"
                     }, default, false).Wait();
                 }
+
+                if (!_repRoles.Get.Any(a => a.Name == "CanAddAccessLevel"))
+                {
+                    _repRoles.AddAsync(new TblRole()
+                    {
+                        Id = new Guid().SequentialGuid(),
+                        ParentId = id,
+                        PageName = "ManageAccessLevelPage",
+                        Sort = 30,
+                        Name = "CanAddAccessLevel",
+                        NormalizedName = "CanAddAccessLevel".ToUpper(),
+                        Description = "توانایی افزودن سطح دسترسی"
+                    }, default, false).Wait();
+                }
             }
             #endregion
 

@@ -11,6 +11,7 @@ namespace PrancaBeauty.WebApp.Models.ViewInput
 
         [Display(Name = "Password")]
         [Required(ErrorMessage = "RequiredMsg")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Display(Name = "RemmeberMe")]

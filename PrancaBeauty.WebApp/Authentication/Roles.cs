@@ -5,5 +5,6 @@
         public const string AdminPage = "AdminPage";
         public const string CanManageAccessLevel = "CanManageAccessLevel";
         public const string CanViewListAccessLevel = "CanViewListAccessLevel";
+        public const string CanAddAccessLevel = "CanAddAccessLevel";
     }
 }

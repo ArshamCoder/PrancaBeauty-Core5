@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +28,12 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
                 return Guid.Empty.ToString();
 
             return qData;
+        }
+
+
+        public async Task<(string, List<OutGetListForAdminPage>)> GetListForAdminPageAsync(string Title, int PageNum, int Take)
+        {
+
         }
     }
 }
