@@ -33,7 +33,7 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
 
         public async Task<(string, List<OutGetListForAdminPage>)> GetListForAdminPageAsync(string Title, int PageNum, int Take)
         {
-
+            return ("", new List<OutGetListForAdminPage>());
         }
     }
 }

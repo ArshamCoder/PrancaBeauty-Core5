@@ -780,35 +780,58 @@ function SendData(url, data, funcsSuccess = function (res) { }) {
     });
 }
 
-function SendForm(url, formId, funcsSuccess = function (res) { }) {
-    // ارسال به صورت فورم
-    // صفحه رفرش می شود
-    var form = $('#' + formId)[0];
-    var formdata = new FormData(form);
+//function SendForm(url, formId, funcsSuccess = function (res) { }) {
+//    // ارسال به صورت فورم
+//    // صفحه رفرش می شود
+//    var form = $('#' + formId)[0];
+//    var formdata = new FormData(form);
+//    var formdata2 = $('#' + formId).serializeArray();
 
-    $.ajax({
-        type: "post",
-        enctype: 'multipart/form-data',
-        url: url,
-        data: formdata,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        beforeSend: function (xhr) {
-            $('.loading').show();
 
-            var securityToken = $("[name=__RequestVerificationToken]").val();
-            xhr.setRequestHeader("XSRF-TOKEN", securityToken);
-        },
-        success: function (response) {
-            funcsSuccess(response);
-        },
-        complete: function (data) {
+//    $.ajax({
+//        type: "post",
+//        enctype: 'multipart/form-data',
+//        url: url,
+//        data: formdata,
+//        processData: false,
+//        contentType: false,
+//        cache: false,
+//        timeout: 600000,
+//        beforeSend: function (xhr) {
+//            $('.loading').show();
+
+//            var securityToken = $("[name=__RequestVerificationToken]").val();
+//            xhr.setRequestHeader("XSRF-TOKEN", securityToken);
+//        },
+//        success: function (response) {
+//            funcsSuccess(response);
+//        },
+//        complete: function (data) {
+//            $('.loading').hide(100);
+//        }
+//    });
+//}
+
+
+function SendForm(_url, _FormId, _Funcs_Success = function (res) { }) {
+    var form = $('#' + _FormId)[0];
+    var formdata2 = $('#' + _FormId).serializeArray();
+
+    var jqxhr = $.post(_url, formdata2, function () {
+        _Funcs_Success(response);
+    })
+        .done(function () {
+            // alert("second success");
+        })
+        .fail(function () {
+            /*alert("error");*/
+        })
+        .always(function () {
             $('.loading').hide(100);
-        }
-    });
+        });
+
 }
+
 
 
 function LoadComponenet(url, data, callbackFuncs = function (data) { }) {

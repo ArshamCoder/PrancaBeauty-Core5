@@ -26,7 +26,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
         }
         public void Run()
         {
-            if (!_repUser.Get.Any(a => a.UserName == "RezaAhmadi"))
+            if (!_repUser.Get.Any(a => a.UserName == "arshambh7@gmail.com"))
             {
                 Guid UserId = new Guid().SequentialGuid();
                 _repUser.AddAsync(new TblUser()
