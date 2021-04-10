@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Framework.Common.Utilities.Paging;
+using Framework.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
 using System;
@@ -11,10 +13,11 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
     public class AccesslevelApplication : IAccesslevelApplication
     {
         private readonly IAccessLevelRepository _accessLevelRepository;
-
-        public AccesslevelApplication(IAccessLevelRepository accessLevelRepository)
+        private readonly ILogger _logger;
+        public AccesslevelApplication(IAccessLevelRepository accessLevelRepository, ILogger logger)
         {
             _accessLevelRepository = accessLevelRepository;
+            _logger = logger;
         }
         public async Task<string> GetIdByNameAsync(string name)
         {
@@ -31,9 +34,36 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
         }
 
 
-        public async Task<(string, List<OutGetListForAdminPage>)> GetListForAdminPageAsync(string Title, int PageNum, int Take)
+        public async Task<(OutPagingData, List<OutGetListForAdminPage>)>
+            GetListForAdminPageAsync(string title, int pageNum, int take)
         {
-            return ("", new List<OutGetListForAdminPage>());
+            try
+            {
+                if (pageNum < 1)
+                    throw new Exception("PageNum < 1");
+
+                if (take < 1)
+                    throw new Exception("Take < 1");
+
+                // آماده سازی اولیه ی کویری
+                var qData = _accessLevelRepository.Get.Select(a => new OutGetListForAdminPage
+                {
+                    Id = a.Id.ToString(),
+                    Name = a.Name,
+                    CountUser = a.TblUsers.Count()
+                }).OrderBy(a => a.Name);
+
+                // صفحه بندی داده ها
+                var qPagingData = PagingData.Calc(await qData.LongCountAsync(), pageNum, take);
+
+                return (qPagingData, await qData.Skip((int)qPagingData.Skip).Take(qPagingData.Take).ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return (null, null);
+            }
+
         }
     }
 }
