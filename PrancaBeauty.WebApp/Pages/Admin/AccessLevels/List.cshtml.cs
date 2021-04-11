@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
 {
@@ -9,5 +10,11 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
         {
             return Page();
         }
+
+        public async Task OnPostReadDataAsync()
+        {
+
+        }
+
     }
 }

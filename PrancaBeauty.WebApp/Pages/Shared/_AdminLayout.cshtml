@@ -21,8 +21,24 @@
 
     <!-- bootstrap rtl -->
     <link rel="stylesheet" href="/Admin/css/bootstrap-rtl.min.css">
+
+    <!-- KendoUI CSS -->
+    <link href="~/lib/KendoUI/css/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/KendoUI/css/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/KendoUI/css/kendo.rtl.min.css" rel="stylesheet" />
+
+
     <!-- template rtl version -->
     <link rel="stylesheet" href="/Admin/css/custom-style.css">
+
+
+    <!-- jQuery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+
+    <!-- KenoUI Js -->
+    <script src="~/lib/KendoUI/js/jszip.min.js"></script>
+    <script src="~/lib/KendoUI/js/kendo.all.min.js"></script>
+    <script src="~/lib/KendoUI/js/kendo.aspnetmvc.min.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -190,8 +206,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -199,11 +214,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
 
                         </ul>
                     </nav>
