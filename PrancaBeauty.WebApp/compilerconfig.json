@@ -6,5 +6,9 @@
   {
     "outputFile": "wwwroot/Main/css/style-rtl.css",
     "inputFile": "wwwroot/Main/scss/rtl/style.scss"
+  },
+  {
+    "outputFile": "wwwroot/Shared/js/SharedScript.es5.js",
+    "inputFile": "wwwroot/Shared/js/SharedScript.js"
   }
 ]

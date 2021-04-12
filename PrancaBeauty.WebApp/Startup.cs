@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using PrancaBeauty.Infrastructure.Core.Configuration;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Config;
@@ -44,7 +45,8 @@ namespace PrancaBeauty.WebApp
 
             services.AddRazorPageConfig()
                 .AddCustomViewLocalization("Localization/Resource")
-                .AddCustomDataAnnotationLocalization(services, typeof(SharedResource));
+                .AddCustomDataAnnotationLocalization(services, typeof(SharedResource))
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.Config();
 
@@ -54,7 +56,7 @@ namespace PrancaBeauty.WebApp
                 .AddErrorDescriber<CustomErrorDescriber>();
 
             services.AddJwtAuthentication(AuthConst.SecretCode, AuthConst.SecretKey, AuthConst.Audience, AuthConst.Issuer);
-
+            services.AddKendo();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

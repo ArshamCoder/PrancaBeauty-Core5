@@ -42,10 +42,10 @@
 
     @if (ViewData["LangDir"].ToString() == "rtl")
     {<!-- Main Style CSS -->
-                <link rel="stylesheet" href="~/Main/css/style-rtl.min.css"> }
-                            else
-                            { <!-- Main Style CSS -->
-                                <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">}
+                        <link rel="stylesheet" href="~/Main/css/style-rtl.min.css"> }
+                                    else
+                                    { <!-- Main Style CSS -->
+                                                        <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">}
 
 
 
@@ -93,6 +93,8 @@
     <script src="~/Main/js/plugins.js"></script>
     @await RenderSectionAsync("scripts", false)
 
+    <!-- Shared Script -->
+    <script src="~/Shared/js/SharedScript.min.js"></script>
     <!-- Main JS -->
     <script src="~/Main/js/main.js"></script>
 
