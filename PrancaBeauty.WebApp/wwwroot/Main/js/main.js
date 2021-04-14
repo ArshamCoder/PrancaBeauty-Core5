@@ -780,57 +780,59 @@ function SendData(url, data, funcsSuccess = function (res) { }) {
     });
 }
 
-//function SendForm(url, formId, funcsSuccess = function (res) { }) {
-//    // ارسال به صورت فورم
-//    // صفحه رفرش می شود
-//    var form = $('#' + formId)[0];
-//    var formdata = new FormData(form);
-//    var formdata2 = $('#' + formId).serializeArray();
+function SendForm(url, formId, funcsSuccess = function (res) { }) {
+    // ارسال به صورت فورم
+    // صفحه رفرش می شود
+    var form = $('#' + formId)[0];
+    var formdata = new FormData(form);
+    var formdata2 = $('#' + formId).serializeArray();
+    debugger
+
+    //$.ajax({
+    //    type: "POST",
+    //    enctype: 'multipart/form-data',
+    //    url: url,
+    //    data: formdata,
+    //    processData: false,
+    //    contentType: false,
+    //    cache: false,
+    //    timeout: 600000,
+    //    success: function (data) {
+    //        console.log();
+    //    },
+    //});
 
 
-//    $.ajax({
-//        type: "post",
-//        enctype: 'multipart/form-data',
-//        url: url,
-//        data: formdata,
-//        processData: false,
-//        contentType: false,
-//        cache: false,
-//        timeout: 600000,
-//        beforeSend: function (xhr) {
-//            $('.loading').show();
-
-//            var securityToken = $("[name=__RequestVerificationToken]").val();
-//            xhr.setRequestHeader("XSRF-TOKEN", securityToken);
-//        },
-//        success: function (response) {
-//            funcsSuccess(response);
-//        },
-//        complete: function (data) {
-//            $('.loading').hide(100);
-//        }
-//    });
-//}
-
-
-function SendForm(_url, _FormId, _Funcs_Success = function (res) { }) {
-    var form = $('#' + _FormId)[0];
-    var formdata2 = $('#' + _FormId).serializeArray();
-
-    var jqxhr = $.post(_url, formdata2, function () {
-        _Funcs_Success(response);
-    })
-        .done(function () {
-            // alert("second success");
-        })
-        .fail(function () {
-            /*alert("error");*/
-        })
-        .always(function () {
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: url,
+        data: formdata,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        beforeSend: function (xhr) {
+            $('.loading').show();
+            var securityToken = $("[name=__RequestVerificationToken]").val();
+            xhr.setRequestHeader("XSRF-TOKEN", securityToken);
+        },
+        error: function (response, ajaxOptions, thrownError) {
+            console.error(response, ajaxOptions, thrownError);
+        },
+        success: function (response) {
+            funcsSuccess(response);
+        },
+        complete: function (data) {
             $('.loading').hide(100);
-        });
+        }
+    });
+
 
 }
+
+
+
 
 
 
