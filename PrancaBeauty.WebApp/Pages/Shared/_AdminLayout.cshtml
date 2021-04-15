@@ -208,7 +208,8 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>}
+        </li>
+}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -216,9 +217,11 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>}
+        </li>
+}
                     </ul>
-                </li>}
+                </li>
+}
 
                         </ul>
                     </nav>
@@ -260,5 +263,6 @@
 
     <!-- AdminLTE App -->
     <script src="/Admin/js/adminlte.min.js"></script>
+    @await RenderSectionAsync("scripts", false)
 </body>
 </html>

@@ -1,18 +1,21 @@
-﻿@inject PrancaBeauty.WebApp.Common.Utilities.IpAddress.IIpAddressChecker IpAddressChecker
+﻿@using System.Globalization
+
+@inject PrancaBeauty.WebApp.Common.Utilities.IpAddress.IIpAddressChecker IpAddressChecker
 
 @{ if (!ViewData.Any(a => a.Key == "LangDir"))
-                {
-                    string ipAddress = Context.Connection.RemoteIpAddress.ToString();
-                    if (IpAddressChecker.CheckIp(ipAddress) == "ir")
-                    {
-                        ViewData["LangDir"] = "rtl";
-                    }
-                    else if (IpAddressChecker.CheckIp(ipAddress) == "us")
-                    {
-                        ViewData["LangDir"] = "ltr";
-                    }
-                    else
-                    {
-                        ViewData["LangDir"] = "rtl";
-                    }
-                } }
+    {
+        string ipAddress = Context.Connection.RemoteIpAddress.ToString();
+        if (IpAddressChecker.CheckIp(ipAddress) == "ir")
+        {
+            ViewData["LangDir"] = "rtl";
+        }
+        else if (IpAddressChecker.CheckIp(ipAddress) == "us")
+        {
+            ViewData["LangDir"] = "ltr";
+        }
+        else
+        {
+            ViewData["LangDir"] = "rtl";
+        }
+    }
+    ViewData["Culture"] = CultureInfo.CurrentCulture.Parent.Name; }

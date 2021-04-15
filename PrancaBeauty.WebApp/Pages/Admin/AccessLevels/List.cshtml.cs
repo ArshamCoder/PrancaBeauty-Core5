@@ -1,12 +1,15 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Accesslevel;
+using PrancaBeauty.WebApp.Authentication;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
 {
+    [Authorize(Roles = Roles.CanViewListAccessLevel)]
     public class ListModel : PageModel
     {
         private readonly IAccesslevelApplication _accesslevelApplication;
