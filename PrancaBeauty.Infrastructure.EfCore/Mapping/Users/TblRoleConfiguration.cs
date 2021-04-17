@@ -14,6 +14,11 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
             builder.Property(a => a.PageName).IsRequired().HasMaxLength(100);
             builder.Property(a => a.Description).IsRequired().HasMaxLength(500);
 
+            builder.HasOne(a => a.TblRoleParent)
+                .WithMany(a => a.TblRoleChild)
+                .HasPrincipalKey(a => a.Id)
+                .HasForeignKey(a => a.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
 

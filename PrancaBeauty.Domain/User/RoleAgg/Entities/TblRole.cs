@@ -13,7 +13,12 @@ namespace PrancaBeauty.Domain.User.RoleAgg.Entities
         public int Sort { get; set; }
         public string Description { get; set; }
 
-
+        /// <summary>
+        /// جوین به خودت جدول
+        /// برای گروه زیر گروه
+        /// </summary>
+        public virtual TblRole TblRoleParent { get; set; }
+        public virtual ICollection<TblRole> TblRoleChild { get; set; }
         public virtual ICollection<TblAccessLevel_Role> TblAccessLevel_Roles { get; set; }
     }
 }
