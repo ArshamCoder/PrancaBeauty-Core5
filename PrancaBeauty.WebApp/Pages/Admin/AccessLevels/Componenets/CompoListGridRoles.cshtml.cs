@@ -17,7 +17,7 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels.Componenets
         {
             _roleApplication = roleApplication;
         }
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public ViCompoListGridRolesModel Input { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {

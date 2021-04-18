@@ -75,6 +75,7 @@ namespace PrancaBeauty.WebApp
 
 
             app.UseRedirectNotRobots();// ایا کاربر اومده تو سایت یا ربات هست
+            app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
