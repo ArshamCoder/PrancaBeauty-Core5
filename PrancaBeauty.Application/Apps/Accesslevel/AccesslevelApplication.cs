@@ -1,10 +1,12 @@
-﻿using Framework.Common.Utilities.Paging;
+﻿using Framework.Common.ExMethod;
+using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Exceptions;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
+using PrancaBeauty.Domain.User.AccessLevelAgg.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,23 +89,28 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
                 if (await _accessLevelRepository.Get.AnyAsync(a => a.Name == Input.Name))
                     throw new ArgumentInvalidException("Name is duplicate.", new ArgumentNullException());
 
-                //await _accessLevelRepository.AddAsync(new TblAccessLevels
-                //{
-                //    Id = new Guid().SequentialGuid(),
-                //    Name = Input.Name,
-                //    TblAccessLevel_Roles = Input.Roles.Select(roleId => new TblAccessLevel_Role()
-                //    {
-                //        Id = new Guid().SequentialGuid(),
-                //        RoleId = Guid.Parse(roleId)
-                //    }).ToList()
-                //}, default, true);
+                await _accessLevelRepository.AddAsync(new TblAccessLevels
+                {
+                    Id = new Guid().SequentialGuid(),
+                    Name = Input.Name,
+                    TblAccessLevel_Roles = Input.Roles.Select(roleId => new TblAccessLevel_Role()
+                    {
+                        Id = new Guid().SequentialGuid(),
+                        RoleId = Guid.Parse(roleId)
+                    }).ToList()
+                }, default, true);
 
-                //return new OperationResult().Succeeded();
+                return new OperationResult().Succeed();
 
-                return default;
+
             }
             catch (ArgumentInvalidException ex)
             {
+                // مثلا یکی با گوشی موبایل میخواد به 
+                // api
+                // سایت وصل بشه و نام وارد نمیکنه فقط این پیغام خطا بهش نشون میدیم که بفهمه
+                // دیگه نیازی نیست لاگ بندازیم توی دیتابیس چون این نوع 
+                // خطا ها مدیریت شده هستند
                 return new OperationResult().Failed(ex.Message);
             }
             catch (Exception ex)

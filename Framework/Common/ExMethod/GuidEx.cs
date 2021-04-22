@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PrancaBeauty.Infrastructure.EfCore.Common.ExMothods
+namespace Framework.Common.ExMethod
 {
     public static class GuidEx
     {

@@ -9,7 +9,13 @@
         public bool IsSucceed { get; set; }
         public int Code { get; set; }
         public string Message { get; set; }
+        public OperationResult Succeed()
+        {
+            IsSucceed = true;
+            Message = "Operation was successded";
 
+            return this;
+        }
         public OperationResult Succeed(string message)
         {
             IsSucceed = true;

@@ -1,9 +1,9 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Common.ExMethod;
+using Framework.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Entities;
 using PrancaBeauty.Domain.User.RoleAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
-using PrancaBeauty.Infrastructure.EfCore.Common.ExMothods;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 using System;
 using System.Linq;

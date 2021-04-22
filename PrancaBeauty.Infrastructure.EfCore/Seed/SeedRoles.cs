@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Framework.Common.ExMethod;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PrancaBeauty.Domain.User.RoleAgg.Entities;
-using PrancaBeauty.Infrastructure.EfCore.Common.ExMothods;
 using System;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Seed

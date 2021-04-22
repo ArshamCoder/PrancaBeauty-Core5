@@ -1,8 +1,8 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Common.ExMethod;
+using Framework.Infrastructure;
 using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
 using PrancaBeauty.Domain.FileServer.ServerAgg.Entities;
 using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
-using PrancaBeauty.Infrastructure.EfCore.Common.ExMothods;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 using System;
 using System.Linq;

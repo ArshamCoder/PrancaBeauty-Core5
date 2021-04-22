@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>&lt;span style='font-wieght:700; font-size:16px;'&gt;403&lt;/span&gt;&lt;br/&gt;&lt;span style='font-wieght:400; font-size:12px;color:red;'&gt;دسترسی شما به این بخش، غیرمجاز میباشد&lt;/span&gt;</value>
+  </data>
+  <data name="AccessLevelHasUser" xml:space="preserve">
+    <value>سطح دسترسی جاری، حاوی کاربرانی میباشد که ابتدا باید آن ها از عضویت این سطح دسترسی خارج شوند.</value>
+  </data>
+  <data name="AccessLevelNotFound" xml:space="preserve">
+    <value>سطح دسترسی مورد نظر شما یافت نشد.</value>
+  </data>
   <data name="AccountCreate" xml:space="preserve">
     <value>حساب ایجاد شد</value>
   </data>
@@ -131,6 +140,9 @@
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>پنل مدیریت</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>ایا مطمعن هستید؟</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>کد</value>
@@ -155,6 +167,9 @@
   </data>
   <data name="DefaultError" xml:space="preserve">
     <value>خطایی ناشناخته رخ داد. لطفا بعدا مجدد امتحان کنید</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>توضیحات</value>
   </data>
   <data name="DuplicateEmail" xml:space="preserve">
     <value>ایمیل تکراری میبشاد</value>
@@ -207,6 +222,9 @@
   <data name="FirstName" xml:space="preserve">
     <value>نام</value>
   </data>
+  <data name="GotoList" xml:space="preserve">
+    <value>بازگشت به لیست</value>
+  </data>
   <data name="GridIsEmpty" xml:space="preserve">
     <value>رکوردی به جهت نمایش وجود ندارد</value>
   </data>
@@ -215,6 +233,9 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>خانه</value>
+  </data>
+  <data name="Id cant be null." xml:space="preserve">
+    <value>شناسه نمیتواند خالی باشد</value>
   </data>
   <data name="InvalidEmail" xml:space="preserve">
     <value>ایمیل '{email}' نامعتبر است</value>
@@ -285,17 +306,32 @@
   <data name="Name" xml:space="preserve">
     <value>نام</value>
   </data>
+  <data name="Name cant be null." xml:space="preserve">
+    <value>نام را وارد کنید</value>
+  </data>
+  <data name="Name is duplicate." xml:space="preserve">
+    <value>نام تکراری است.</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>بعدی</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>خیر</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>باشه</value>
+  </data>
+  <data name="Operation was successded" xml:space="preserve">
+    <value>عملایت با موفقیت انجام شد.</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>صفحه</value>
   </data>
   <data name="PageableMsg" xml:space="preserve">
     <value>{0} تا {1} از {2} مورد</value>
+  </data>
+  <data name="PageName" xml:space="preserve">
+    <value>عنوان بخش</value>
   </data>
   <data name="PassCompareMsg" xml:space="preserve">
     <value>کلمه عبور با تکرار آن یکسان نیست.</value>
@@ -378,6 +414,12 @@
   <data name="Roles" xml:space="preserve">
     <value>نقش ها</value>
   </data>
+  <data name="Roles cant be null." xml:space="preserve">
+    <value>نقش ها را وارد کنید</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
   <data name="SendAuthCode" xml:space="preserve">
     <value>ارسال کد احراز هویت</value>
   </data>
@@ -416,6 +458,9 @@
   </data>
   <data name="UserPanel" xml:space="preserve">
     <value>پنل کاربری</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>بله</value>
   </data>
   <data name="YourAccountIsDisabled" xml:space="preserve">
     <value>حساب کاربری شما غیرفعال شده است. لطفا با مدیریت در ارتباط باشید.</value>
