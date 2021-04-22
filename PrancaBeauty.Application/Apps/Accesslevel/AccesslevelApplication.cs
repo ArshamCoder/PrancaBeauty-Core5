@@ -2,6 +2,8 @@
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Contracts.AccessLevel;
+using PrancaBeauty.Application.Contracts.Result;
+using PrancaBeauty.Application.Exceptions;
 using PrancaBeauty.Domain.User.AccessLevelAgg.Contracts;
 using System;
 using System.Collections.Generic;
@@ -70,5 +72,50 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
             }
 
         }
+
+
+        public async Task<OperationResult> AddNewAsync(InpAddNewAccessLevel Input)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Input.Name))
+                    throw new ArgumentInvalidException("Name cant be null.", new ArgumentNullException());
+
+                if (Input.Roles == null)
+                    throw new ArgumentInvalidException("Roles cant be null.", new ArgumentNullException());
+
+                if (await _accessLevelRepository.Get.AnyAsync(a => a.Name == Input.Name))
+                    throw new ArgumentInvalidException("Name is duplicate.", new ArgumentNullException());
+
+                //await _accessLevelRepository.AddAsync(new TblAccessLevels
+                //{
+                //    Id = new Guid().SequentialGuid(),
+                //    Name = Input.Name,
+                //    TblAccessLevel_Roles = Input.Roles.Select(roleId => new TblAccessLevel_Role()
+                //    {
+                //        Id = new Guid().SequentialGuid(),
+                //        RoleId = Guid.Parse(roleId)
+                //    }).ToList()
+                //}, default, true);
+
+                //return new OperationResult().Succeeded();
+
+                return default;
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
+
+
+
     }
 }

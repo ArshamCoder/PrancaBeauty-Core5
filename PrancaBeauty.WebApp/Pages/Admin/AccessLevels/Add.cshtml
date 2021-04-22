@@ -1,9 +1,7 @@
 ﻿@page "/{culture}/Admin/AccessLevel/Add"
 @model PrancaBeauty.WebApp.Pages.Admin.AccessLevels.AddModel
-@{
-    ViewData["Title"] = Localizer["AddAccessLevel"];
-    Layout = "~/pages/shared/_AdminLayout.cshtml";
-}
+@{ ViewData["Title"] = Localizer["AddAccessLevel"];
+    Layout = "~/pages/shared/_AdminLayout.cshtml"; }
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -30,7 +28,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="">
+                            <form id="frmAddAccessLevel">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -53,8 +51,8 @@
                                     <div class="row">
                                         <div class="col-md-12 text-left">
                                             <hr />
-                                            <button class="btn btn-success">ذخیره</button>
-                                            <button class="btn btn-warning">بازگشت به لیست</button>
+                                            <button onclick="SendForm('/@ViewData["Culture"]/Admin/AccessLevel/Add', 'frmAddAccessLevel')" type="button" class="btn btn-success">@Localizer["Save"]</button>
+                                            <button onclick="GotoList()" type="button" class="btn btn-warning">@Localizer["GotoList"]</button>
                                         </div>
                                     </div>
                                 </div>
@@ -78,5 +76,8 @@
                 placeholder: ''
             });
         });
+        function GotoList() {
+            location.href = '@ViewData["ReturnUrl"]';
+        }
     </script>
 }
