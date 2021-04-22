@@ -1,7 +1,21 @@
 ﻿@page "/Admin/AccessLevel/Compo/ListGridRoles"
+@using PrancaBeauty.WebApp.Models.ViewModel
 @model PrancaBeauty.WebApp.Pages.Admin.AccessLevels.Componenets.CompoListGridRolesModel
-@{
-}
-<h1>
-    Test
-</h1>
+@{ }
+<div class="k-lang">
+    @(Html.Kendo()
+        .Grid<VmCompoListGridRolesModel>()
+        .Name("ListRoles")
+        .DefaultSettings(Localizer)
+        .Pageable(a=>a.Enabled(false))
+        .Sortable()
+        .Columns(col=> { })
+        .PersistSelection()
+        .Events(a=> {
+                        a.DataBound("");
+        })
+        .ClientDetailTemplateId("")
+        .DataSource(ds=> ds.Ajax()
+            .Model(model=> model.Id(a=>a.Id))
+            .Read(read=> read.Url("/Admin/AccessLevel/Compo/ListGridRoles?handler=Read").Data("forgeryToken"))))
+</div>

@@ -1,5 +1,7 @@
 ﻿using Framework.Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PrancaBeauty.Application.Contracts.Roles;
 using PrancaBeauty.Domain.User.RoleAgg.Contracts;
 using PrancaBeauty.Domain.User.RoleAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
@@ -38,6 +40,26 @@ namespace PrancaBeauty.Application.Apps.Role
                 _logger.Error(ex);
                 return null;
             }
+        }
+
+        public async Task<List<OutListOfRoles>> ListOfRolesAsync(string parentId = null)
+        {
+            var qData = await _roleManager.Roles
+                .Where(a => a.ParentId == (parentId == null ? (Guid?)null : Guid.Parse(parentId)))
+                .Select(a => new OutListOfRoles
+                {
+                    Id = a.Id.ToString(),
+                    Name = a.Name,
+                    PageName = a.PageName,
+                    Description = a.Description,
+                    Sort = a.Sort,
+                    HasChild = a.tblRoles_Childs.Any(),
+                    ParentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null
+                })
+                .ToListAsync();
+
+            return qData;
+
         }
 
     }
