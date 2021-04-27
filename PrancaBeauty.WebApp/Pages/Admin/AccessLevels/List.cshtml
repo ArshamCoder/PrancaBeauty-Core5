@@ -69,7 +69,7 @@
         }
     @if (User.IsInRole(Roles.CanRemoveAccessLevel))
     {
-        <a href="" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>
+            <a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>
     }
         </div>
         </div>
@@ -81,5 +81,13 @@
         function Add() {
             location.href = '/@ViewData["Culture"]/Admin/AccessLevel/Add?returnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
         }
-</script>
-}
+</script>}
+@if (User.IsInRole(Roles.CanRemoveAccessLevel))
+{
+<script>
+        function Remove(_Id) {
+            confirm('@Localizer["AreYouSure"]', '', function () {
+                SendData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Remove', { Id: _Id});
+            });
+        }
+</script>}

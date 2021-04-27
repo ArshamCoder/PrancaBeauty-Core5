@@ -122,7 +122,45 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
 
 
 
+        public async Task<OperationResult> RemoveAsync(InpRemove input)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(input.Id))
+                    throw new ArgumentInvalidException("Id cant be null.");
 
+                // واکشی سطح دسترسی
+                var qData = await _accessLevelRepository.Get.Where(a => a.Id == Guid.Parse(input.Id)).SingleOrDefaultAsync();
+                if (qData == null)
+                    return new OperationResult().Failed("AccessLevelNotFound");
+
+                // برسی عضو بودن کاربر در سطح دسترسی جاری
+                if (await CheckHasUserAsync(input.Id))
+                    return new OperationResult().Failed("AccessLevelHasUser");
+
+                // حذف کامل سطح دسترسی
+                await _accessLevelRepository.DeleteAsync(qData, default, true);
+
+                return new OperationResult().Succeed();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+        private async Task<bool> CheckHasUserAsync(string accessLevelId)
+        {
+            return await _accessLevelRepository.Get
+                .Where(a => a.Id == Guid.Parse(accessLevelId))
+                .Select(a => a.TblUsers.Any())
+                .SingleAsync();
+        }
 
     }
 }
