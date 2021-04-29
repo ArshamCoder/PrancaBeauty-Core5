@@ -135,6 +135,8 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
                     return new OperationResult().Failed("AccessLevelNotFound");
 
                 // برسی عضو بودن کاربر در سطح دسترسی جاری
+                // پس وقتی که کاربری این سطح دسترسی دارد
+                // مدیر نباید اجازه داشته باشید که سطح دسترسی پاک کند
                 if (await CheckHasUserAsync(input.Id))
                     return new OperationResult().Failed("AccessLevelHasUser");
 
@@ -156,6 +158,7 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
 
         private async Task<bool> CheckHasUserAsync(string accessLevelId)
         {
+            //چک میکند که کاربر در این سطح دسترسی عضو هست یا خیر
             return await _accessLevelRepository.Get
                 .Where(a => a.Id == Guid.Parse(accessLevelId))
                 .Select(a => a.TblUsers.Any())

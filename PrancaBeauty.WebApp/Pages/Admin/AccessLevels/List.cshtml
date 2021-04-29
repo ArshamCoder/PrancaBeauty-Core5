@@ -81,7 +81,8 @@
         function Add() {
             location.href = '/@ViewData["Culture"]/Admin/AccessLevel/Add?returnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
         }
-</script>}
+</script>
+}
 @if (User.IsInRole(Roles.CanRemoveAccessLevel))
 {
 <script>
@@ -90,4 +91,11 @@
                 SendData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Remove', { Id: _Id});
             });
         }
-</script>}
+</script>
+}
+
+<script>
+    function RefreshData() {
+        RefreshGrid('ListAccessLevel');
+    }
+</script>

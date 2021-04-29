@@ -47,7 +47,7 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
         public async Task<IActionResult> OnPostRemoveAsync(string Id)
         {
             if (!User.IsInRole(Roles.CanRemoveAccessLevel))
-                return _msgBox.FaildMsg("");
+                return _msgBox.FaildMsg(_localizer["AccessDenied"]);
 
             if (!ModelState.IsValid)
                 return _msgBox.ModelStateMsg(ModelState.GetErrors());
@@ -59,14 +59,14 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
 
             if (result.IsSucceed)
             {
-
+                return _msgBox.SuccessMsg(_localizer[result.Message], "RefreshData()");
             }
             else
             {
                 return _msgBox.ModelStateMsg(_localizer[result.Message]);
             }
 
-            return Page();
+
         }
 
     }
