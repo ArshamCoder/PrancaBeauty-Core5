@@ -120,7 +120,32 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
             }
         }
 
+        public async Task<OutGetForEdit> GetForEditAsync(string accessLevelId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(accessLevelId))
+                    throw new ArgumentInvalidException("AccessLevelId cant be null.");
 
+                return await _accessLevelRepository.Get
+                    .Where(a => a.Id == Guid.Parse(accessLevelId))
+                    .Select(a => new OutGetForEdit
+                    {
+                        Id = a.Id.ToString(),
+                        Name = a.Name
+                    })
+                    .SingleOrDefaultAsync();
+            }
+            catch (ArgumentInvalidException)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return null;
+            }
+        }
 
         public async Task<OperationResult> RemoveAsync(InpRemove input)
         {

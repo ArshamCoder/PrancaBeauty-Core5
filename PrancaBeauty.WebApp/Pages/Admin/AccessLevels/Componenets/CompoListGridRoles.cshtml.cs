@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Role;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using PrancaBeauty.WebApp.Models.ViewModel;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,9 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels.Componenets
             if (Input.AccessLevelId != null)
             {
                 // ویرایش
+                var rolesList = await _roleApplication.ListOfRolesByAccessLevelIdAsync(Input.AccessLevelId);
+
+                ViewData["SelectedRoles"] = rolesList ?? throw new Exception("RolesList is null.");
                 return Page();
             }
             else
