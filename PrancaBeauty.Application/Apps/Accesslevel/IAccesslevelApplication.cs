@@ -16,5 +16,6 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
         Task<OperationResult> AddNewAsync(InpAddNewAccessLevel Input);
         Task<OperationResult> RemoveAsync(InpRemove input);
         Task<OutGetForEdit> GetForEditAsync(string accessLevelId);
+        Task<OperationResult> UpdateAsync(InpUpdateAccessLevel input);
     }
 }

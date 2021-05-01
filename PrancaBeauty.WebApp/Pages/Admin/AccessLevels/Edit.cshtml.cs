@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Accesslevel;
+using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
@@ -42,7 +43,7 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
 
             Input.Id = qData.Id;
             Input.Name = qData.Name;
-            Input.Roles = qData.Roles;
+
 
             ViewData["ReturnUrl"] = ReturnUrl ?? $"/{CultureInfo.CurrentCulture.Parent.Name}/Admin/AccessLevel/List";
             return Page();
@@ -53,7 +54,20 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
             if (!ModelState.IsValid)
                 return _msgBox.ModelStateMsg(ModelState.GetErrors());
 
-            return Page();
+            var Result = await _accesslevelApplication.UpdateAsync(new InpUpdateAccessLevel()
+            {
+                Id = Input.Id,
+                Name = Input.Name,
+                Roles = Input.Roles
+            });
+            if (Result.IsSucceed)
+            {
+                return _msgBox.SuccessMsg(_localizer[Result.Message], "GotoList()");
+            }
+            else
+            {
+                return _msgBox.FaildMsg(_localizer[Result.Message]);
+            }
         }
 
 

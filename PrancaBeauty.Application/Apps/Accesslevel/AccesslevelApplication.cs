@@ -2,6 +2,7 @@
 using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using PrancaBeauty.Application.Apps.AccesslevelsRoles;
 using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Exceptions;
@@ -17,11 +18,13 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
     public class AccesslevelApplication : IAccesslevelApplication
     {
         private readonly IAccessLevelRepository _accessLevelRepository;
+        private readonly IAccesslevelRolesApplication _accessLevelRolesApplication;
         private readonly ILogger _logger;
-        public AccesslevelApplication(IAccessLevelRepository accessLevelRepository, ILogger logger)
+        public AccesslevelApplication(IAccessLevelRepository accessLevelRepository, ILogger logger, IAccesslevelRolesApplication accessLevelRolesApplication)
         {
             _accessLevelRepository = accessLevelRepository;
             _logger = logger;
+            _accessLevelRolesApplication = accessLevelRolesApplication;
         }
         public async Task<string> GetIdByNameAsync(string name)
         {
@@ -189,6 +192,76 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
                 .Select(a => a.TblUsers.Any())
                 .SingleAsync();
         }
+
+        public async Task<OperationResult> UpdateAsync(InpUpdateAccessLevel input)
+        {
+            try
+            {
+                #region برسی ورودی ها
+                if (input == null)
+                    throw new ArgumentInvalidException("Input cant be null.");
+
+                if (string.IsNullOrWhiteSpace(input.Id))
+                    throw new ArgumentInvalidException("Id cant be null.");
+
+                if (string.IsNullOrWhiteSpace(input.Name))
+                    throw new ArgumentInvalidException("Name cant be null.");
+
+                if (input.Roles == null)
+                    throw new ArgumentInvalidException("Roles cant be null.");
+
+                if (input.Roles.Count() == 0)
+                    throw new ArgumentInvalidException("Roles cant be null.");
+                #endregion
+
+                // واکشی اطلاعات قدیمی
+                var qData = await _accessLevelRepository.Get.Where(a => a.Id == Guid.Parse(input.Id)).SingleOrDefaultAsync();
+                if (qData == null)
+                    return new OperationResult().Failed("Error404");
+
+                // جایگزاری داده های جدید
+                qData.Name = input.Name;
+
+                // لغو عضویت تمامی رول ها
+                var resultRemoveAccRoles = await _accessLevelRolesApplication.RemoveByAccessLevelIdAsync(input.Id);
+
+                #region ثبت رول های جدید
+
+                qData.TblAccessLevel_Roles = input.Roles.Select(x => new TblAccessLevel_Role
+                {
+                    Id = new Guid().SequentialGuid(),
+                    RoleId = Guid.Parse(x)
+                }).ToList();
+                //qData.TblAccessLevel_Roles = new List<TblAccessLevel_Role>();
+                //foreach (var item in input.Roles)
+                //{
+                //    qData.TblAccessLevel_Roles.Add(new TblAccessLevel_Role()
+                //    {
+                //        Id = new Guid().SequentialGuid(),
+                //        RoleId = Guid.Parse(item)
+                //    });
+                //}
+                #endregion
+
+                // ثبت ویرایش
+                await _accessLevelRepository.UpdateAsync(qData, default, true);
+
+                // ابدیت سطح دسترسی های کاربران
+
+                return new OperationResult().Succeed();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
 
     }
 }

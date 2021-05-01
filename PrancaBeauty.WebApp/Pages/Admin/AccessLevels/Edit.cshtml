@@ -1,7 +1,7 @@
 ﻿@page "/{culture}/Admin/AccessLevel/Edit/{Id}"
 @model PrancaBeauty.WebApp.Pages.Admin.AccessLevels.EditModel
 @{ ViewData["Title"] = Localizer["AddAccessLevel"];
-                Layout = "~/pages/shared/_AdminLayout.cshtml"; }
+    Layout = "~/pages/shared/_AdminLayout.cshtml"; }
 
 @using PrancaBeauty.WebApp.Models.ViewInput
 
@@ -31,6 +31,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="frmEditAccessLevel">
+                                <input asp-for="Input.Id" type="hidden" />
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -43,7 +44,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <LoadComponent url="/Admin/AccessLevel/Compo/ListGridRoles"
-                                                           data='new ViCompoListGridRolesModel { AccessLevelId = Model.Input.Id }'
+                                                           data='new ViCompoListGridRolesModel {AccessLevelId = Model.Input.Id}'
                                                            context="HttpContext"></LoadComponent>
 
                                         </div>
