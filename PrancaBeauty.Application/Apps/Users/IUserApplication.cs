@@ -2,6 +2,7 @@
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.Application.Apps.Users
@@ -26,5 +27,8 @@ namespace PrancaBeauty.Application.Apps.Users
 
         Task<TblUser> GetUserByPhoneNumberAsync(string phoneNumber);
         Task<OperationResult> ReCreatePasswordAsync(TblUser user);
+        Task<OperationResult> AddRolesAsync(TblUser user, string[] roles);
+        Task<OperationResult> EditUsersRoleByAccIdAsync(string accessLevelId, string[] roles);
+        Task<List<string>> GetUserIdsByAccIdAsync(string accessLevelId);
     }
 }

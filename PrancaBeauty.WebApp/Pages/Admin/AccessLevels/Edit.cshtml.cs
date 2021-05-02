@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Accesslevel;
+using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Common.ExMethod;
@@ -19,12 +20,14 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
         private readonly IMsgBox _msgBox;
         private readonly ILocalizer _localizer;
         private readonly IAccesslevelApplication _accesslevelApplication;
+        private readonly IUserApplication _userApplication;
 
-        public EditModel(IMsgBox msgBox, ILocalizer localizer, IAccesslevelApplication accesslevelApplication)
+        public EditModel(IMsgBox msgBox, ILocalizer localizer, IAccesslevelApplication accesslevelApplication, IUserApplication userApplication)
         {
             _msgBox = msgBox;
             _localizer = localizer;
             _accesslevelApplication = accesslevelApplication;
+            _userApplication = userApplication;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -54,19 +57,26 @@ namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
             if (!ModelState.IsValid)
                 return _msgBox.ModelStateMsg(ModelState.GetErrors());
 
-            var Result = await _accesslevelApplication.UpdateAsync(new InpUpdateAccessLevel()
+            var result = await _accesslevelApplication.UpdateAsync(new InpUpdateAccessLevel()
             {
                 Id = Input.Id,
                 Name = Input.Name,
                 Roles = Input.Roles
             });
-            if (Result.IsSucceed)
+
+            if (result.IsSucceed)
             {
-                return _msgBox.SuccessMsg(_localizer[Result.Message], "GotoList()");
+                // ابدیت سطح دسترسی های کاربران
+                var updateRolesResult = await _userApplication.EditUsersRoleByAccIdAsync(Input.Id, Input.Roles);
+
+                // ذخیره شناسه کاربران عضو سطح دسترسی جاری برای ابدیت توکن ها
+                CacheUsersToRebuildToken.AddRange(await _userApplication.GetUserIdsByAccIdAsync(Input.Id));
+
+                return _msgBox.SuccessMsg(_localizer[result.Message], "GotoList()");
             }
             else
             {
-                return _msgBox.FaildMsg(_localizer[Result.Message]);
+                return _msgBox.FaildMsg(_localizer[result.Message]);
             }
         }
 

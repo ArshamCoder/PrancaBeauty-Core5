@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Contracts.Users;
+using PrancaBeauty.Application.Exceptions;
 using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -489,9 +491,140 @@ namespace PrancaBeauty.Application.Apps.Users
             return new OperationResult().Succeed(newPassword);
         }
 
+        public async Task<OperationResult> RemoveAllRolesAsync(TblUser user)
+        {
+            try
+            {
+                if (user == null)
+                    throw new ArgumentInvalidException("user cant be null.");
+
+                var Result = await _userRepository.RemoveAllRolesAsync(user);
+                if (Result.Succeeded)
+                {
+                    return new OperationResult().Succeed();
+                }
+                else
+                {
+                    return new OperationResult()
+                        .Failed(string.Join(" | ",
+                            Result.Errors.Select(a => new { ErrTxt = a.Code + "-" + a.Description })));
+                }
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
 
 
+        public async Task<OperationResult> EditUsersRoleByAccIdAsync(string accessLevelId, string[] roles)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(accessLevelId))
+                    throw new ArgumentInvalidException("AccessLevelId cant be null.");
+
+                if (roles == null)
+                    throw new ArgumentInvalidException("Roles cant be null.");
+
+                //دریافت لیست کاربران بر اساس سطح دسترسی
+                var qUsers = await _userRepository.Get
+                    .Where(a => a.AccessLevelId == Guid.Parse(accessLevelId)).ToListAsync();
+
+                foreach (var item in qUsers)
+                {
+                    // حذف عضویت رول ها
+                    var removeResult = await RemoveAllRolesAsync(item);
+                    if (removeResult.IsSucceed)
+                    {
+                        // افزودن
+                        var addResult = await AddRolesAsync(item, roles);
+                        if (addResult.IsSucceed == false)
+                            _logger.Warning($"زمان افزودن عضویت رول ها برای کاربر با شناسه: [{item.Id}]، خطاهایی به شرح زیر رخ داد: [{removeResult.Message}]");
+                    }
+                    else
+                    {
+                        _logger.Warning($"زمان حذف عضویت رول ها برای کاربر با شناسه: [{item.Id}]، خطاهایی به شرح زیر رخ داد: [{removeResult.Message}]");
+                    }
+                }
+                return new OperationResult().Succeed();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+        public async Task<OperationResult> AddRolesAsync(TblUser user, string[] roles)
+        {
+            try
+            {
+                if (user == null)
+                    throw new ArgumentInvalidException("user cant be null.");
+
+                if (roles == null)
+                    throw new ArgumentInvalidException("Roles cant be null.");
+
+                var Result = await _userRepository.AddToRolesAsync(user, roles);
+                if (Result.Succeeded)
+                {
+                    return new OperationResult().Succeed();
+                }
+                else
+                {
+                    return new OperationResult().Failed(string.Join(" | ", Result.Errors.Select(a => new { ErrTxt = a.Code + "-" + a.Description })));
+                }
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
+        public async Task<List<string>> GetUserIdsByAccIdAsync(string accessLevelId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(accessLevelId))
+                    throw new ArgumentInvalidException("AccessLevelId cant be null.");
+
+                var qUsers = await _userRepository.Get
+                    .Where(a => a.AccessLevelId == Guid.Parse(accessLevelId))
+                    .Select(a => a.Id.ToString()).ToListAsync();
+
+                return qUsers;
+            }
+            catch (ArgumentInvalidException)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return null;
+            }
+        }
     }
+
+
+
+
 
 
 

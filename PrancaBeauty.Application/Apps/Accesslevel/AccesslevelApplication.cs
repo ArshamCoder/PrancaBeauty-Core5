@@ -3,6 +3,7 @@ using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.AccesslevelsRoles;
+using PrancaBeauty.Application.Apps.Role;
 using PrancaBeauty.Application.Contracts.AccessLevel;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Exceptions;
@@ -19,12 +20,14 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
     {
         private readonly IAccessLevelRepository _accessLevelRepository;
         private readonly IAccesslevelRolesApplication _accessLevelRolesApplication;
+        private readonly IRoleApplication _roleApplication;
         private readonly ILogger _logger;
-        public AccesslevelApplication(IAccessLevelRepository accessLevelRepository, ILogger logger, IAccesslevelRolesApplication accessLevelRolesApplication)
+        public AccesslevelApplication(IAccessLevelRepository accessLevelRepository, ILogger logger, IAccesslevelRolesApplication accessLevelRolesApplication, IRoleApplication roleApplication)
         {
             _accessLevelRepository = accessLevelRepository;
             _logger = logger;
             _accessLevelRolesApplication = accessLevelRolesApplication;
+            _roleApplication = roleApplication;
         }
         public async Task<string> GetIdByNameAsync(string name)
         {
@@ -225,28 +228,29 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
                 // لغو عضویت تمامی رول ها
                 var resultRemoveAccRoles = await _accessLevelRolesApplication.RemoveByAccessLevelIdAsync(input.Id);
 
-                #region ثبت رول های جدید
+                #region ثبت عضویت رول های جدید
 
-                qData.TblAccessLevel_Roles = input.Roles.Select(x => new TblAccessLevel_Role
-                {
-                    Id = new Guid().SequentialGuid(),
-                    RoleId = Guid.Parse(x)
-                }).ToList();
-                //qData.TblAccessLevel_Roles = new List<TblAccessLevel_Role>();
-                //foreach (var item in input.Roles)
+                //qData.TblAccessLevel_Roles = input.Roles.Select(x => new TblAccessLevel_Role
                 //{
-                //    qData.TblAccessLevel_Roles.Add(new TblAccessLevel_Role()
-                //    {
-                //        Id = new Guid().SequentialGuid(),
-                //        RoleId = Guid.Parse(item)
-                //    });
-                //}
+                //    Id = new Guid().SequentialGuid(),
+                //    RoleId = Guid.Parse(await _roleApplication.GetIdByNameAsync(x))
+                //}).ToList();
+                qData.TblAccessLevel_Roles = new List<TblAccessLevel_Role>();
+                foreach (var item in input.Roles)
+                {
+                    qData.TblAccessLevel_Roles.Add(new TblAccessLevel_Role()
+                    {
+                        Id = new Guid().SequentialGuid(),
+                        RoleId = Guid.Parse(await _roleApplication.GetIdByNameAsync(item))
+                    });
+                }
                 #endregion
 
                 // ثبت ویرایش
                 await _accessLevelRepository.UpdateAsync(qData, default, true);
 
-                // ابدیت سطح دسترسی های کاربران
+
+
 
                 return new OperationResult().Succeed();
             }

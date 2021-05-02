@@ -116,6 +116,16 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
             return await _userManager.UpdateAsync(entity);
         }
 
+        public async Task<IdentityResult> RemoveAllRolesAsync(TblUser user)
+        {
+            // حذف کلیه رول های یک کاربر
+
+            // واکشی رول های فعلی کاربر
+            var qRoles = await _userManager.GetRolesAsync(user);
+
+            // حذف عضویت
+            return await _userManager.RemoveFromRolesAsync(user, qRoles);
+        }
 
         public async Task<IdentityResult> AddPhoneNumberPasswordAsync(TblUser entity, string password)
         {
@@ -128,5 +138,16 @@ namespace PrancaBeauty.Infrastructure.EfCore.Repository.User
         {
             return await Get.Where(a => a.PhoneNumber == phoneNumber).SingleOrDefaultAsync();
         }
+
+
+        public async Task<IdentityResult> AddToRolesAsync(TblUser user, string[] roles)
+        {
+            // کاربر را در رول های جدیدی که از ورودی میگیرد عضو می کند
+            // افزودن عضویت
+            return await _userManager.AddToRolesAsync(user, roles);
+        }
+
+
+
     }
 }

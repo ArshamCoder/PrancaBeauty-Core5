@@ -10,5 +10,6 @@ namespace PrancaBeauty.Application.Apps.Role
         Task<List<string>> GetRolesByUserAsync(TblUser user);
         Task<List<OutListOfRoles>> ListOfRolesAsync(string ParentId = null);
         Task<string[]> ListOfRolesByAccessLevelIdAsync(string accessLevelId);
+        Task<string> GetIdByNameAsync(string name);
     }
 }

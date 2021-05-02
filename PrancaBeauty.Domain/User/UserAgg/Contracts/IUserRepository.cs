@@ -26,5 +26,7 @@ namespace PrancaBeauty.Domain.User.UserAgg.Contracts
         Task<IdentityResult> RemovePhoneNumberPasswordAsync(TblUser entity);
         Task<IdentityResult> AddPhoneNumberPasswordAsync(TblUser entity, string password);
         Task<TblUser> FindByPhoneNumberAsync(string phoneNumber);
+        Task<IdentityResult> RemoveAllRolesAsync(TblUser user);
+        Task<IdentityResult> AddToRolesAsync(TblUser user, string[] roles);
     }
 }
