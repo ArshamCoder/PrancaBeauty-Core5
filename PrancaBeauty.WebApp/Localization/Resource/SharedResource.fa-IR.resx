@@ -123,6 +123,9 @@
   <data name="AccessLevelHasUser" xml:space="preserve">
     <value>سطح دسترسی جاری، حاوی کاربرانی میباشد که ابتدا باید آن ها از عضویت این سطح دسترسی خارج شوند.</value>
   </data>
+  <data name="AccessLevelName" xml:space="preserve">
+    <value>نقش کاربر</value>
+  </data>
   <data name="AccessLevelNotFound" xml:space="preserve">
     <value>سطح دسترسی مورد نظر شما یافت نشد.</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="AddNewAccessLevel" xml:space="preserve">
     <value>افزودن</value>
+  </data>
+  <data name="AddNewUsers" xml:space="preserve">
+    <value>افزودن کاربر جدید</value>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>پنل مدیریت</value>
@@ -213,6 +219,9 @@
   <data name="EmailPattern" xml:space="preserve">
     <value>^[a-zA-Z0-9\-\._]{3,100}[@][a-zA-Z0-9\-\._]{3,100}$</value>
   </data>
+  <data name="Error404" xml:space="preserve">
+    <value>اطلاعات مورد نظر شما یافت نشد.</value>
+  </data>
   <data name="Error500" xml:space="preserve">
     <value>عملیات با شکست مواجه شد.</value>
   </data>
@@ -221,6 +230,9 @@
   </data>
   <data name="FirstName" xml:space="preserve">
     <value>نام</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>نام کاربر</value>
   </data>
   <data name="GotoList" xml:space="preserve">
     <value>بازگشت به لیست</value>
@@ -237,6 +249,9 @@
   <data name="Id cant be null." xml:space="preserve">
     <value>شناسه نمیتواند خالی باشد</value>
   </data>
+  <data name="Input cant be null." xml:space="preserve">
+    <value>اطلاعات لازم را وارد کنید</value>
+  </data>
   <data name="InvalidEmail" xml:space="preserve">
     <value>ایمیل '{email}' نامعتبر است</value>
   </data>
@@ -248,6 +263,9 @@
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>نام کاربری '{userName}' نامعتبر است، فقط می تواند حاوی حروف و یا اعداد باشد</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>وضعیت</value>
   </data>
   <data name="ItemsPerPage" xml:space="preserve">
     <value>مورد بر صفحه</value>
@@ -269,6 +287,9 @@
   </data>
   <data name="ListAccessLevel" xml:space="preserve">
     <value>لیست سطوح دسترسی</value>
+  </data>
+  <data name="ListUsers" xml:space="preserve">
+    <value>لیست کاربران</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>ورود به سایت</value>
@@ -296,6 +317,9 @@
   </data>
   <data name="ManageAccessLevel" xml:space="preserve">
     <value>مدریت سطوح دسترسی</value>
+  </data>
+  <data name="ManageUsers" xml:space="preserve">
+    <value>مدیریت کاربران</value>
   </data>
   <data name="MobilePattern" xml:space="preserve">
     <value>^[0][9][0-9]{9}$</value>
@@ -386,6 +410,9 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>بارگزاری مجدد</value>
+  </data>
+  <data name="RegDate" xml:space="preserve">
+    <value>تاریخ ثبت نام</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>ثبت نام</value>

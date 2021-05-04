@@ -1,5 +1,6 @@
 ﻿using Framework.Application.Consts;
 using Framework.Common.ExMethod;
+using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.Accesslevel;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OutGetListForAdminPage = PrancaBeauty.Application.Contracts.Users.OutGetListForAdminPage;
 
 namespace PrancaBeauty.Application.Apps.Users
 {
@@ -621,6 +623,69 @@ namespace PrancaBeauty.Application.Apps.Users
                 return null;
             }
         }
+
+
+
+        public async Task<(OutPagingData, List<OutGetListForAdminPage>)>
+            GetListForAdminPageAsync(string email, string phoneNumber, string fullName, int pageNum, int take)
+        {
+            try
+            {
+                if (pageNum < 1)
+                    throw new ArgumentInvalidException("PageNum < 1");
+
+                if (take < 1)
+                    throw new ArgumentInvalidException("Take < 1");
+
+                email = string.IsNullOrWhiteSpace(email) ? null : email;
+                phoneNumber = string.IsNullOrWhiteSpace(phoneNumber) ? null : phoneNumber;
+                fullName = string.IsNullOrWhiteSpace(fullName) ? null : fullName;
+
+                // آماده سازی اولیه ی کویری
+                var qData = _userRepository.Get
+                    .OrderByDescending(a => a.Date)
+                    .Select(a => new OutGetListForAdminPage
+                    {
+                        Id = a.Id.ToString(),
+                        FullName = a.FirstName + " " + a.LastName,
+                        Email = a.Email,
+                        PhoneNumber = a.PhoneNumber,
+                        AccessLevelName = a.TblAccessLevels.Name,
+                        Date = a.Date.ToString("yyyy/MM/dd HH:mm"),
+                        IsActive = a.IsActive
+                    })
+                .Where(a => fullName == null || a.FullName.Contains(fullName))
+                .Where(a => email == null || a.Email.Contains(email))
+                .Where(a => phoneNumber == null || a.PhoneNumber.Contains(phoneNumber))
+                .OrderByDescending(a => a.IsActive);
+
+                // صفحه بندی داده ها
+                var qPagingData = PagingData.Calc(await qData.LongCountAsync(), pageNum, take);
+
+                return (qPagingData, await qData.Skip((int)qPagingData.Skip).Take(qPagingData.Take).ToListAsync());
+            }
+            catch (ArgumentInvalidException)
+            {
+                return (null, null);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return (null, null);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 

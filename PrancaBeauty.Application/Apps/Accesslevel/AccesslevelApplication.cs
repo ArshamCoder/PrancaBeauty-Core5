@@ -50,10 +50,10 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
             try
             {
                 if (pageNum < 1)
-                    throw new Exception("PageNum < 1");
+                    throw new ArgumentInvalidException("PageNum < 1");
 
                 if (take < 1)
-                    throw new Exception("Take < 1");
+                    throw new ArgumentInvalidException("Take < 1");
 
                 title = string.IsNullOrWhiteSpace(title) ? null : title;
 
@@ -72,6 +72,10 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
                 var qPagingData = PagingData.Calc(await qData.LongCountAsync(), pageNum, take);
 
                 return (qPagingData, await qData.Skip((int)qPagingData.Skip).Take(qPagingData.Take).ToListAsync());
+            }
+            catch (ArgumentInvalidException)
+            {
+                return (null, null);
             }
             catch (Exception ex)
             {
