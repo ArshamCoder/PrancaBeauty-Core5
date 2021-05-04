@@ -599,6 +599,7 @@ namespace PrancaBeauty.Application.Apps.Users
 
         public async Task<List<string>> GetUserIdsByAccIdAsync(string accessLevelId)
         {
+            // لیست کاربران با یک سطح دسترسی خاصی را برمیگیرداند
             try
             {
                 if (string.IsNullOrWhiteSpace(accessLevelId))
