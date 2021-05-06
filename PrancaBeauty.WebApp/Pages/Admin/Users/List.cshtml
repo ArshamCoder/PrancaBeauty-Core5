@@ -1,9 +1,7 @@
 ﻿@page "/{culture}/Admin/Users/List"
 @model PrancaBeauty.WebApp.Pages.Admin.Users.ListModel
-@{
-    ViewData["Title"] = Localizer["ListUsers"];
-    Layout = "~/pages/shared/_AdminLayout.cshtml";
-}
+@{ ViewData["Title"] = Localizer["ListUsers"];
+    Layout = "~/pages/shared/_AdminLayout.cshtml"; }
 
 
 <div class="content-wrapper">
@@ -44,7 +42,10 @@
                                       col.Bound(a => a.PhoneNumber).HtmlAttributes(new { @class = "text-left" }).Width(80).Sortable(false);
                                       col.Bound(a => a.AccessLevelName).HtmlAttributes(new { @class = "text-left" }).Width(100).Sortable(false);
                                       col.Bound(a => a.Date).Width(90).HtmlAttributes(new { @class = "text-left" }).Sortable(false);
-                                      col.Bound(a => a.IsActive).HtmlAttributes(new {style = "text-align:center;" }).ClientTemplate("<img style='width:32px' src='/Shared/img/#=IsActive#.png'/>").Width(50).Sortable(false);
+                                      col.Bound(a => a.IsActive)
+                                          .HtmlAttributes(new {style = "text-align:center;" })
+                                          .ClientTemplate("<img style='width:32px' src='/Shared/img/#=IsActive#.png'/>")
+                                          .Width(50).Sortable(false);
                                       col.Bound(a => a).Width(50).Title(" ")
                                                                  .HtmlAttributes(new { style= "overflow: visible; text-align: center;" })
                                                                  .ClientHeaderTemplate(User.IsInRole(Roles.CanAddUsers)? "<button class='btn btn-success btn-sm' onclick='Add()'><i class='fa fa-plus'></i></button>" : "")
@@ -64,21 +65,19 @@
     <!-- /.content -->
 </div>
 
-<script id="DropDownCmd">
-    <div class="item-action dropdown">
-        <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fa fa-bars fs-16 text-dark"></i></a>
-        <div class="dropdown-menu dropdown-menu-left">
-            @if (User.IsInRole(Roles.CanEditUsers))
-            {
-                <a href="/@ViewData["Culture"]/Admin/Users/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
-            }
-            @if (User.IsInRole(Roles.CanRemoveUsers))
-            {
-                <a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>
-            }
-        </div>
+
+<div class="item-action dropdown" id="DropDownCmd">
+    <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fa fa-bars fs-16 text-dark"></i></a>
+    <div class="dropdown-menu dropdown-menu-left">
+        @if (User.IsInRole(Roles.CanEditUsers))
+        {
+<a href="/@ViewData["Culture"]/Admin/Users/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>            }
+        @if (User.IsInRole(Roles.CanRemoveUsers))
+        {
+<a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>            }
     </div>
-</script>
+</div>
+
 
 <div id="ToolbarPanel">
     <div class="row">
@@ -96,20 +95,20 @@
 
 @if (User.IsInRole(Roles.CanAddUsers))
 {
-    <script>
+<script>
         function Add() {
             location.href = '/@ViewData["Culture"]/Admin/Users/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
         }
-    </script>
+</script>
 }
 
 @if (User.IsInRole(Roles.CanRemoveUsers))
 {
-    <script>
+<script>
         function Remove(_Id) {
             RemoveData('/@ViewData["Culture"]/Admin/Users/List?handler=Remove', {Id:_Id});
         }
-    </script>
+</script>
 }
 
 <script>
