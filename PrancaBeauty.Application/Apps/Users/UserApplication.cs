@@ -627,7 +627,7 @@ namespace PrancaBeauty.Application.Apps.Users
 
 
         public async Task<(OutPagingData, List<OutGetListForAdminPage>)>
-            GetListForAdminPageAsync(string email, string phoneNumber, string fullName, int pageNum, int take)
+            GetListForAdminPageAsync(string email, string phoneNumber, string fullName, string Sort, int pageNum, int take)
         {
             try
             {
@@ -643,7 +643,7 @@ namespace PrancaBeauty.Application.Apps.Users
 
                 // آماده سازی اولیه ی کویری
                 var qData = _userRepository.Get
-                    .OrderByDescending(a => a.Date)
+
                     .Select(a => new OutGetListForAdminPage
                     {
                         Id = a.Id.ToString(),
@@ -651,13 +651,92 @@ namespace PrancaBeauty.Application.Apps.Users
                         Email = a.Email,
                         PhoneNumber = a.PhoneNumber,
                         AccessLevelName = a.TblAccessLevels.Name,
-                        Date = a.Date.ToString("yyyy/MM/dd HH:mm"),
-                        IsActive = a.IsActive
+                        Date = a.Date,
+                        IsActive = a.IsActive,
+                        IsEmailConfirmed = a.EmailConfirmed,
+                        IsPhoneNumberConfirmed = a.PhoneNumberConfirmed
                     })
                 .Where(a => fullName == null || a.FullName.Contains(fullName))
                 .Where(a => email == null || a.Email.Contains(email))
                 .Where(a => phoneNumber == null || a.PhoneNumber.Contains(phoneNumber))
-                .OrderByDescending(a => a.IsActive);
+               .OrderByDescending(a => a.Date);
+
+
+                #region مرتب سازی
+                if (Sort != null)
+                    switch (Sort.ToLower())
+                    {
+                        case "fullnamedes":
+                            {
+                                qData = qData.OrderByDescending(a => a.FullName);
+                                break;
+                            }
+                        case "fullnameaes":
+                            {
+                                qData = qData.OrderBy(a => a.FullName);
+                                break;
+                            }
+                        case "emaildes":
+                            {
+                                qData = qData.OrderByDescending(a => a.Email);
+                                break;
+                            }
+                        case "emailaes":
+                            {
+                                qData = qData.OrderBy(a => a.Email);
+                                break;
+                            }
+                        case "isactivedes":
+                            {
+                                qData = qData.OrderByDescending(a => a.IsActive);
+                                break;
+                            }
+                        case "isactiveaes":
+                            {
+                                qData = qData.OrderBy(a => a.IsActive);
+                                break;
+                            }
+                        case "dateaes":
+                            {
+                                qData = qData.OrderByDescending(a => a.Date);
+                                break;
+                            }
+                        case "datedes":
+                            {
+                                qData = qData.OrderBy(a => a.Date);
+                                break;
+                            }
+                        case "confirmaccountdes":
+                            {
+                                qData = qData.OrderByDescending(a => a.IsEmailConfirmed);
+                                break;
+                            }
+                        case "confirmaccountaes":
+                            {
+                                qData = qData.OrderBy(a => a.IsEmailConfirmed);
+                                break;
+                            }
+                        case "confirmphonenumberdes":
+                            {
+                                qData = qData.OrderByDescending(a => a.IsPhoneNumberConfirmed);
+                                break;
+                            }
+                        case "confirmphonenumberAes":
+                            {
+                                qData = qData.OrderBy(a => a.IsPhoneNumberConfirmed);
+                                break;
+                            }
+                        default:
+                            {
+                                qData = qData.OrderByDescending(a => a.Date);
+                                break;
+                            }
+                    }
+                #endregion
+
+
+
+
 
                 // صفحه بندی داده ها
                 var qPagingData = PagingData.Calc(await qData.LongCountAsync(), pageNum, take);

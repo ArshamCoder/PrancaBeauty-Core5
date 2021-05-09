@@ -12,19 +12,19 @@ namespace PrancaBeauty.WebApp.Models.ViewInput
 
         [Display(Name = "PhoneNumber")]
         [Required(ErrorMessage = "RequiredMsg")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "StringLengthMsg")]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "StringLengthMsg")]
         [Phone]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "FirstName")]
         [Required(ErrorMessage = "RequiredMsg")]
-        [StringLength(30, MinimumLength = 6, ErrorMessage = "StringLengthMsg")]
+        [StringLength(30, MinimumLength = 1, ErrorMessage = "StringLengthMsg")]
         [RegularExpression(@"[A-Zا-یa-zآ\s]*")]
         public string FirstName { get; set; }
 
         [Display(Name = "LastName")]
         [Required(ErrorMessage = "RequiredMsg")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "StringLengthMsg")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "StringLengthMsg")]
         [RegularExpression(@"[A-Zا-یa-zآ\s]*")]
         public string LastName { get; set; }
 

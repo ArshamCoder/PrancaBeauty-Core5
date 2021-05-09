@@ -7,6 +7,8 @@ using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
+using PrancaBeauty.WebApp.Models.ViewModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.Admin.Users
@@ -31,15 +33,29 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
         }
 
         public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request,
-            string FullName, string Email, string PhoneNumber, string Sort)
+            string FullName, string Email, string PhoneNumber, string FieldSort)
         {
             var qData = await _usersApplication
-                .GetListForAdminPageAsync(Email, PhoneNumber, FullName, request.Page, request.PageSize);
+                .GetListForAdminPageAsync(Email, PhoneNumber, FullName, FieldSort, request.Page, request.PageSize);
 
+            var items = qData.Item2
+                .Select(a => new VmListUsers
+                {
+                    Id = a.Id,
+                    FullName = a.FullName,
+                    AccessLevelName = a.AccessLevelName,
+                    Date = a.Date.ToString("yyyy/MM/dd HH:mm"),
+                    Email = a.Email,
+                    IsActive = a.IsActive,
+                    IsEmailConfirmed = a.IsEmailConfirmed,
+                    IsPhoneNumberConfirmed = a.IsPhoneNumberConfirmed,
+                    PhoneNumber = a.PhoneNumber
+                });
 
-            var _DataGrid = qData.Item2.ToDataSourceResult(request);
+            var _DataGrid = items.ToDataSourceResult(request);
+
             _DataGrid.Total = (int)qData.Item1.CountAllItem;
-            _DataGrid.Data = qData.Item2;
+            _DataGrid.Data = items;
 
             return new JsonResult(_DataGrid);
         }

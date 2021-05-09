@@ -1,10 +1,10 @@
-﻿using PrancaBeauty.Application.Contracts.Result;
+﻿using Framework.Common.Utilities.Paging;
+using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Framework.Common.Utilities.Paging;
 
 namespace PrancaBeauty.Application.Apps.Users
 {
@@ -33,6 +33,6 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<List<string>> GetUserIdsByAccIdAsync(string accessLevelId);
 
         Task<(OutPagingData, List<OutGetListForAdminPage>)>
-            GetListForAdminPageAsync(string email, string phoneNumber, string fullName, int pageNum, int take);
+            GetListForAdminPageAsync(string email, string phoneNumber, string fullName, string sort, int pageNum, int take);
     }
 }

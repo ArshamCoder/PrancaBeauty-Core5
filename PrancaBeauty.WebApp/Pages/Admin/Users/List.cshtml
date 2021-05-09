@@ -1,4 +1,5 @@
 ﻿@page "/{culture}/Admin/Users/List"
+@using PrancaBeauty.WebApp.Models.ViewModel
 @model PrancaBeauty.WebApp.Pages.Admin.Users.ListModel
 @{ ViewData["Title"] = Localizer["ListUsers"];
     Layout = "~/pages/shared/_AdminLayout.cshtml"; }
@@ -31,26 +32,26 @@
                         <div class="card-body">
                             <div class="k-lang">
                                 @(Html.Kendo()
-                                  .Grid<PrancaBeauty.Application.Contracts.Users.OutGetListForAdminPage>()
+                                  .Grid<VmListUsers>()
                                   .Name("ListUsers")
                                   .ToolBar(a=>a.ClientTemplateId("ToolbarPanel"))
                                   .DefaultSettings(Localizer)
-                                  .Columns(col=> {
-                                      col.Bound(a => a.Id).Hidden().HtmlAttributes(new { @class = "RowId" }).Sortable(false);
-                                      col.Bound(a => a.FullName).Width(150).Sortable(false);
-                                      col.Bound(a => a.Email).HtmlAttributes(new { @class= "text-left" }).Width(150).Sortable(false);
-                                      col.Bound(a => a.PhoneNumber).HtmlAttributes(new { @class = "text-left" }).Width(80).Sortable(false);
-                                      col.Bound(a => a.AccessLevelName).HtmlAttributes(new { @class = "text-left" }).Width(100).Sortable(false);
-                                      col.Bound(a => a.Date).Width(90).HtmlAttributes(new { @class = "text-left" }).Sortable(false);
-                                      col.Bound(a => a.IsActive)
-                                          .HtmlAttributes(new {style = "text-align:center;" })
-                                          .ClientTemplate("<img style='width:32px' src='/Shared/img/#=IsActive#.png'/>")
-                                          .Width(50).Sortable(false);
-                                      col.Bound(a => a).Width(50).Title(" ")
-                                                                 .HtmlAttributes(new { style= "overflow: visible; text-align: center;" })
-                                                                 .ClientHeaderTemplate(User.IsInRole(Roles.CanAddUsers)? "<button class='btn btn-success btn-sm' onclick='Add()'><i class='fa fa-plus'></i></button>" : "")
-                                                                 .ClientTemplateId("DropDownCmd");
-                                  })
+                                 .Columns(col =>
+                                 {
+                                     col.Bound(a => a.Id).Hidden().HtmlAttributes(new { @class = "RowId" }).Sortable(false);
+                                     col.Bound(a => a.FullName).Width(150).Sortable(false);
+                                     col.Bound(a => a.Email).HtmlAttributes(new { @class = "text-left" }).Width(150).Sortable(false);
+                                     col.Bound(a => a.PhoneNumber).HtmlAttributes(new { @class = "text-left" }).Width(80).Sortable(false);
+                                     col.Bound(a => a.AccessLevelName).HtmlAttributes(new { @class = "text-left" }).Width(100).Sortable(false);
+                                     col.Bound(a => a.Date).Width(90).HtmlAttributes(new { @class = "text-left" }).Sortable(false);
+                                     col.Bound(a => a.IsEmailConfirmed).HtmlAttributes(new { style = "text-align:center;" }).ClientTemplate("<img style='width:32px' src='/Shared/img/#=IsEmailConfirmed#.png'/>").Width(50).Sortable(false);
+                                     col.Bound(a => a.IsPhoneNumberConfirmed).HtmlAttributes(new { style = "text-align:center;" }).ClientTemplate("<img style='width:32px' src='/Shared/img/#=IsPhoneNumberConfirmed#.png'/>").Width(50).Sortable(false);
+                                     col.Bound(a => a.IsActive).HtmlAttributes(new { style = "text-align:center;" }).ClientTemplate("<img style='width:32px' src='/Shared/img/#=IsActive#.png'/>").Width(50).Sortable(false);
+                                     col.Bound(a => a).Width(50).Title(" ")
+                                                                .HtmlAttributes(new { style = "overflow: visible; text-align: center;" })
+                                                                .ClientHeaderTemplate(User.IsInRole(Roles.CanAddUsers) ? "<button class='btn btn-success btn-sm' onclick='Add()'><i class='fa fa-plus'></i></button>" : "")
+                                                                .ClientTemplateId("DropDownCmd");
+                                 })
                                   .DataSource(ds=>ds.Ajax()
                                                     .PageSize(10)
                                                     .Read(read=>read.Url($"/{CultureInfo.CurrentCulture.Parent.Name}/Admin/Users/List?handler=ReadData").Data("forgeryToken"))))
@@ -97,6 +98,14 @@
                 <option value="FullNameAes">@Localizer["SortFullNameAes"]</option>
                 <option value="EmailDes">@Localizer["SortEmailDes"]</option>
                 <option value="EmailAes">@Localizer["SortEmailAes"]</option>
+                <option value="IsActiveDes">@Localizer["IsActiveDes"]</option>
+                <option value="IsActiveAes">@Localizer["IsActiveAes"]</option>
+                <option value="DateDes">@Localizer["DateDes"]</option>
+                <option value="DateAes">@Localizer["DateAes"]</option>
+                <option value="ConfirmEmailDes">@Localizer["ConfirmEmailDes"]</option>
+                <option value="ConfirmEmailAes">@Localizer["ConfirmEmailAes"]</option>
+                <option value="ConfirmPhoneNumberDes">@Localizer["ConfirmPhoneNumberDes"]</option>
+                <option value="ConfirmPhoneNumberAes">@Localizer["ConfirmPhoneNumberAes"]</option>
             </select>
         </div>
     </div>
@@ -127,9 +136,9 @@
         var _FullName = $('#txtSearchFullName').val();
         var _Email = $('#txtSearchEmail').val();
         var _PhoneNumber = $('#txtSerachPhoneNumber').val();
-        var _txtSort = $('#txtSort').val();
+        var _txtSort = $('#txtSort option:selected').val();
         var _Grid = $('#ListUsers').data('kendoGrid');
-        _Grid.dataSource.transport.options.read.url = '/@CultureInfo.CurrentCulture.Parent.Name/Admin/Users/List?handler=ReadData&FullName=' + _FullName + '&Email=' + _Email + '&PhoneNumber=' + _PhoneNumber + '&Sort=' + _txtSort;
+        _Grid.dataSource.transport.options.read.url = '/@CultureInfo.CurrentCulture.Parent.Name/Admin/Users/List?handler=ReadData&FullName=' + _FullName + '&Email=' + _Email + '&PhoneNumber=' + _PhoneNumber + '&FieldSort=' + _txtSort;
         _Grid.dataSource.read();
         _Grid.refresh();
     }
