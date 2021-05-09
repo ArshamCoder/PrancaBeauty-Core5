@@ -150,6 +150,12 @@
   <data name="AreYouSure" xml:space="preserve">
     <value>ایا مطمعن هستید؟</value>
   </data>
+  <data name="ChangeStatusDisable" xml:space="preserve">
+    <value>غیر فعال کردن</value>
+  </data>
+  <data name="ChangeStatusEnable" xml:space="preserve">
+    <value>فعال کردن</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>کد</value>
   </data>
@@ -162,14 +168,32 @@
   <data name="ConcurrencyFailure" xml:space="preserve">
     <value>رکورد جاری پیشتر ویرایش شده‌است و تغییرات شما آن‌را بازنویسی خواهد کرد</value>
   </data>
+  <data name="ConfirmAccountDes" xml:space="preserve">
+    <value>وضعیت ایمیل (نزولی)</value>
+  </data>
+  <data name="ConfirmEmailAes" xml:space="preserve">
+    <value>وضعیت ایمیل (صعودی)</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>تایید کلمه عبور</value>
+  </data>
+  <data name="ConfirmPhoneNumberAes" xml:space="preserve">
+    <value>وضعیت موبایل (صعودی)</value>
+  </data>
+  <data name="ConfirmPhoneNumberDes" xml:space="preserve">
+    <value>وضعیت موبایل (نزولی)</value>
   </data>
   <data name="CountUser" xml:space="preserve">
     <value>تعداد کاربران</value>
   </data>
   <data name="Dashborad" xml:space="preserve">
     <value>پیشخوان</value>
+  </data>
+  <data name="DateAes" xml:space="preserve">
+    <value>تاریخ (صعودی)</value>
+  </data>
+  <data name="DateDes" xml:space="preserve">
+    <value>تاریخ (نزولی)</value>
   </data>
   <data name="DefaultError" xml:space="preserve">
     <value>خطایی ناشناخته رخ داد. لطفا بعدا مجدد امتحان کنید</value>
@@ -266,6 +290,18 @@
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>وضعیت</value>
+  </data>
+  <data name="IsActiveAes" xml:space="preserve">
+    <value>وضعیت (صعودی)</value>
+  </data>
+  <data name="IsActiveDes" xml:space="preserve">
+    <value>وضعیت (نزولی)</value>
+  </data>
+  <data name="IsEmailConfirmed" xml:space="preserve">
+    <value>وضعیت تایید ایمیل</value>
+  </data>
+  <data name="IsPhoneNumberConfirmed" xml:space="preserve">
+    <value>وضعیت تایید موبایل</value>
   </data>
   <data name="ItemsPerPage" xml:space="preserve">
     <value>مورد بر صفحه</value>
@@ -483,8 +519,14 @@
   <data name="UserAlreadyInRole" xml:space="preserve">
     <value>کاربر از قبل عضو این Role می باشد</value>
   </data>
+  <data name="UserChangeStatus" xml:space="preserve">
+    <value>وضعیت کاربر با موفقیت تغییر کرد.</value>
+  </data>
   <data name="UserCreatedSuccessfully" xml:space="preserve">
     <value>کاربر با موفقیت ایجاد شد.</value>
+  </data>
+  <data name="UserDeleted" xml:space="preserve">
+    <value>کاربر با موفقیت حذف شد.</value>
   </data>
   <data name="UserLockoutNotEnabled" xml:space="preserve">
     <value>این کاربر قفل نشده است و فعال می باشد</value>
@@ -503,6 +545,15 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>بله</value>
+  </data>
+  <data name="YouCantChanageAdminAccountStatus" xml:space="preserve">
+    <value>شما نمیتوانید وضعیت حساب کابر مدیر کل را تغییر دهید.</value>
+  </data>
+  <data name="YouCantChanageYourAccountStatus" xml:space="preserve">
+    <value>شما نمیتوانید وضعیت حساب کاربری خود را تغییر دهید.</value>
+  </data>
+  <data name="YouCantDeleteUser" xml:space="preserve">
+    <value>امکان حذف این کاربر وجود ندارد. میتوانید کاربر جاری را غیرفعال کنید.</value>
   </data>
   <data name="YourAccountIsDisabled" xml:space="preserve">
     <value>حساب کاربری شما غیرفعال شده است. لطفا با مدیریت در ارتباط باشید.</value>

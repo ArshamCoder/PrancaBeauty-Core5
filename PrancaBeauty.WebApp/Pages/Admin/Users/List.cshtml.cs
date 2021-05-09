@@ -30,17 +30,18 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
             return Page();
         }
 
-        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request)
+        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request,
+            string FullName, string Email, string PhoneNumber, string Sort)
         {
             var qData = await _usersApplication
-                .GetListForAdminPageAsync(null, null, null, request.Page, request.PageSize);
+                .GetListForAdminPageAsync(Email, PhoneNumber, FullName, request.Page, request.PageSize);
 
 
-            var dataGrid = qData.Item2.ToDataSourceResult(request);
-            dataGrid.Total = (int)qData.Item1.CountAllItem;
-            dataGrid.Data = qData.Item2;
+            var _DataGrid = qData.Item2.ToDataSourceResult(request);
+            _DataGrid.Total = (int)qData.Item1.CountAllItem;
+            _DataGrid.Data = qData.Item2;
 
-            return new JsonResult(dataGrid);
+            return new JsonResult(_DataGrid);
         }
     }
 }

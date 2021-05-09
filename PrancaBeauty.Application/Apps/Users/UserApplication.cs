@@ -676,16 +676,6 @@ namespace PrancaBeauty.Application.Apps.Users
         }
 
 
-
-
-
-
-
-
-
-
-
-
     }
 
 
