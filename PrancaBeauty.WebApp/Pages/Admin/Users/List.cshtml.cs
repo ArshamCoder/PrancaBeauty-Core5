@@ -7,6 +7,7 @@ using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
+using PrancaBeauty.WebApp.Models.ViewInput;
 using PrancaBeauty.WebApp.Models.ViewModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,16 +28,25 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
             _usersApplication = usersApplication;
         }
 
+
+        [BindProperty(SupportsGet = true)]
+        public ViListUsers Input { get; set; }
+
+
+
         public IActionResult OnGet()
         {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request,
-            string FullName, string Email, string PhoneNumber, string FieldSort)
+        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request)
         {
             var qData = await _usersApplication
-                .GetListForAdminPageAsync(Email, PhoneNumber, FullName, FieldSort, request.Page, request.PageSize);
+                .GetListForAdminPageAsync(Input.Email,
+                    Input.PhoneNumber, Input.FullName,
+                    Input.FieldSort,
+                    request.Page,
+                    request.PageSize);
 
             var items = qData.Item2
                 .Select(a => new VmListUsers
@@ -58,6 +68,19 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
             _DataGrid.Data = items;
 
             return new JsonResult(_DataGrid);
+        }
+
+        public async Task<IActionResult> OnPostRemoveAsync(string Id)
+        {
+            var result = await _usersApplication.RemoveUserAsync(Id);
+            if (result.IsSucceed)
+            {
+                return _msgBox.SuccessMsg(_localizer[result.Message], "RefreshData()");
+            }
+            else
+            {
+                return _msgBox.FaildMsg(_localizer[result.Message]);
+            }
         }
     }
 }
