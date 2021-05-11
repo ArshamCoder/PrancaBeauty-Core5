@@ -36,5 +36,6 @@ namespace PrancaBeauty.Application.Apps.Users
             GetListForAdminPageAsync(string email, string phoneNumber, string fullName, string sort, int pageNum, int take);
 
         Task<OperationResult> RemoveUserAsync(string userId);
+        Task<OperationResult> ChangeUserStatusAsync(string userId, string selfUserId);
     }
 }

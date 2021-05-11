@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.WebApp.Authentication;
+using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
@@ -72,7 +73,27 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
 
         public async Task<IActionResult> OnPostRemoveAsync(string Id)
         {
+            if (!User.IsInRole(Roles.CanChangeUsersStatus))
+                return _msgBox.FaildMsg(_localizer["AccessDenied"]);
             var result = await _usersApplication.RemoveUserAsync(Id);
+            if (result.IsSucceed)
+            {
+                return _msgBox.SuccessMsg(_localizer[result.Message], "RefreshData()");
+            }
+            else
+            {
+                return _msgBox.FaildMsg(_localizer[result.Message.Replace(" | ", "<br/>")]);
+            }
+        }
+
+
+
+        public async Task<IActionResult> OnPostChanageStatusAsync(string Id)
+        {
+            if (!User.IsInRole(Roles.CanChangeUsersStatus))
+                return _msgBox.FaildMsg(_localizer["AccessDenied"]);
+
+            var result = await _usersApplication.ChangeUserStatusAsync(Id, User.GetUserDetails().UserId);
             if (result.IsSucceed)
             {
                 return _msgBox.SuccessMsg(_localizer[result.Message], "RefreshData()");
@@ -82,5 +103,14 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
                 return _msgBox.FaildMsg(_localizer[result.Message]);
             }
         }
+
+
+
+
+
+
+
+
+
     }
 }

@@ -792,7 +792,42 @@ namespace PrancaBeauty.Application.Apps.Users
         }
 
 
+        public async Task<OperationResult> ChangeUserStatusAsync(string userId, string selfUserId)
+        {
+            //selfUserId
+            // یک کاربر نباید بتواند حساب کاربری خود را غیر فعال یا فعال کند
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                    throw new ArgumentInvalidException($"UserId cannot be null.");
 
+                // جلوگیری از تغییر وضعیت حساب خود
+                if (userId == selfUserId)
+                    return new OperationResult().Failed("YouCantChanageYourAccountStatus");
+
+                var qUser = await _userRepository.FindByIdAsync(userId);
+                if (qUser == null)
+                    return new OperationResult().Failed("UserNotFound");
+
+                // این کاربر مدیر می باشد و به هیچ عنوان نباید 
+                // حساب اون غیر فغال شود
+                if (qUser.Email.ToLower() == "arshambh7@gmail.com")
+                    return new OperationResult().Failed("YouCantChanageAdminAccountStatus");
+
+                //انجام تغییر وضعیت حساب کاربر
+                // قفل شود یا باز شود
+                qUser.IsActive = !qUser.IsActive;
+                await _userRepository.UpdateAsync(qUser, default, true);
+
+
+                return new OperationResult().Succeed("UserChangeStatus");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
 
 
 
