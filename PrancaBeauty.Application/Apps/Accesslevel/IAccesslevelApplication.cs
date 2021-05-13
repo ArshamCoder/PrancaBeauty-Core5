@@ -17,5 +17,12 @@ namespace PrancaBeauty.Application.Apps.Accesslevel
         Task<OperationResult> RemoveAsync(InpRemove input);
         Task<OutGetForEdit> GetForEditAsync(string accessLevelId);
         Task<OperationResult> UpdateAsync(InpUpdateAccessLevel input);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Name">بخشی از نام برای جستوجو</param>
+        /// <returns></returns>
+        Task<List<OutGetForChangeUserAccesssLevel>> GetForChangeUserAccesssLevelAsync(string Name);
     }
 }
