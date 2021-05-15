@@ -16,9 +16,8 @@
                         .Placeholder(Localizer["PleseSelect"])
                         .DataTextField("Name")
                         .DataValueField("Id")
-                        //.Value("0")
-                        .DataSource(sr => {
-                                              sr.Read(read =>
+                        //.Value("0") //مقدار پیش فرض رو اینجا پر میکنیم برای محیط ویرایش
+                        .DataSource(sr => {sr.Read(read =>
                                               {
                                                   read.Url($"/{ViewData["culture"]}/Admin/Users/Compo/ChangeAccessLevel?handler=Read");
                                               });

@@ -831,23 +831,71 @@ namespace PrancaBeauty.Application.Apps.Users
 
 
 
+        public async Task<OperationResult> ChanageUserAccessLevelAsync(string userId, string selfUserId, string accessLevelId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    throw new ArgumentInvalidException($"'{nameof(userId)}' cannot be null.");
+                }
 
+                if (string.IsNullOrWhiteSpace(selfUserId))
+                {
+                    throw new ArgumentInvalidException($"'{nameof(selfUserId)}' cannot be null.");
+                }
 
+                if (string.IsNullOrWhiteSpace(accessLevelId))
+                {
+                    throw new ArgumentInvalidException($"'{nameof(accessLevelId)}' cannot be null.");
+                }
 
+                // جلوگیری از تغییر سطح دسترسی حساب خود
+                if (userId == selfUserId)
+                    return new OperationResult().Failed("YouCantChanageYourAccountAccessLevel");
 
+                var qUser = await _userRepository.FindByIdAsync(userId);
+                if (qUser == null)
+                    return new OperationResult().Failed("UserNotFound");
 
+                // کاربر نباید بتواند سطح دسترسی ادمین عوض کند
 
+                if (qUser.Email.ToLower() == "arshambh7@gmail.com")
+                    return new OperationResult().Failed("YouCantChanageAdminAccountAceessLevel");
 
+                qUser.AccessLevelId = Guid.Parse(accessLevelId);
 
+                await _userRepository.UpdateAsync(qUser, default, true);
 
-
-
-
-
-
-
-
+                return new OperationResult().Succeed("UserChangeAccessLevel");
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
 

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.Application.Apps.Users;
+using PrancaBeauty.WebApp.Authentication;
+using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
@@ -38,6 +40,20 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users.Componenets
             return new JsonResult(qData);
         }
 
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var result = await _userApplication
+                .ChanageUserAccessLevelAsync(Input.UserId, User.GetUserDetails().UserId, Input.AccessLevelId);
+            if (result.IsSucceed)
+            {
+                CacheUsersToRebuildToken.Add(Input.UserId);
 
+                return _msgBox.SuccessMsg(_localizer[result.Message], "Close(); RefreshData();");
+            }
+            else
+            {
+                return _msgBox.FaildMsg(_localizer[result.Message]);
+            }
+        }
     }
 }
