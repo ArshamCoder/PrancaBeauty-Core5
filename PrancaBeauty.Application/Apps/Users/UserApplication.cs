@@ -647,6 +647,7 @@ namespace PrancaBeauty.Application.Apps.Users
                     .Select(a => new OutGetListForAdminPage
                     {
                         Id = a.Id.ToString(),
+                        AccessLevelId = a.AccessLevelId.ToString(),
                         FullName = a.FirstName + " " + a.LastName,
                         Email = a.Email,
                         PhoneNumber = a.PhoneNumber,
@@ -888,14 +889,6 @@ namespace PrancaBeauty.Application.Apps.Users
 
 
 
-
-
-
-
-
-
-
-}
 
 
 

@@ -46,6 +46,8 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users.Componenets
                 .ChanageUserAccessLevelAsync(Input.UserId, User.GetUserDetails().UserId, Input.AccessLevelId);
             if (result.IsSucceed)
             {
+                // بعد از تغییر سطح دسترسی کاربر از سایت باید خارج شود
+                // و بعدش دوباره لاگین کند
                 CacheUsersToRebuildToken.Add(Input.UserId);
 
                 return _msgBox.SuccessMsg(_localizer[result.Message], "Close(); RefreshData();");

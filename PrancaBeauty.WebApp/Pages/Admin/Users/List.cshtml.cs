@@ -57,6 +57,7 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Users
                     AccessLevelName = a.AccessLevelName,
                     Date = a.Date.ToString("yyyy/MM/dd HH:mm"),
                     Email = a.Email,
+                    AccessLevelId = a.AccessLevelId,
                     IsActive = a.IsActive,
                     IsEmailConfirmed = a.IsEmailConfirmed,
                     IsPhoneNumberConfirmed = a.IsPhoneNumberConfirmed,
