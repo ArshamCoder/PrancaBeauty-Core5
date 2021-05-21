@@ -1,4 +1,4 @@
-﻿@page  "/Auth/Login/Components/LoginByPhoneNumber"
+﻿@page  "/{culture}/Auth/Login/Components/LoginByPhoneNumber"
 @model PrancaBeauty.WebApp.Pages.Auth.Login.Components.PhoneNumberLogin.CompoPhoneNumberModel
 @{ }
 
@@ -13,7 +13,7 @@
         </p>
         <div class="login_submit">
             <a onclick="LoginByUserNamePassword()" href="#LoginPhoneNumber">@Localizer["LoginByUserNamePassword"]</a>
-            <button onclick="SendForm('/Auth/Login/Components/LoginByPhoneNumber','compo_Login')" type="button">@Localizer["SendAuthCode"]</button>
+            <button onclick="SendForm('/@ViewData["Culture"]/Auth/Login/Components/LoginByPhoneNumber','compo_Login')" type="button">@Localizer["SendAuthCode"]</button>
         </div>
     </form>
 </div>
@@ -29,13 +29,13 @@
         location.href = '@(System.Net.WebUtility.UrlDecode(ViewData["ReturnUrl"].ToString()))';
     }
     function LoginByUserNamePassword() {
-        LoadComponenet('/Auth/Login/Components/LoginByUsernamePassword', { ReturnUrl: null }, function (data) {
+        LoadComponenet('/@ViewData["Culture"]/Auth/Login/Components/LoginByUsernamePassword', { ReturnUrl: null }, function (data) {
             $('#CompoLogin').html(data);
         });
     }
 
     function GotoOtpPage() {
-        LoadComponenet('/Auth/Login/Components/LoginByPhoneNumber/OTP',
+        LoadComponenet('/@ViewData["Culture"]/Auth/Login/Components/LoginByPhoneNumber/OTP',
             { ReturnUrl: null, PhoneNumber: $('#Input_PhoneNumber').val() }, function (data) {
             $('#CompoLogin').html(data);
         });

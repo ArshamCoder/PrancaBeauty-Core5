@@ -67,6 +67,7 @@ namespace PrancaBeauty.WebApp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.RedirectStatusCode();
             app.UseRouting();
             app.UseStaticFiles();
             app.UseLocalization(new List<CultureInfo>() { new CultureInfo("en-US"), new CultureInfo("fa-IR") }, "fa-IR");

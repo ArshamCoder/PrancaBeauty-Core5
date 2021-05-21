@@ -113,5 +113,45 @@ namespace PrancaBeauty.WebApp.Config
             return app.UseMiddleware<RedirectWhenNotRobotsMiddleware>();
         }
 
+
+        public static IApplicationBuilder RedirectStatusCode(this IApplicationBuilder app)
+        {
+            return app.Use(async (context, next) =>
+            {
+                await next.Invoke();
+
+                if (context.Response.StatusCode == 401)
+                {
+                    var rqf = context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                    string culture = rqf.RequestCulture.Culture.Parent.Name;
+
+                    context.Response.Redirect($"/{culture}/Auth/Login");
+                }
+
+                //if (context.Response.StatusCode == 429)
+                //{
+                //    var rqf = context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                //    string culture = rqf.RequestCulture.Culture.Parent.Name;
+
+                //    context.Response.Redirect($"/{culture}/Error/429");
+                //}
+
+                if (context.Response.StatusCode == 404)
+                {
+                    var rqf = context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                    string culture = rqf.RequestCulture.Culture.Parent.Name;
+
+                    context.Response.Redirect($"/{culture}/Error/404");
+                }
+
+                if (context.Response.StatusCode == 400)
+                {
+                    var rqf = context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                    string culture = rqf.RequestCulture.Culture.Parent.Name;
+
+                    context.Response.Redirect($"/{culture}/Error/400");
+                }
+            });
+        }
     }
 }
