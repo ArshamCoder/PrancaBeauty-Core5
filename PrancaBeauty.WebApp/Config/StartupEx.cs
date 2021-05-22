@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.WebEncoders;
 using PrancaBeauty.WebApp.Authentication.Jwt;
@@ -152,6 +155,26 @@ namespace PrancaBeauty.WebApp.Config
                     context.Response.Redirect($"/{culture}/Error/400");
                 }
             });
+        }
+
+
+        public static IServiceCollection RateLimitConfig(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+
+            services.AddMemoryCache();
+
+            services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
+
+            services.Configure<IpRateLimitPolicies>(configuration.GetSection("IpRateLimitPolicies"));
+
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
+            return services;
         }
     }
 }

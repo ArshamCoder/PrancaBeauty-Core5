@@ -20,35 +20,38 @@ namespace PrancaBeauty.WebApp.Middlewares
             // GET فقط برای حالت 
             if (context.Request.Method.ToLower() == "get")
             {
-                string[] Paths = context.Request.Path.HasValue ?
+                string[] paths = context.Request.Path.HasValue ?
                     context.Request.Path.Value.Trim(new char[] { '/' }).Split("/")
                     : new string[] { };
 
-                var _SettingApplication = (ISettingApplication)context.RequestServices.GetService(typeof(ISettingApplication));
-                var _LanguageApplication = (ILanguageApplication)context.RequestServices.GetService(typeof(ILanguageApplication));
+                var settingApplication = (ISettingApplication)context.RequestServices.GetService(typeof(ISettingApplication));
+                var languageApplication = (ILanguageApplication)context.RequestServices.GetService(typeof(ILanguageApplication));
 
-                if (Paths.Any())
+                if (paths.Any())
                 {
                     // زبان انتخاب شده
-                    string langAbbr = Paths.First();
+                    string langAbbr = paths.First();
 
-                    var isValid = await _LanguageApplication.IsValidAbbrForSiteLangAsync(langAbbr);
+                    var isValid = await languageApplication.IsValidAbbrForSiteLangAsync(langAbbr);
                     if (!isValid)
                     {
-                        string SiteUrl = (await _SettingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
+                        string siteUrl = (await settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
 
                         // replace
                         // کردن بخش اول آدرس مرورگر که کاربر فرستاده اینجا
-                        Paths[0] = "fa";
+                        paths[0] = "fa";
 
                         context.Response.StatusCode = 301;
-                        context.Response.Redirect(SiteUrl + "/" + string.Join("/", Paths));
+                        context.Response.Redirect(siteUrl + "/" + string.Join("/", paths));
                     }
                 }
                 else
                 {
-                    string siteUrl = (await _SettingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
-                    context.Response.Redirect(siteUrl + "/fa");
+                    if (settingApplication != null)
+                    {
+                        string siteUrl = (await settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
+                        context.Response.Redirect(siteUrl + "/fa");
+                    }
                 }
             }
 

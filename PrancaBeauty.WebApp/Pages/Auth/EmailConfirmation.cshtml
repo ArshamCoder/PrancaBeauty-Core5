@@ -1,9 +1,7 @@
-﻿@page
+﻿@page "/{culture}/Auth/EmailConfirmation"
 @model PrancaBeauty.WebApp.Pages.Auth.EmailConfirmationModel
-@{
-    ViewData["Tilte"] = Localizer["EmailConfirmation"];
-    Layout = "Shared/_MainLayout";
-}
+@{ ViewData["Tilte"] = Localizer["EmailConfirmation"];
+    Layout = "Shared/_MainLayout"; }
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
     <div class="container">
