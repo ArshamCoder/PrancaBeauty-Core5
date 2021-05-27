@@ -34,6 +34,11 @@ function SendData(_url, _data, _Funcs_Success = function (res) { }) {
         },
         complete: function (data) {
             $('.loading').hide(100);
+        },
+        error: function (data) {
+            if (data.status == 429) {
+                Alert429();
+            }
         }
     });
 }
@@ -62,6 +67,11 @@ function SendForm(_url, _FormId, _Funcs_Success = function (res) { }) {
         },
         complete: function (data) {
             $('.loading').hide(100);
+        },
+        error: function (data) {
+            if (data.status == 429) {
+                Alert429();
+            }
         }
     });
 }
@@ -76,6 +86,11 @@ function LoadComponenet(_Url, _Data, _CallbackFuncs = function (data) { }) {
         },
         complete: function (data) {
             $('.loading').hide(100);
+        },
+        error: function (data) {
+            if (data.status == 429) {
+                Alert429();
+            }
         }
     }).done(function (data) {
         _CallbackFuncs(data);
@@ -97,4 +112,19 @@ function RefreshGrid(_GridId) {
 
 function ChangeUrl(_NewUrl) {
     history.pushState({}, null, _NewUrl);
+}
+
+
+function Alert429() {
+    return swal.fire({
+        title: '429',
+        html: $.parseHTML(Err429Msg)[0].data,//تگ های اچ تی ام ال حذف میکنه و متن رو به کاربر نشان میدهد
+        icon: 'warning',
+        confirmButtonText: OkText
+    });
+}
+
+function Logout(_ReturnUrl) {
+    document.cookie = 'PrancaBeautyAuth=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/;';
+    location.href = _ReturnUrl;
 }

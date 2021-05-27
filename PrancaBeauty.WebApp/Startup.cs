@@ -13,6 +13,7 @@ using PrancaBeauty.WebApp.Localization.Resource;
 using PrancaBeauty.WebApp.Middlewares;
 using System.Collections.Generic;
 using System.Globalization;
+using WebMarkupMin.AspNetCore5;
 
 namespace PrancaBeauty.WebApp
 {
@@ -58,6 +59,11 @@ namespace PrancaBeauty.WebApp
                 .AddCustomDataAnnotationLocalization(services, typeof(SharedResource))
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
+            //کم کردن حجم 
+            //html
+            //صفحات
+            services.AddCustomWebMarkupMin();
+
             services.Config();
 
             services.AddInject();
@@ -81,6 +87,7 @@ namespace PrancaBeauty.WebApp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseWebMarkupMin();
             app.RedirectStatusCode();
             app.UseRouting();
             app.UseStaticFiles();

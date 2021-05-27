@@ -12,6 +12,7 @@
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2020.3.1021" />
     <PackageReference Include="UAParser" Version="3.1.46" />
+    <PackageReference Include="WebMarkupMin.AspNetCore5" Version="2.10.0" />
   </ItemGroup>
 
   <ItemGroup>

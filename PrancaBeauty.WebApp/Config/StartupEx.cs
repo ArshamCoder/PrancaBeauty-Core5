@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using WebMarkupMin.AspNetCore5;
+using WebMarkupMin.Core;
 
 namespace PrancaBeauty.WebApp.Config
 {
@@ -175,6 +177,17 @@ namespace PrancaBeauty.WebApp.Config
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
             return services;
+        }
+        public static void AddCustomWebMarkupMin(this IServiceCollection services)
+        {
+            services.AddWebMarkupMin(opt =>
+            {
+                opt.AllowMinificationInDevelopmentEnvironment = true;
+                opt.AllowCompressionInDevelopmentEnvironment = true;
+            }).AddHtmlMinification(opt =>
+            {
+                opt.MinificationSettings.WhitespaceMinificationMode = WhitespaceMinificationMode.None;
+            });
         }
     }
 }
