@@ -37,6 +37,9 @@ namespace PrancaBeauty.WebApp
 
             #endregion
 
+            //بخش فشرده سازی
+            services.GZipConfig();
+
             #region درست کردن متن فارسی
             // view source
             // در مرورگر بزنیم متن فارسی از حالت کد خارج می کند
@@ -87,8 +90,10 @@ namespace PrancaBeauty.WebApp
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseWebMarkupMin();
+            app.UseCustomCaching();
             app.RedirectStatusCode();
+            app.UseResponseCompression(); //برای بخش فشرده سازی جی زیپ
+            app.UseWebMarkupMin();
             app.UseRouting();
             app.UseStaticFiles();
             app.UseLocalization(new List<CultureInfo>() { new CultureInfo("en-US"), new CultureInfo("fa-IR") }, "fa-IR");
