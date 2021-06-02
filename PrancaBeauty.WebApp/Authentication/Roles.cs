@@ -2,6 +2,8 @@
 {
     public static class Roles
     {
+        public const string AdminPage = "AdminPage";
+
         #region AccessLevels
         public const string CanManageAccessLevel = "CanManageAccessLevel";
         public const string CanViewListAccessLevel = "CanViewListAccessLevel";

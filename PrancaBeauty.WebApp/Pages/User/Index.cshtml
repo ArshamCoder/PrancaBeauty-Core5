@@ -1,5 +1,5 @@
 ﻿@page "/{culture}/User/Index"
-@model BeautyShop.Pages.User.IndexModel
+@model PrancaBeauty.WebApp.Pages.User.IndexModel
 @{ Layout = "Shared/_UserLayout"; }
 
 
@@ -10,8 +10,8 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="/">@Localizer["Home"]</a></li>
-                            <li>@ViewData["Title"]</li>
+                            <li><a href="/@ViewData["Culture"]">@Localizer["Home"]</a></li>
+                            <li>@Localizer["Dashboard"]</li>
                         </ul>
                     </div>
                 </div>

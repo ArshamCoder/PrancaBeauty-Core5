@@ -9,7 +9,7 @@ namespace PrancaBeauty.WebApp.Models.ViewInput
         public string Email { get; set; }
         public string MobileNumber { get; set; }
         public string GivenName { get; set; }
-        public string Surname { get; set; }
+        public string SurName { get; set; }
         public string AccessLevel { get; set; }
         public DateTime Date { get; set; }
     }

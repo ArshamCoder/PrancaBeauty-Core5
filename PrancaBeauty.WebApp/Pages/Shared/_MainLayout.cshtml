@@ -238,7 +238,7 @@
                     <div class="col-lg-8 col-md-8">
                         <div class="setting_compare">
                             <ul>
-                                <li><span>دوشنبه - جمعه: 8:00 - 18:00</span></li>
+
                                 <li class="account">
                                     <a href="#"> Setting <i class="icon-right ion-ios-arrow-down"></i></a>
                                     <ul class="dropdown_currency">
@@ -249,6 +249,32 @@
                                 </li>
                                 <li><a href="#"><i class="icon-equalizer icons"></i> مقایسه (3)</a></li>
                                 <li><a href="#"><i class="icon-heart"></i> علاقه مندی  (3)</a></li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li>
+                                        <a href="#"><img class="lang-flag" src="/Main/img/user.png" /> @User.GetUserDetails().GivenName @User.GetUserDetails().SurName <i class="icon-right ion-ios-arrow-down"></i></a>
+                                        <ul class="dropdown_language">
+                                            <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["UserPanel"]</a></li>
+                                            @if (User.IsInRole(Roles.AdminPage))
+                                            {
+                                                <li><a href="/@ViewData["Culture"]/Admin/Index">@Localizer["AdminPanel"]</a></li>
+                                            }
+                                            <li class="dropdown-divider"></li>
+                                            <li><a href="/@ViewData["Culture"]/User/EditProfile">@Localizer["EditProfile"]</a></li>
+                                            <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["EditPassword"]</a></li>
+                                            <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["Orders"]</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li><a onclick="Logout('@Context.Request.GetCurrentUrl()')" href="#Logout">@Localizer["Logout"]</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <div class="d-inline m-2"><a title="@Localizer["Login"]" href="/@ViewData["Culture"]/Auth/Login?ReturnUrl=@Context.Request.GetCurrentUrlEncoded()"><i class="icon-login"></i></a></div>
+                                        <div class="d-inline m-2"><a title="@Localizer["Register"]" href="/@ViewData["Culture"]/Auth/Register"><i class="icon-user"></i></a></div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>

@@ -177,7 +177,7 @@
                             <img src="~/Admin/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block"> @User.GetUserDetails().GivenName @User.GetUserDetails().Surname</a>
+                            <a href="#" class="d-block"> @User.GetUserDetails().GivenName @User.GetUserDetails().SurName</a>
                         </div>
                     </div>
 
@@ -187,13 +187,12 @@
                             <!-- Add icons to the links using the .nav-icon class
                             with font-awesome or any other icon font library -->
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="/@ViewData["Culture"]/Admin/Index" class="nav-link active">
                                     <i class="nav-icon fa fa-dashboard"></i>
                                     <p>
-                                        @Localizer["Dashborad"]
+                                        @Localizer["Dashboard"]
                                     </p>
                                 </a>
-
                             </li>
                             @if (User.IsInRole(Roles.CanManageAccessLevel))
                             {
@@ -213,8 +212,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -222,11 +220,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
 
                             @if (User.IsInRole(Roles.CanManageUsers))
                             {
@@ -246,8 +242,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewUsers"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListUsers))
                         {
         <li class="nav-item">
@@ -255,11 +250,24 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListUsers"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
+
+
+
+                            <li class="nav-item">
+                                <a onclick="Logout('@Context.Request.GetCurrentUrl()')" href="#Logout" class="nav-link">
+                                    <i class="nav-icon fa fa-sign-out"></i>
+                                    <p>
+                                        @Localizer["Logout"]
+                                    </p>
+                                </a>
+                            </li>
+
+
+
+
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->

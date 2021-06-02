@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace PrancaBeauty.WebApp.Common.ExMethod
 {
@@ -11,6 +12,15 @@ namespace PrancaBeauty.WebApp.Common.ExMethod
                 url += request.QueryString.Value;
 
             return url;
+        }
+
+        public static string GetCurrentUrlEncoded(this HttpRequest request)
+        {
+            string Url = request.Scheme + "://" + request.Host + request.Path;
+            if (request.QueryString.HasValue)
+                Url += request.QueryString.Value;
+
+            return WebUtility.UrlEncode(Url);
         }
     }
 }
