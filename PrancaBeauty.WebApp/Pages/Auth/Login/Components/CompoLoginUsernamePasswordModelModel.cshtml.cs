@@ -28,9 +28,9 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
         [BindProperty]
         public ViCompoLoginUsernamePasswordModel Input { get; set; }
 
-        public IActionResult OnGet(string returnUrl)
+        public IActionResult OnGet()
         {
-            ViewData["returnUrl"] = returnUrl ?? "/Auth/User/Index";
+
             return Page();
         }
 

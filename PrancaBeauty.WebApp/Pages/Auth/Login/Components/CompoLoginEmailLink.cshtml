@@ -27,9 +27,7 @@
             placeholder: ''
         });
     });
-    function GotoReturnUrl() {
-        location.href = '@(System.Net.WebUtility.UrlDecode(ViewData["ReturnUrl"].ToString()))';
-    }
+
 
     function LoginByPhoneNumber() {
         LoadComponenet('/@ViewData["Culture"]/Auth/Login/Components/LoginByPhoneNumber', { ReturnUrl: null }, function (data) {

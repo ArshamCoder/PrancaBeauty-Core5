@@ -35,9 +35,9 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components.PhoneNumberLogin
         [BindProperty(SupportsGet = true)]
         public ViCompoLoginPhoneNumberOtpModel Input { get; set; }
 
-        public IActionResult OnGet(string returnUrl)
+        public IActionResult OnGet()
         {
-            ViewData["ReturnUrl"] = returnUrl ?? "/Auth/User/Index";
+
             return Page();
         }
 

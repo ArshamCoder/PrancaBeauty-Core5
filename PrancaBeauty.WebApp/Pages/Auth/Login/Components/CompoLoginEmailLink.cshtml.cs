@@ -40,9 +40,9 @@ namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
         public ViCompoLoginEmailLinkModel Input { get; set; }
 
 
-        public IActionResult OnGet(string returnUrl)
+        public IActionResult OnGet()
         {
-            ViewData["ReturnUrl"] = returnUrl ?? "/Auth/User/Index";
+
             return Page();
         }
 

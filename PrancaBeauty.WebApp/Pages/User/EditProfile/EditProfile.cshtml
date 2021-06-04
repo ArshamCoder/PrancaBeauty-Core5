@@ -1,9 +1,7 @@
-﻿@page "/{culture}/User/Index"
-@model PrancaBeauty.WebApp.Pages.User.IndexModel
-@{ ViewData["Title"] = Localizer["Home"];
+﻿@page "/{Culture}/User/EditProfile"
+@model PrancaBeauty.WebApp.Pages.User.EditProfile.EditProfileModel
+@{ ViewData["Title"] = Localizer["EditProfile"];
                 Layout = "Shared/_UserLayout"; }
-
-
 @section breadcrumbs{
     <div class="breadcrumbs_area">
         <div class="container">
@@ -12,7 +10,8 @@
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="/@ViewData["Culture"]">@Localizer["Home"]</a></li>
-                            <li>@Localizer["Dashboard"]</li>
+                            <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["Dashboard"]</a></li>
+                            <li>@Localizer["EditProfile"]</li>
                         </ul>
                     </div>
                 </div>
@@ -20,6 +19,3 @@
         </div>
     </div>
 }
-
-
-Index Page
