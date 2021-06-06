@@ -138,6 +138,9 @@
   <data name="AccountCreateMsg" xml:space="preserve">
     <value>حساب کاربر با موفیت ایجاد شد. لطفا ایمیل خود را برسی کنید و &lt;b&gt;روی لینک فعالسازی کلیک نمایید&lt;/b&gt;.</value>
   </data>
+  <data name="AccountSetting" xml:space="preserve">
+    <value>تنظیمات حساب</value>
+  </data>
   <data name="AddAccessLevel" xml:space="preserve">
     <value>افزودن سطح دسترسی جدید</value>
   </data>
@@ -159,6 +162,12 @@
   <data name="ChangeAccessLevel" xml:space="preserve">
     <value>تغییر سطح دسترسی</value>
   </data>
+  <data name="ChangeEmail" xml:space="preserve">
+    <value>تغییر ایمیل</value>
+  </data>
+  <data name="ChangeEmailSubject" xml:space="preserve">
+    <value>تغییر ایمیل حساب</value>
+  </data>
   <data name="ChangeStatusDisable" xml:space="preserve">
     <value>غیر فعال کردن</value>
   </data>
@@ -178,7 +187,7 @@
     <value>کد وارد شده استباه است</value>
   </data>
   <data name="CodeMelli" xml:space="preserve">
-    <value />
+    <value>کد ملی</value>
   </data>
   <data name="ConcurrencyFailure" xml:space="preserve">
     <value>رکورد جاری پیشتر ویرایش شده‌است و تغییرات شما آن‌را بازنویسی خواهد کرد</value>
@@ -191,6 +200,9 @@
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>تایید کلمه عبور</value>
+  </data>
+  <data name="ConfirmPhoneNumber" xml:space="preserve">
+    <value>تایید شماره موبایل</value>
   </data>
   <data name="ConfirmPhoneNumberAes" xml:space="preserve">
     <value>وضعیت موبایل (صعودی)</value>
@@ -210,8 +222,17 @@
   <data name="DateDes" xml:space="preserve">
     <value>تاریخ (نزولی)</value>
   </data>
+  <data name="DateMsg" xml:space="preserve">
+    <value>قالب {0} اشتباه است</value>
+  </data>
+  <data name="DatePattern" xml:space="preserve">
+    <value>[1][3-4][0-9][0-9][\/\-]([0][1-9])|([1][0-2])[\/\-]([0][1-9])|([1-2][0-9])|([3][0-1])</value>
+  </data>
   <data name="DefaultError" xml:space="preserve">
     <value>خطایی ناشناخته رخ داد. لطفا بعدا مجدد امتحان کنید</value>
+  </data>
+  <data name="DefaultLangId" xml:space="preserve">
+    <value>زبان پیشفرض</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>توضیحات</value>
@@ -227,6 +248,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>ویرایش</value>
+  </data>
+  <data name="EditAddress" xml:space="preserve">
+    <value>ویرایش آدرس ها</value>
   </data>
   <data name="EditPassword" xml:space="preserve">
     <value>ویرایش کلمه عبور</value>
@@ -411,6 +435,15 @@
   <data name="Operation was successded" xml:space="preserve">
     <value>عملیات با موفقیت انجام شد.</value>
   </data>
+  <data name="Operation was successded,ChangeEmail" xml:space="preserve">
+    <value>عملیات با موفقیت انجام شد&lt;br/&gt; تغییر ایمیل با موفقیت انجام شد لطفا بر روی لینک ارسال شده به ایمیل جدید کلیک نمایید</value>
+  </data>
+  <data name="Operation was successded,ChangeEmail,ChangePhoneNumber" xml:space="preserve">
+    <value>عملیات با موفقیت انجام شد&lt;br/&gt; تغییر ایمیل با موفقیت انجام شد لطفا بر روی لینک ارسال شده به ایمیل جدید کلیک نمایید&lt;br/&gt; تغییر شماره موبایل با موفقیت انجام شد. لطفا مجددا اقدام به تایید نمایید.</value>
+  </data>
+  <data name="Operation was successded,ChangePhoneNumber" xml:space="preserve">
+    <value>عملیات با موفقیت انجام شد&lt;br/&gt; تغییر شماره موبایل با موفقیت انجام شد. لطفا مجددا اقدام به تایید نمایید.</value>
+  </data>
   <data name="Orders" xml:space="preserve">
     <value>سفارشات</value>
   </data>
@@ -456,17 +489,26 @@
   <data name="PhoneNumberCantBeNull" xml:space="preserve">
     <value>شماره موبایل الزامی میباشد</value>
   </data>
+  <data name="PhoneNumberConfirmation" xml:space="preserve">
+    <value>تایید شماره موبایل</value>
+  </data>
   <data name="PhoneNumberIsInvalid" xml:space="preserve">
     <value>شماره موبایل وارد شده اشتباه است</value>
   </data>
+  <data name="PhoneNumberMsg" xml:space="preserve">
+    <value>قالب {0} اشتباه است.</value>
+  </data>
   <data name="PhoneNumberNotFound" xml:space="preserve">
     <value>شماره موبایل یافت نشد</value>
+  </data>
+  <data name="PleaseClickToConfirmPhoneNumber" xml:space="preserve">
+    <value>لطفا برای تایید شماره موبایل، کلیک نمایید.</value>
   </data>
   <data name="PleaseConfirmYourEmail" xml:space="preserve">
     <value>لطفا بر روی لینک ارسال شده کلیک نمایید. درصورتی که ایمیلی را دریافت نکرده اید لطفا با همان مشخصات، یکبار دیگر اقدام به ثبت نام کنید</value>
   </data>
   <data name="PleaseConfirmYourPhoneNumber" xml:space="preserve">
-    <value>شماره موبایل شمت تایید نشده است لطفا ابتدا آن را تایید نمایید</value>
+    <value>شماره موبایل شما تایید نشده است لطفا ابتدا آن را تایید نمایید</value>
   </data>
   <data name="PleseSelect" xml:space="preserve">
     <value>لطفا انتخاب کنید</value>
@@ -515,6 +557,12 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>ذخیره</value>
+  </data>
+  <data name="SaveAccountSettings" xml:space="preserve">
+    <value>ذخیره تنظیمات حساب</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>امنیت</value>
   </data>
   <data name="SendAuthCode" xml:space="preserve">
     <value>ارسال کد احراز هویت</value>

@@ -1,7 +1,11 @@
 ﻿using Framework.Domain;
 using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
+using PrancaBeauty.Domain.Region.CityAgg.Entities;
+using PrancaBeauty.Domain.Region.CountryAgg.Entities;
+using PrancaBeauty.Domain.Region.ProvinceAgg.Entities;
 using PrancaBeauty.Domain.SettingAgg.Entities;
 using PrancaBeauty.Domain.TemplateAgg.Entities;
+using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -34,6 +38,11 @@ namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
 
         public virtual ICollection<TblTemplate> TblTemplates { get; set; }
         public virtual ICollection<TblSetting> TblSettings { get; set; }
+
+        public virtual ICollection<TblCountries_Translates> tblCountries_Translates { get; set; }
+        public virtual ICollection<TblProvinces_Translate> tblProvinces_Translate { get; set; }
+        public virtual ICollection<TblCities_Translates> tblCities_Translates { get; set; }
+        public virtual ICollection<TblUser> tblUsers { get; set; }
         public virtual TblFile TblFile { get; set; }
     }
 }
