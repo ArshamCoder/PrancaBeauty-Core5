@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrancaBeauty.Infrastructure.EFCore.Data;
+using System;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Data
 {
@@ -15,6 +16,9 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                 new AddDataLanguage().Run();
                 new AddDataSetting().Run();
                 new AddDataTemplate().Run();
+                new AddData_Countris().Run();
+                new AddData_Province().Run();
+                new AddData_Cities().Run();
             }
             catch (Exception e)
             {
