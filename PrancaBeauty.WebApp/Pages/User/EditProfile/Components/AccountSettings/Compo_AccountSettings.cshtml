@@ -1,0 +1,102 @@
+﻿@page "/{Culture}/User/EditProfile/Compo/AccountSettings"
+@model PrancaBeauty.WebApp.Pages.User.EditProfile.Components.AccountSettings.Compo_AccountSettingsModel
+
+<form id="frmAccountSettings">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Input.LangId"></label>
+                <LoadComponent id="CompoLanguage"
+                               url="/@ViewData["culture"]/Admin/Shared/Compo/ComboLanguage"
+                               context="HttpContext"
+                               data="new viCompo_Combo_Language() { LangId=Model.Input.LangId }"></LoadComponent>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control text-left" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                @if (Model.Input.PhoneNumberConfirmed)
+                {
+                    <div class="input-group dir-ltr">
+                        <input asp-for="Input.PhoneNumber" class="form-control text-left" />
+                        <div class="input-group-append">
+                            <div style="padding:7px 15px;" class="bg-success"><i class="fa fa-check text-white"></i></div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group dir-ltr">
+                        <input asp-for="Input.PhoneNumber" class="form-control text-left" />
+                        <div class="input-group-append">
+                            <button type="button" onclick="ConfirmPhoneNumber()" title="@Localizer["PleaseClickToConfirmPhoneNumber"]" class="btn btn-danger"><i class="fa fa-check"></i></button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Input.BirthDate"></label>
+                <input asp-for="Input.BirthDate" placeholder="____/__/__" class="form-control text-left" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group text-left mt-4">
+                <button onclick="SendForm('/@ViewData["Culture"]/User/EditProfile/Compo/AccountSettings', 'frmAccountSettings')" type="button" class="btn btn-primary">@Localizer["SaveAccountSettings"]</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#Input_BirthDate').inputmask({
+            regex: '@Localizer["DatePattern"]',
+            placeholder: ''
+        });
+    });
+</script>
+
+@if (!Model.Input.PhoneNumberConfirmed)
+{
+    <script>
+    function ConfirmPhoneNumber() {
+        LoadComponenet('/@ViewData["culture"]/User/EditProfile/Compo/PhoneNumberConfirmation', { PhoneNumber: '@Model.Input.PhoneNumber' }, function (res) {
+                $('body').append(res);
+                $('#PhoneNumberConfirmation').modal({ backdrop: 'static', keyboard: false });
+            });
+        }
+    </script>
+}

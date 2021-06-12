@@ -11,7 +11,9 @@ using PrancaBeauty.Domain.User.UserAgg.Contracts;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using OutGetListForAdminPage = PrancaBeauty.Application.Contracts.Users.OutGetListForAdminPage;
 
@@ -880,19 +882,123 @@ namespace PrancaBeauty.Application.Apps.Users
                 return new OperationResult().Failed("Error500");
             }
         }
+
+        public async Task<OutGetUserDetailsForAccountSettings> GetUserDetailsForAccountSettingsAsync(string userId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                    throw new ArgumentInvalidException($"UserId cannot be null or whitespace.");
+
+                var qData = await _userRepository.Get
+                    .Where(a => a.Id == Guid.Parse(userId))
+                    .Select(a => new OutGetUserDetailsForAccountSettings
+                    {
+                        LangId = a.LangId.ToString(),
+                        Email = a.Email,
+                        PhoneNumber = a.PhoneNumber,
+                        FirstName = a.FirstName,
+                        LastName = a.LastName,
+                        BirthDate = a.BirthDate,
+                        PhoneNumberConfirmed = a.PhoneNumberConfirmed
+                    }).SingleOrDefaultAsync();
+
+                //if (qData == null)
+                //    return null;
+
+                return qData;
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return null;
+            }
+        }
+
+
+
+        public async Task<OperationResult> SaveAccountSettingUserDetailsAsync(string UserId, InpSaveAccountSettingUserDetails Input, string UrlToChangeEmail)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(UserId))
+                    throw new ArgumentInvalidException($"UserId cannot be null or whitespace.");
+
+                if (Input is null)
+                    throw new ArgumentInvalidException($"Input cannot be null.");
+
+                var qUser = await _userRepository.FindByIdAsync(UserId);
+
+                if (qUser == null)
+                    return new OperationResult().Failed("User Not Found.");
+
+                bool FlgChangeEmail = false;
+                bool FlgChangePhoneNumber = false;
+
+                qUser.LangId = Guid.Parse(Input.LangId);
+                qUser.FirstName = Input.FirstName;
+                qUser.LastName = Input.LastName;
+                qUser.BirthDate = Input.BirthDate;
+
+                #region تغییر شماره موبایل
+                if (qUser.PhoneNumber != Input.PhoneNumber)
+                {
+                    qUser.PhoneNumber = Input.PhoneNumber;
+                    qUser.PhoneNumberConfirmed = false;
+
+                    FlgChangePhoneNumber = true;
+                }
+                #endregion
+
+                await _userRepository.UpdateAsync(qUser, default, true);
+
+                #region تغییر ایمیل
+                if (qUser.Email != Input.Email)
+                {
+                    string NewEmail = Input.Email;
+                    string Token = await _userRepository.GenerateChangeEmailTokenAsync(qUser, NewEmail);
+
+                    string EncryptedData = $"{UserId}, {NewEmail}, {Token}".AesEncrypt(AuthConst.SecretKey);
+
+                    string _Url = UrlToChangeEmail.Replace("[Token]", WebUtility.UrlEncode(EncryptedData));
+
+                    await _EmailSender.SendAsync(NewEmail, _Localizer["ChangeEmailSubject"], await _TemplateApplication.GetEmailChangeTemplateAsync(CultureInfo.CurrentCulture.Name, _Url));
+
+                    FlgChangeEmail = true;
+                }
+                #endregion
+
+                // نمایش پیغام ها
+                if (FlgChangeEmail && FlgChangePhoneNumber)
+                    return new OperationResult().Succeed("Operation was successded,ChangeEmail,ChangePhoneNumber");
+                else if (FlgChangeEmail && !FlgChangePhoneNumber)
+                    return new OperationResult().Succeed("Operation was successded,ChangeEmail");
+                else if (!FlgChangeEmail && FlgChangePhoneNumber)
+                    return new OperationResult().Succeed("Operation was successded,ChangePhoneNumber");
+                else
+                    return new OperationResult().Succeed();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

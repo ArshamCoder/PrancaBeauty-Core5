@@ -21,9 +21,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
                 .IsRequired(false)
                 .HasMaxLength(5000);
 
-            builder.Property(a => a.CodeMeli)
-                .IsRequired(false)
-                .HasMaxLength(100);
+
 
 
             //fluent api join

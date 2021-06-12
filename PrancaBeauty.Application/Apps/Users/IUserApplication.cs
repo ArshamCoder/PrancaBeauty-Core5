@@ -38,5 +38,6 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<OperationResult> RemoveUserAsync(string userId);
         Task<OperationResult> ChangeUserStatusAsync(string userId, string selfUserId);
         Task<OperationResult> ChanageUserAccessLevelAsync(string userId, string selfUserId, string accessLevelId);
+        Task<OutGetUserDetailsForAccountSettings> GetUserDetailsForAccountSettingsAsync(string userId);
     }
 }
