@@ -1,4 +1,5 @@
 ﻿@page "/{Culture}/User/EditProfile/Compo/AccountSettings"
+@using PrancaBeauty.WebApp.Models.ViewInput
 @model PrancaBeauty.WebApp.Pages.User.EditProfile.Components.AccountSettings.Compo_AccountSettingsModel
 
 <form id="frmAccountSettings">
@@ -9,7 +10,7 @@
                 <LoadComponent id="CompoLanguage"
                                url="/@ViewData["culture"]/Admin/Shared/Compo/ComboLanguage"
                                context="HttpContext"
-                               data="new viCompo_Combo_Language() { LangId=Model.Input.LangId }"></LoadComponent>
+                               data="new ViCompo_Combo_Language() { LangId=Model.Input.LangId }"></LoadComponent>
             </div>
         </div>
     </div>
@@ -28,22 +29,20 @@
                 <label asp-for="Input.PhoneNumber"></label>
                 @if (Model.Input.PhoneNumberConfirmed)
                 {
-                    <div class="input-group dir-ltr">
-                        <input asp-for="Input.PhoneNumber" class="form-control text-left" />
-                        <div class="input-group-append">
-                            <div style="padding:7px 15px;" class="bg-success"><i class="fa fa-check text-white"></i></div>
-                        </div>
-                    </div>
-                }
+    <div class="input-group dir-ltr">
+        <input asp-for="Input.PhoneNumber" class="form-control text-left" />
+        <div class="input-group-append">
+            <div style="padding:7px 15px;" class="bg-success"><i class="fa fa-check text-white"></i></div>
+        </div>
+    </div> }
                 else
                 {
-                    <div class="input-group dir-ltr">
-                        <input asp-for="Input.PhoneNumber" class="form-control text-left" />
-                        <div class="input-group-append">
-                            <button type="button" onclick="ConfirmPhoneNumber()" title="@Localizer["PleaseClickToConfirmPhoneNumber"]" class="btn btn-danger"><i class="fa fa-check"></i></button>
-                        </div>
-                    </div>
-                }
+    <div class="input-group dir-ltr">
+        <input asp-for="Input.PhoneNumber" class="form-control text-left" />
+        <div class="input-group-append">
+            <button type="button" onclick="ConfirmPhoneNumber()" title="@Localizer["PleaseClickToConfirmPhoneNumber"]" class="btn btn-danger"><i class="fa fa-check"></i></button>
+        </div>
+    </div>}
             </div>
         </div>
     </div>
@@ -91,12 +90,11 @@
 
 @if (!Model.Input.PhoneNumberConfirmed)
 {
-    <script>
+<script>
     function ConfirmPhoneNumber() {
         LoadComponenet('/@ViewData["culture"]/User/EditProfile/Compo/PhoneNumberConfirmation', { PhoneNumber: '@Model.Input.PhoneNumber' }, function (res) {
                 $('body').append(res);
                 $('#PhoneNumberConfirmation').modal({ backdrop: 'static', keyboard: false });
             });
         }
-    </script>
-}
+</script>}

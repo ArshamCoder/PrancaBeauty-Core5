@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PrancaBeauty.WebApp.Common.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace PrancaBeauty.WebApp.Models.ViewInput
 {

@@ -9,6 +9,14 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
     {
         public void Configure(EntityTypeBuilder<TblUser> builder)
         {
+            builder.Property(a => a.AccessLevelId)
+                .IsRequired()
+                .HasMaxLength(150);
+
+            builder.Property(a => a.LangId)
+                .IsRequired(false)
+                .HasMaxLength(150);
+
             builder.Property(a => a.FirstName)
                 .IsRequired()
                 .HasMaxLength(100);
@@ -33,6 +41,12 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
                 .WithMany(x => x.TblUsers)
                 .HasPrincipalKey(x => x.Id) //معرفی کلید خارجی
                 .HasForeignKey(x => x.AccessLevelId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.TblLanguage)
+                .WithMany(x => x.tblUsers)
+                .HasPrincipalKey(x => x.Id) //معرفی کلید خارجی
+                .HasForeignKey(x => x.LangId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
