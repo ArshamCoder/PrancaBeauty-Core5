@@ -58,8 +58,12 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.AccountSettings
             {
                 string SiteUrl = (await _SettingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
 
-                var Result = await _UserApplication.SaveAccountSettingUserDetailsAsync(User.GetUserDetails().UserId, _Mapper.Map<InpSaveAccountSettingUserDetails>(Input), $"{SiteUrl}/{CultureInfo.CurrentCulture.Parent.Name}/Auth/ChangeEmail?Token=[Token]");
-                if (Result.IsSucceeded)
+                var Result = await _UserApplication
+                    .SaveAccountSettingUserDetailsAsync(
+                        User.GetUserDetails().UserId,
+                        _Mapper.Map<InpSaveAccountSettingUserDetails>(Input),
+                        $"{SiteUrl}/{CultureInfo.CurrentCulture.Parent.Name}/Auth/ChangeEmail?Token=[Token]");
+                if (Result.IsSucceed)
                 {
                     return _MsgBox.SuccessMsg(_Localizer[Result.Message]);
                 }

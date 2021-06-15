@@ -141,14 +141,23 @@
   <data name="AccountSetting" xml:space="preserve">
     <value>تنظیمات حساب</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>افزودن</value>
+  </data>
   <data name="AddAccessLevel" xml:space="preserve">
     <value>افزودن سطح دسترسی جدید</value>
+  </data>
+  <data name="AddAddress" xml:space="preserve">
+    <value>افزودن آدرس</value>
   </data>
   <data name="AddNewAccessLevel" xml:space="preserve">
     <value>افزودن</value>
   </data>
   <data name="AddNewUsers" xml:space="preserve">
     <value>افزودن کاربر جدید</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>آدرس</value>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>پنل مدیریت</value>
@@ -168,11 +177,17 @@
   <data name="ChangeEmailSubject" xml:space="preserve">
     <value>تغییر ایمیل حساب</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغییر کلمه عبور</value>
+  </data>
   <data name="ChangeStatusDisable" xml:space="preserve">
     <value>غیر فعال کردن</value>
   </data>
   <data name="ChangeStatusEnable" xml:space="preserve">
     <value>فعال کردن</value>
+  </data>
+  <data name="CityId" xml:space="preserve">
+    <value>شهر</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>خروج</value>
@@ -210,8 +225,17 @@
   <data name="ConfirmPhoneNumberDes" xml:space="preserve">
     <value>وضعیت موبایل (نزولی)</value>
   </data>
+  <data name="CountBills" xml:space="preserve">
+    <value>تعداد صورت حساب</value>
+  </data>
+  <data name="CountryId" xml:space="preserve">
+    <value>کشور</value>
+  </data>
   <data name="CountUser" xml:space="preserve">
     <value>تعداد کاربران</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>کلمه عبور فعلی</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>پیشخوان</value>
@@ -236,6 +260,9 @@
   </data>
   <data name="Description" xml:space="preserve">
     <value>توضیحات</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>محله</value>
   </data>
   <data name="DuplicateEmail" xml:space="preserve">
     <value>ایمیل تکراری میبشاد</value>
@@ -423,6 +450,15 @@
   <data name="Name is duplicate." xml:space="preserve">
     <value>نام تکراری است.</value>
   </data>
+  <data name="NationalCode" xml:space="preserve">
+    <value>کد ملی</value>
+  </data>
+  <data name="NationalCodePattern" xml:space="preserve">
+    <value>[0-9]{10}</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>کلمه عبور جدید</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>بعدی</value>
   </data>
@@ -492,6 +528,9 @@
   <data name="PhoneNumberConfirmation" xml:space="preserve">
     <value>تایید شماره موبایل</value>
   </data>
+  <data name="PhoneNumberConfirmationCodeNotSent" xml:space="preserve">
+    <value>مشکلی در ارسال کد ایجاد شد. لطفا بعدا تلاش نمایید.</value>
+  </data>
   <data name="PhoneNumberIsInvalid" xml:space="preserve">
     <value>شماره موبایل وارد شده اشتباه است</value>
   </data>
@@ -500,6 +539,9 @@
   </data>
   <data name="PhoneNumberNotFound" xml:space="preserve">
     <value>شماره موبایل یافت نشد</value>
+  </data>
+  <data name="Plaque" xml:space="preserve">
+    <value>پلاک</value>
   </data>
   <data name="PleaseClickToConfirmPhoneNumber" xml:space="preserve">
     <value>لطفا برای تایید شماره موبایل، کلیک نمایید.</value>
@@ -513,8 +555,17 @@
   <data name="PleseSelect" xml:space="preserve">
     <value>لطفا انتخاب کنید</value>
   </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>کد پستی</value>
+  </data>
+  <data name="PostalCodePattern" xml:space="preserve">
+    <value>[0-9]{10}</value>
+  </data>
   <data name="Previous" xml:space="preserve">
     <value>قبلی</value>
+  </data>
+  <data name="ProviceId" xml:space="preserve">
+    <value>استان</value>
   </data>
   <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
     <value>بازیابی ناموفق بود</value>
@@ -570,6 +621,9 @@
   <data name="ShopMainPage" xml:space="preserve">
     <value>فروشگاه</value>
   </data>
+  <data name="SmsCodeIsSent" xml:space="preserve">
+    <value>کد پیامک شد.</value>
+  </data>
   <data name="SmsSenderNotRespond" xml:space="preserve">
     <value>سرویس دهنده ی پیامک پاسخ گو نیست</value>
   </data>
@@ -588,11 +642,17 @@
   <data name="Sorting" xml:space="preserve">
     <value>مرتب سازی</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="StringLengthMsg" xml:space="preserve">
     <value>{0} باید بین {2} تا {1} کاراکتر باشد</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>عنوان</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>واحد</value>
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>کاربر از قبل دارای کلمه عبور می باشد</value>
