@@ -8,6 +8,7 @@ using PrancaBeauty.WebApp.Common.Utilities.Types;
 using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using System.Threading.Tasks;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
 {

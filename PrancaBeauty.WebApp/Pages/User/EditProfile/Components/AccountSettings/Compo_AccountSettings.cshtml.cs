@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Framework.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Setting;
@@ -6,7 +7,6 @@ using PrancaBeauty.Application.Apps.Users;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
-using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using System;
 using System.Globalization;

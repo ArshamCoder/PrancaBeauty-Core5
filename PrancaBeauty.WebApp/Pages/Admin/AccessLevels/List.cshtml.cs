@@ -10,6 +10,7 @@ using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Localization;
 using System.Threading.Tasks;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.WebApp.Pages.Admin.AccessLevels
 {

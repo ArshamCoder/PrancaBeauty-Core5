@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Framework.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Common.ExMethod;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
-using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using System.Globalization;
 using System.Threading.Tasks;

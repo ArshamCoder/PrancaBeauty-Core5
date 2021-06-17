@@ -29,5 +29,8 @@ namespace PrancaBeauty.Domain.User.UserAgg.Contracts
         Task<IdentityResult> RemoveAllRolesAsync(TblUser user);
         Task<IdentityResult> AddToRolesAsync(TblUser user, string[] roles);
         Task<IdentityResult> RemoveAsync(TblUser user);
+        Task<string> GenerateChangeEmailTokenAsync(TblUser user, string newEmail);
+        Task<IdentityResult> ChangeEmailAsync(TblUser user, string newEmail, string token);
+        Task<IdentityResult> ChangePasswordAsync(TblUser user, string currentPassword, string newPassword);
     }
 }

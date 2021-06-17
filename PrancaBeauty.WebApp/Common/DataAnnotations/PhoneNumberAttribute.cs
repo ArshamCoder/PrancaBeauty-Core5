@@ -2,6 +2,7 @@
 using PrancaBeauty.WebApp.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.WebApp.Common.DataAnnotations
 {

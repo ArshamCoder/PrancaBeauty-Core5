@@ -75,5 +75,14 @@ namespace PrancaBeauty.Application.Apps.Template
             return (await SetGeneralParameters(template, langCode))
                 .Replace("[Url]", url);
         }
+
+        public async Task<string> GetEmailChangeTemplateAsync(string langCode, string url)
+        {
+            string template = await GetTemplateAsync(langCode, "ChanageEmail");
+
+            return (await SetGeneralParameters(template, langCode))
+                .Replace("[Url]", url);
+        }
+
     }
 }

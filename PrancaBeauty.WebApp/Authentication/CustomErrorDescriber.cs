@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Framework.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using PrancaBeauty.WebApp.Localization;
 
 namespace PrancaBeauty.WebApp.Authentication

@@ -18,6 +18,7 @@ using System.Globalization;
 using System.IO.Compression;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Framework.Infrastructure;
 using WebMarkupMin.AspNetCore5;
 using WebMarkupMin.Core;
 

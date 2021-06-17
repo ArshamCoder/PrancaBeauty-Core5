@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Framework.Infrastructure;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.WebApp.Localization;
 
 namespace PrancaBeauty.WebApp.Pages.Home

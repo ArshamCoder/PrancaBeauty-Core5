@@ -1,4 +1,5 @@
-﻿using Kendo.Mvc.UI.Fluent;
+﻿using Framework.Infrastructure;
+using Kendo.Mvc.UI.Fluent;
 using PrancaBeauty.WebApp.Localization;
 
 namespace PrancaBeauty.WebApp.Common.ExMethod

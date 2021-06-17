@@ -1,4 +1,4 @@
-﻿namespace PrancaBeauty.WebApp.Localization
+﻿namespace Framework.Infrastructure
 {
     public interface ILocalizer
     {

@@ -12,6 +12,7 @@ using PrancaBeauty.WebApp.Models.ViewInput;
 using PrancaBeauty.WebApp.Models.ViewModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.WebApp.Pages.Admin.Users
 {

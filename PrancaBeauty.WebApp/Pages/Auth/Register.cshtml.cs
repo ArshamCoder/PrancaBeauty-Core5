@@ -12,6 +12,7 @@ using PrancaBeauty.WebApp.Models.ViewInput;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.WebApp.Pages.Auth
 {

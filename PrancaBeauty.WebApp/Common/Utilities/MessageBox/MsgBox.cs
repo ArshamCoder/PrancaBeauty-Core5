@@ -1,4 +1,5 @@
-﻿using PrancaBeauty.WebApp.Common.Utilities.Types;
+﻿using Framework.Infrastructure;
+using PrancaBeauty.WebApp.Common.Utilities.Types;
 using PrancaBeauty.WebApp.Localization;
 
 namespace PrancaBeauty.WebApp.Common.Utilities.MessageBox

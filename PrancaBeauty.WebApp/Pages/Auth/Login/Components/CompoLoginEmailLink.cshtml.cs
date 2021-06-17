@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.WebApp.Pages.Auth.Login.Components
 {

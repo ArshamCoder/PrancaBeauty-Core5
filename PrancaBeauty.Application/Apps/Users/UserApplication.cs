@@ -1,9 +1,12 @@
 ﻿using Framework.Application.Consts;
+using Framework.Application.Services.Email;
+using Framework.Application.Services.Sms;
 using Framework.Common.ExMethod;
 using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.Accesslevel;
+using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.Application.Exceptions;
@@ -32,12 +35,20 @@ namespace PrancaBeauty.Application.Apps.Users
         private readonly IUserRepository _userRepository;
         private readonly IAccesslevelApplication _accesslevelApplication;
         private readonly ILogger _logger;
+        private readonly IEmailSender _emailSender;
+        private readonly ISmsSender _smsSender;
+        private readonly ILocalizer _localizer;
+        private readonly ITemplateApplication _templateApplication;
 
-        public UserApplication(IUserRepository userRepository, ILogger logger, IAccesslevelApplication accesslevelApplication)
+        public UserApplication(IUserRepository userRepository, IAccesslevelApplication accesslevelApplication, ILogger logger, IEmailSender emailSender, ISmsSender smsSender, ITemplateApplication templateApplication, ILocalizer localizer)
         {
             _userRepository = userRepository;
-            _logger = logger;
             _accesslevelApplication = accesslevelApplication;
+            _logger = logger;
+            _emailSender = emailSender;
+            _smsSender = smsSender;
+            _templateApplication = templateApplication;
+            _localizer = localizer;
         }
 
         public async Task<OperationResult> AddUserAsync(InpAddUser input)
@@ -921,7 +932,8 @@ namespace PrancaBeauty.Application.Apps.Users
 
 
 
-        public async Task<OperationResult> SaveAccountSettingUserDetailsAsync(string UserId, InpSaveAccountSettingUserDetails Input, string UrlToChangeEmail)
+        public async Task<OperationResult> SaveAccountSettingUserDetailsAsync(string UserId,
+            InpSaveAccountSettingUserDetails Input, string UrlToChangeEmail)
         {
             try
             {
@@ -962,11 +974,12 @@ namespace PrancaBeauty.Application.Apps.Users
                     string NewEmail = Input.Email;
                     string Token = await _userRepository.GenerateChangeEmailTokenAsync(qUser, NewEmail);
 
+                    //اطلاعات رمزنگاری میکنیم که به صورت ایمیل بفرستیم برای کاربر
                     string EncryptedData = $"{UserId}, {NewEmail}, {Token}".AesEncrypt(AuthConst.SecretKey);
 
                     string _Url = UrlToChangeEmail.Replace("[Token]", WebUtility.UrlEncode(EncryptedData));
 
-                    await _EmailSender.SendAsync(NewEmail, _Localizer["ChangeEmailSubject"], await _TemplateApplication.GetEmailChangeTemplateAsync(CultureInfo.CurrentCulture.Name, _Url));
+                    await _emailSender.SendAsync(NewEmail, _localizer["ChangeEmailSubject"], await _templateApplication.GetEmailChangeTemplateAsync(CultureInfo.CurrentCulture.Name, _Url));
 
                     FlgChangeEmail = true;
                 }
