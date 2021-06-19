@@ -80,6 +80,9 @@ namespace PrancaBeauty.WebApp
 
             services.AddJwtAuthentication(AuthConst.SecretCode, AuthConst.SecretKey, AuthConst.Audience, AuthConst.Issuer);
             services.AddKendo();
+            services.AddAutoMapper(typeof(Startup));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

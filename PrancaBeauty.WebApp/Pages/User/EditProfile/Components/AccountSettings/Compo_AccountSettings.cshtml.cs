@@ -1,4 +1,5 @@
-﻿using Framework.Infrastructure;
+﻿using AutoMapper;
+using Framework.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,23 +18,23 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.AccountSettings
     [Authorize]
     public class Compo_AccountSettingsModel : PageModel
     {
-        private readonly IMsgBox _MsgBox;
-        private readonly ILocalizer _Localizer;
-        private readonly IUserApplication _UserApplication;
-        private readonly ISettingApplication _SettingApplication;
-        private readonly IMapper _Mapper;
+        private readonly IMsgBox _msgBox;
+        private readonly ILocalizer _localizer;
+        private readonly IUserApplication _userApplication;
+        private readonly ISettingApplication _settingApplication;
+        private readonly IMapper _mapper;
         public Compo_AccountSettingsModel(IMsgBox msgBox, IUserApplication userApplication, ILocalizer localizer, ISettingApplication settingApplication, IMapper mapper)
         {
-            _MsgBox = msgBox;
-            _UserApplication = userApplication;
-            _Localizer = localizer;
-            _SettingApplication = settingApplication;
-            _Mapper = mapper;
+            _msgBox = msgBox;
+            _userApplication = userApplication;
+            _localizer = localizer;
+            _settingApplication = settingApplication;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var qData = await _UserApplication.GetUserDetailsForAccountSettingsAsync(User.GetUserDetails().UserId);
+            var qData = await _userApplication.GetUserDetailsForAccountSettingsAsync(User.GetUserDetails().UserId);
 
             if (qData == null)
                 throw new Exception();
@@ -56,20 +57,20 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.AccountSettings
         {
             try
             {
-                string SiteUrl = (await _SettingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
+                string SiteUrl = (await _settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
 
-                var Result = await _UserApplication
+                var Result = await _userApplication
                     .SaveAccountSettingUserDetailsAsync(
                         User.GetUserDetails().UserId,
-                        _Mapper.Map<InpSaveAccountSettingUserDetails>(Input),
+                        _mapper.Map<InpSaveAccountSettingUserDetails>(Input),
                         $"{SiteUrl}/{CultureInfo.CurrentCulture.Parent.Name}/Auth/ChangeEmail?Token=[Token]");
                 if (Result.IsSucceed)
                 {
-                    return _MsgBox.SuccessMsg(_Localizer[Result.Message]);
+                    return _msgBox.SuccessMsg(_localizer[Result.Message]);
                 }
                 else
                 {
-                    return _MsgBox.FaildMsg(_Localizer[Result.Message]);
+                    return _msgBox.FaildMsg(_localizer[Result.Message]);
                 }
             }
             catch (Exception ex)

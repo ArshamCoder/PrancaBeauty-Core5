@@ -14,7 +14,8 @@
                         <ul class="nav flex-column dashboard-list">
                             @if (User.IsInRole(Roles.AdminPage))
                             {
-                <li><a href="/@ViewData["Culture"]/Admin/Index" class="nav-link">@Localizer["AdminPanel"]</a></li>}
+                <li><a href="/@ViewData["Culture"]/Admin/Index" class="nav-link">@Localizer["AdminPanel"]</a></li>
+}
 
                             <li><a href="/@ViewData["Culture"]/User/Index" class="nav-link">@Localizer["Dashboard"]</a></li>
                             <li> <a href="#orders" class="nav-link">Orders</a></li>
@@ -36,6 +37,9 @@
 
 
 @section styles{
+    <!-- sweetalert -->
+    <link href="~/lib/sweetalert/sweetalert.min.css" rel="stylesheet" />
+
     <!-- KendoUI CSS -->
     <link href="~/lib/KendoUI/css/kendo.common-bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/KendoUI/css/kendo.bootstrap.min.css" rel="stylesheet" />
@@ -44,10 +48,16 @@
 }
 
 @section scripts{
+
+    <!--inputmask-->
     <script src="~/lib/input-mask/jquery.inputmask.min.js"></script>
+
+    <!-- sweetalert -->
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
 }
 
 @section KendoScripts{
+
     <!-- KenoUI Js -->
     <script src="~/lib/KendoUI/js/jszip.min.js"></script>
     <script src="~/lib/KendoUI/js/kendo.all.min.js"></script>

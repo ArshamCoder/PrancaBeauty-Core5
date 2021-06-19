@@ -1007,8 +1007,45 @@ namespace PrancaBeauty.Application.Apps.Users
         }
 
 
+        public async Task<OperationResult> ChangeEmailAsync(string Token)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Token))
+                    throw new ArgumentInvalidException("'Token' cannot be null or whitespace.");
 
+                string DecryptedToken = Token.AesDecrypt(AuthConst.SecretKey);
 
+                string _UserId = DecryptedToken.Split(", ")[0];
+                string _NewEmail = DecryptedToken.Split(", ")[1];
+                string _Token = DecryptedToken.Split(", ")[2];
+
+                var qUser = await _userRepository.FindByIdAsync(_UserId);
+
+                var Result = await _userRepository.ChangeEmailAsync(qUser, _NewEmail, _Token);
+                if (Result.Succeeded)
+                {
+                    qUser.UserName = _NewEmail;
+                    qUser.NormalizedUserName = _NewEmail.ToUpper();
+                    await _userRepository.UpdateAsync(qUser, default, true);
+
+                    return new OperationResult().Succeed();
+                }
+                else
+                {
+                    return new OperationResult().Failed(string.Join(", ", Result.Errors.Select(a => a.Description)));
+                }
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
 
 
     }
