@@ -53,6 +53,7 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.AccountSettings
             return Page();
         }
 
+
         public async Task<IActionResult> OnPostAsync()
         {
             try
