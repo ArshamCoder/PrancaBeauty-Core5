@@ -1048,6 +1048,98 @@ namespace PrancaBeauty.Application.Apps.Users
         }
 
 
+        public async Task<OperationResult> ReSendSmsCodeAsync(string phoneNumber)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(phoneNumber))
+                    throw new ArgumentInvalidException($"PhoneNumber cannot be null or whitespace.");
+
+                var qUser = await _userRepository.FindByPhoneNumberAsync(phoneNumber);
+                if (qUser == null)
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+
+                if (qUser.IsActive == false)
+                    return new OperationResult().Failed("YourAccountIsDisabled");
+
+                if (qUser.LastTrySentSms.HasValue)
+                    if (qUser.LastTrySentSms.Value.AddMinutes(AuthConst.LimitToResendSmsInMinute) > DateTime.Now)
+                        return new OperationResult().Failed("LimitToResendSms2Minute");
+
+                var reNewPasswordResult = await ReCreatePasswordAsync(qUser);
+                if (reNewPasswordResult.IsSucceed)
+                {
+                    var isSend = _smsSender.SendLoginCode(phoneNumber, reNewPasswordResult.Message);
+                    if (isSend)
+                        return new OperationResult().Succeed("SmsCodeIsSent");
+                    else
+                        return new OperationResult().Failed("SmsSenderNotRespond");
+                }
+                else
+                {
+                    return new OperationResult().Failed(reNewPasswordResult.Message);
+                }
+
+
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+        public async Task<OperationResult> PhoneConfirmationBySmsCodeAsync(string userId, string phoneNumber, string code)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                    throw new ArgumentInvalidException($"'UserId' cannot be null or whitespace.");
+
+                if (string.IsNullOrWhiteSpace(phoneNumber))
+                    throw new ArgumentInvalidException($"'PhoneNumber' cannot be null or whitespace.");
+
+                if (string.IsNullOrWhiteSpace(code))
+                    throw new ArgumentInvalidException($"'Code' cannot be null or whitespace.");
+
+                var qUser = await _userRepository.FindByIdAsync(userId);
+                if (qUser == null)
+                    return new OperationResult().Failed("UserIdNotFound");
+
+                if (qUser.PhoneNumber != phoneNumber)
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+
+                if (qUser.PhoneNumberConfirmed)
+                    return new OperationResult().Failed("PhoneNumberNotFound");
+
+                if (qUser.PasswordPhoneNumber != code.ToMd5())
+                    return new OperationResult().Failed("CodeIsInvalid");
+
+                qUser.PhoneNumberConfirmed = true;
+
+                await _userRepository.UpdateAsync(qUser, default, true);
+
+                return new OperationResult().Succeed();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+
+
+
+
     }
 
 

@@ -15,6 +15,8 @@
     });
 }
 
+
+
 function SendData(_url, _data, _Funcs_Success = function (res) { }) {
 
     $.ajax({
