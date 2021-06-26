@@ -257,21 +257,24 @@
                             <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["UserPanel"]</a></li>
                             @if (User.IsInRole(Roles.AdminPage))
                             {
-            <li><a href="/@ViewData["Culture"]/Admin/Index">@Localizer["AdminPanel"]</a></li>}
+            <li><a href="/@ViewData["Culture"]/Admin/Index">@Localizer["AdminPanel"]</a></li>
+}
                             <li class="dropdown-divider"></li>
                             <li><a href="/@ViewData["Culture"]/User/EditProfile">@Localizer["EditProfile"]</a></li>
-                            <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["EditPassword"]</a></li>
+                            <li><a href="/@ViewData["Culture"]/User/EditProfile#CompoChangePasswordAnchor">@Localizer["EditPassword"]</a></li>
                             <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["Orders"]</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a onclick="Logout('@Context.Request.GetCurrentUrl()')" href="#Logout">@Localizer["Logout"]</a></li>
                         </ul>
-                    </li> }
-                                else
-                                {
-                    <li>
-                        <div class="d-inline m-2"><a title="@Localizer["Login"]" href="/@ViewData["Culture"]/Auth/Login?ReturnUrl=@Context.Request.GetCurrentUrlEncoded()"><i class="icon-login"></i></a></div>
-                        <div class="d-inline m-2"><a title="@Localizer["Register"]" href="/@ViewData["Culture"]/Auth/Register"><i class="icon-user"></i></a></div>
-                    </li>}
+                    </li>
+ }
+                else
+                {
+    <li>
+        <div class="d-inline m-2"><a title="@Localizer["Login"]" href="/@ViewData["Culture"]/Auth/Login?ReturnUrl=@Context.Request.GetCurrentUrlEncoded()"><i class="icon-login"></i></a></div>
+        <div class="d-inline m-2"><a title="@Localizer["Register"]" href="/@ViewData["Culture"]/Auth/Register"><i class="icon-user"></i></a></div>
+    </li>
+}
                             </ul>
                         </div>
                     </div>

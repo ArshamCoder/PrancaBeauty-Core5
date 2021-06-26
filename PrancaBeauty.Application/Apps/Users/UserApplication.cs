@@ -1136,7 +1136,44 @@ namespace PrancaBeauty.Application.Apps.Users
             }
         }
 
+        public async Task<OperationResult> ChanagePasswordAsync(string userId, string currentPassword, string newPassword)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                    throw new ArgumentInvalidException($"'{nameof(userId)}' cannot be null or whitespace.");
 
+                if (string.IsNullOrWhiteSpace(currentPassword))
+                    throw new ArgumentInvalidException($"'{nameof(currentPassword)}' cannot be null or whitespace.");
+
+                if (string.IsNullOrWhiteSpace(newPassword))
+                    throw new ArgumentInvalidException($"'{nameof(newPassword)}' cannot be null or whitespace.");
+
+                var qUser = await _userRepository.FindByIdAsync(userId);
+                if (qUser == null)
+                    return new OperationResult().Failed("UserNotFound");
+
+                var Result = await _userRepository.ChangePasswordAsync(qUser, currentPassword, newPassword);
+                if (Result.Succeeded)
+                {
+                    return new OperationResult().Succeed();
+                }
+                else
+                {
+                    return new OperationResult().Failed(string.Join(", ", Result.Errors.Select(a => a.Description)));
+                }
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                return new OperationResult().Failed(ex.Message);
+
+            }
+        }
 
 
 

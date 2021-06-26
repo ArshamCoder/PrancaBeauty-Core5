@@ -1,5 +1,6 @@
 ﻿using Framework.Application.Services.Sms;
 using Framework.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Users;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.PhoneNumberConfirmation
 {
+    [Authorize]
     public class Compo_PhoneNumberConfirmationModel : PageModel
     {
         private readonly IMsgBox _MsgBox;

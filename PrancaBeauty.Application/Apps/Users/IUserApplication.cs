@@ -43,5 +43,6 @@ namespace PrancaBeauty.Application.Apps.Users
         Task<OperationResult> ChangeEmailAsync(string Token);
         Task<OperationResult> ReSendSmsCodeAsync(string phoneNumber);
         Task<OperationResult> PhoneConfirmationBySmsCodeAsync(string userId, string phoneNumber, string code);
+        Task<OperationResult> ChanagePasswordAsync(string userId, string currentPassword, string newPassword);
     }
 }

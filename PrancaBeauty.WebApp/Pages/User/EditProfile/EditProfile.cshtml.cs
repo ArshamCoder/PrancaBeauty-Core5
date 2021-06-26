@@ -1,4 +1,5 @@
 ﻿using a;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Users;
@@ -6,6 +7,7 @@ using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 
 namespace PrancaBeauty.WebApp.Pages.User.EditProfile
 {
+    [Authorize]
     public class EditProfileModel : PageModel
     {
 
