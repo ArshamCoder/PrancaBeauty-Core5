@@ -28,8 +28,8 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.PhoneNumberConfi
             if (string.IsNullOrWhiteSpace(Input.PhoneNumber))
                 return StatusCode(400);
 
-            var Result = await _UserApplication.ReSendSmsCodeAsync(Input.PhoneNumber);
-            if (Result.IsSucceed)
+            var result = await _UserApplication.ReSendSmsCodeAsync(Input.PhoneNumber);
+            if (result.IsSucceed)
                 return Page();
             else
             {
@@ -59,15 +59,15 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.PhoneNumberConfi
             if (!ModelState.IsValid)
                 return _MsgBox.ModelStateMsg(ModelState.GetErrors());
 
-            var UserId = User.GetUserDetails().UserId;
-            var Result = await _UserApplication.PhoneConfirmationBySmsCodeAsync(UserId, Input.PhoneNumber, Input.Code);
-            if (Result.IsSucceed)
+            var userId = User.GetUserDetails().UserId;
+            var result = await _UserApplication.PhoneConfirmationBySmsCodeAsync(userId, Input.PhoneNumber, Input.Code);
+            if (result.IsSucceed)
             {
-                return _MsgBox.SuccessMsg(_Localizer[Result.Message], "ReloadPage()");
+                return _MsgBox.SuccessMsg(_Localizer[result.Message], "ReloadPage()");
             }
             else
             {
-                return _MsgBox.FaildMsg(_Localizer[Result.Message]);
+                return _MsgBox.FaildMsg(_Localizer[result.Message]);
             }
         }
 

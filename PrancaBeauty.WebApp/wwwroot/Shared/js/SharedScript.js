@@ -130,3 +130,7 @@ function Logout(_ReturnUrl) {
     document.cookie = 'PrancaBeautyAuth=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/;';
     location.href = _ReturnUrl;
 }
+
+function ReloadPage() {
+    location.reload();
+}
