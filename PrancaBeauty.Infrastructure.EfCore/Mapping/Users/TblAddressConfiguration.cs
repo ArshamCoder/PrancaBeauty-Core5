@@ -37,6 +37,18 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Users
                 .HasForeignKey(a => a.CountryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(a => a.tblProvinces)
+                .WithMany(a => a.tblAddress)
+                .HasPrincipalKey(a => a.Id)
+                .HasForeignKey(a => a.ProviceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(a => a.tblCities)
+                .WithMany(a => a.tblAddress)
+                .HasPrincipalKey(a => a.Id)
+                .HasForeignKey(a => a.CityId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }
