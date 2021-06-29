@@ -13,5 +13,7 @@ namespace PrancaBeauty.Application.Apps.Language
         Task<string> GetDirectionByCodeAsync(string code);
         Task<string> GetAbbrByCodeAsync(string code);
         Task<bool> IsValidAbbrForSiteLangAsync(string abbr);
+        Task<string> GetLangIdByLangCodeAsync(string langCode);
+        Task<OutSiteLangCache> GetLangDetailsByIdAsync(string langId);
     }
 }

@@ -42,9 +42,10 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.Address
         public async Task<IActionResult> OnPostReadDataAsync(string LangId, [DataSourceRequest] DataSourceRequest request)
         {
             string UserId = User.GetUserDetails().UserId;
-            //string LangId = await _LanguageApplication.GetLangIdByLangCodeAsync(CultureInfo.CurrentCulture.Name);
+            // string LangId = await _LanguageApplication.GetLangIdByLangCodeAsync(CultureInfo.CurrentCulture.Name);
 
-            var qData = await _AddressApplication.GetAddressByUserIdForManageAsync(UserId, LangId, null, request.Page, request.PageSize);
+            var qData = await _AddressApplication
+                .GetAddressByUserIdForManageAsync(UserId, LangId, null, request.Page, request.PageSize);
 
             var _DataGrid = qData.Item2.ToDataSourceResult(request);
             _DataGrid.Total = (int)qData.Item1.CountAllItem;

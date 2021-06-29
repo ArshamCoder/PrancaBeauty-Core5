@@ -58,6 +58,7 @@ namespace PrancaBeauty.WebApp
             services.AddCustomAuthorization();
 
             services.AddRazorPageConfig()
+                .AddFilters()
                 .AddCustomViewLocalization("Localization/Resource")
                 .AddCustomDataAnnotationLocalization(services, typeof(SharedResource))
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ContractResolver = new DefaultContractResolver());

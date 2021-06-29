@@ -1,4 +1,5 @@
 ﻿using AspNetCoreRateLimit;
+using Framework.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.WebEncoders;
 using PrancaBeauty.WebApp.Authentication.Jwt;
 using PrancaBeauty.WebApp.Common.Utilities.IpAddress;
 using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
+using PrancaBeauty.WebApp.Fillters;
 using PrancaBeauty.WebApp.Localization;
 using PrancaBeauty.WebApp.Middlewares;
 using System;
@@ -18,7 +20,6 @@ using System.Globalization;
 using System.IO.Compression;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using Framework.Infrastructure;
 using WebMarkupMin.AspNetCore5;
 using WebMarkupMin.Core;
 
@@ -55,6 +56,14 @@ namespace PrancaBeauty.WebApp.Config
                 x.Conventions.AuthorizeFolder("/Admin/", "AdminPanelPolicy");
             });
 
+        }
+
+        public static IMvcBuilder AddFilters(this IMvcBuilder mvcBuilder)
+        {
+            return mvcBuilder.AddMvcOptions(opt =>
+            {
+                opt.Filters.Add(new FillLangIdParametrFilter());
+            });
         }
 
         public static IServiceCollection AddLocalization(this IServiceCollection services, string resourcePath)
