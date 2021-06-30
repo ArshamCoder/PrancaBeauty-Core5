@@ -1,0 +1,34 @@
+﻿@page "/{culture}/Shared/Compo/Region/ComboCity"
+@model PrancaBeauty.WebApp.Pages.Shared.Components.Region.Combo_City.Compo_Combo_CitiesModel
+
+@{
+    string FieldName = Model.Input.FieldName;
+    string FieldId = FieldName.Replace(".", "_").Replace("[", "_").Replace("]", "_");
+    string FieldTitle = Localizer[FieldName.Split('.').Last()];
+}
+<script>
+    function Filter_@(FieldId)()
+    {
+        var ItemCombo = $('#@(FieldId)').data("kendoComboBox");
+        return { Text: ItemCombo.text(), ProvinceId: '@Model.Input.ProvinceId' };
+    }
+</script>
+<label for="@FieldId">@FieldTitle</label>
+<div class="k-lang">
+    @(Html.Kendo()
+          .ComboBox()
+          .Name(FieldName)
+          .HtmlAttributes(new { @class= "form-control",style="width:100%;height:35px;" })
+          .Placeholder(Localizer["PleseSelect"])
+          .DataTextField("Title")
+          .DataValueField("Id")
+          .Filter(FilterType.Contains)
+          .MinLength(2)
+          .Value(Model.Input.CityId)
+          .DataSource(sr => {
+              sr.Read(read =>
+              {
+                  read.Url($"/{ViewData["culture"]}/Shared/Compo/Region/ComboCity?handler=Read").Data($"Filter_{FieldId}");
+              }).ServerFiltering(true);
+          }).Template("<div class='d-inline ml-2 mr-2'>#=Title#</div>"))
+</div>
