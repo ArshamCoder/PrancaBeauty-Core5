@@ -4,7 +4,7 @@ using PrancaBeauty.Application.Apps.Language;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using System.Threading.Tasks;
 
-namespace PrancaBeauty.WebApp.Pages.Shared.Components
+namespace PrancaBeauty.WebApp.Pages.Shared.Components.Combo_Language
 {
     public class Compo_Combo_LanguageModel : PageModel
     {

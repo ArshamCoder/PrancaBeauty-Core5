@@ -12,6 +12,14 @@ namespace PrancaBeauty.Domain.Region.CountryAgg.Entities
         public Guid Id { get; set; }
         public Guid FlagImgId { get; set; }
         public string Name { get; set; }
+
+        /// <summary>
+        /// مثلا پر میشه
+        /// +98
+        /// یا
+        /// +1
+        /// </summary>
+        public string PhoneCode { get; set; }
         public bool IsActive { get; set; }
 
         public virtual TblFile tblFiles { get; set; }
