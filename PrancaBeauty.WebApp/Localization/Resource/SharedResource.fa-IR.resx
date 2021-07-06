@@ -150,14 +150,23 @@
   <data name="AddAddress" xml:space="preserve">
     <value>افزودن آدرس</value>
   </data>
+  <data name="AddCategory" xml:space="preserve">
+    <value>افزودن دسته جدید</value>
+  </data>
   <data name="AddNewAccessLevel" xml:space="preserve">
     <value>افزودن</value>
+  </data>
+  <data name="AddNewCategory" xml:space="preserve">
+    <value>افزودن دسته جدید</value>
   </data>
   <data name="AddNewUsers" xml:space="preserve">
     <value>افزودن کاربر جدید</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>آدرس</value>
+  </data>
+  <data name="AddressHasFactors" xml:space="preserve">
+    <value>آدرس دارای فاکتورهایی میباشد که امکان حذف آن وجود ندارد.</value>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>پنل مدیریت</value>
@@ -167,6 +176,15 @@
   </data>
   <data name="BirthDate" xml:space="preserve">
     <value>تاریخ تولد</value>
+  </data>
+  <data name="CategoryId" xml:space="preserve">
+    <value>دسته</value>
+  </data>
+  <data name="CategoryImage" xml:space="preserve">
+    <value>ایکن دسته</value>
+  </data>
+  <data name="CategoryName Is Duplicate." xml:space="preserve">
+    <value>نام در دسته پدر انتخاب شده تکراری میباشد.</value>
   </data>
   <data name="ChangeAccessLevel" xml:space="preserve">
     <value>تغییر سطح دسترسی</value>
@@ -330,6 +348,9 @@
   <data name="FirstName" xml:space="preserve">
     <value>نام</value>
   </data>
+  <data name="FontIconCode" xml:space="preserve">
+    <value>کد فونت ایکن</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>نام کاربر</value>
   </data>
@@ -347,6 +368,9 @@
   </data>
   <data name="Id cant be null." xml:space="preserve">
     <value>شناسه نمیتواند خالی باشد</value>
+  </data>
+  <data name="IdIsInvalid" xml:space="preserve">
+    <value>شناسه مورد نظر یافت نشد.</value>
   </data>
   <data name="Input cant be null." xml:space="preserve">
     <value>اطلاعات لازم را وارد کنید</value>
@@ -384,6 +408,9 @@
   <data name="KendoOf" xml:space="preserve">
     <value>از {0}</value>
   </data>
+  <data name="LangId" xml:space="preserve">
+    <value>زبان</value>
+  </data>
   <data name="Last" xml:space="preserve">
     <value>آخرین</value>
   </data>
@@ -398,6 +425,9 @@
   </data>
   <data name="ListAccessLevel" xml:space="preserve">
     <value>لیست سطوح دسترسی</value>
+  </data>
+  <data name="ListCategories" xml:space="preserve">
+    <value>لیست دسته بندی ها</value>
   </data>
   <data name="ListUsers" xml:space="preserve">
     <value>لیست کاربران</value>
@@ -432,6 +462,9 @@
   <data name="ManageAccessLevel" xml:space="preserve">
     <value>مدریت سطوح دسترسی</value>
   </data>
+  <data name="ManageCategories" xml:space="preserve">
+    <value>مدیرت دسته بندی ها</value>
+  </data>
   <data name="ManageUsers" xml:space="preserve">
     <value>مدیریت کاربران</value>
   </data>
@@ -465,6 +498,9 @@
   <data name="No" xml:space="preserve">
     <value>خیر</value>
   </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>موردی یافت نشد.</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>باشه</value>
   </data>
@@ -491,6 +527,12 @@
   </data>
   <data name="PageName" xml:space="preserve">
     <value>عنوان بخش</value>
+  </data>
+  <data name="ParentId" xml:space="preserve">
+    <value>دسته پدر</value>
+  </data>
+  <data name="ParentTitle" xml:space="preserve">
+    <value>عنوان دسته پدر</value>
   </data>
   <data name="PassCompareMsg" xml:space="preserve">
     <value>کلمه عبور با تکرار آن یکسان نیست.</value>
@@ -552,6 +594,9 @@
   <data name="PleaseConfirmYourPhoneNumber" xml:space="preserve">
     <value>شماره موبایل شما تایید نشده است لطفا ابتدا آن را تایید نمایید</value>
   </data>
+  <data name="PleaseSelectCategory" xml:space="preserve">
+    <value>انتخاب دسته</value>
+  </data>
   <data name="PleseSelect" xml:space="preserve">
     <value>لطفا انتخاب کنید</value>
   </data>
@@ -564,7 +609,7 @@
   <data name="Previous" xml:space="preserve">
     <value>قبلی</value>
   </data>
-  <data name="ProviceId" xml:space="preserve">
+  <data name="ProvinceId" xml:space="preserve">
     <value>استان</value>
   </data>
   <data name="RecoveryCodeRedemptionFailed" xml:space="preserve">
@@ -627,6 +672,9 @@
   <data name="SmsSenderNotRespond" xml:space="preserve">
     <value>سرویس دهنده ی پیامک پاسخ گو نیست</value>
   </data>
+  <data name="Sort" xml:space="preserve">
+    <value>ترتیب</value>
+  </data>
   <data name="SortEmailAes" xml:space="preserve">
     <value>بر اساس ایمیل(صعودی)</value>
   </data>
@@ -641,9 +689,6 @@
   </data>
   <data name="Sorting" xml:space="preserve">
     <value>مرتب سازی</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
   <data name="StringLengthMsg" xml:space="preserve">
     <value>{0} باید بین {2} تا {1} کاراکتر باشد</value>
