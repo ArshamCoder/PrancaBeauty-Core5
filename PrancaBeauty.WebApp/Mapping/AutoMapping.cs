@@ -12,10 +12,29 @@ namespace PrancaBeauty.WebApp.Mapping
         public AutoMapping()
         {
             CreateMap<ViCompo_AccountSettings, InpSaveAccountSettingUserDetails>().ReverseMap();
+            CreateMap<ViCompo_AddAddress, InpAddAddress>();
             CreateMap<OutGetAddressByUserIdForManage, VmCompo_ListAddress>().ReverseMap();
             CreateMap<PrancaBeauty.Application.Contracts.Countries.OutGetListForCombo, vmCompo_Combo_Countries>();
             CreateMap<PrancaBeauty.Application.Contracts.Province.OutGetListForCombo, vmCompo_Combo_Province>();
             CreateMap<PrancaBeauty.Application.Contracts.City.OutGetListForCombo, vmCompo_Combo_Cities>();
+
+
+
+
+            //CreateMap<viCompo_AccountSettings, InpSaveAccountSettingUserDetails>();
+            //CreateMap<OutGetAddressByUserIdForManage, vmCompo_ListAddress>();
+            //CreateMap<OutGetAddressDetails, viCompo_EditAddress>();
+            //CreateMap<viCompo_EditAddress, InpEditAddress>();
+            //CreateMap<viAddCategory, InpAddCategory>();
+            //CreateMap<viAddCategory_Translate, InpAddCategory_Translate>();
+            //CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForAdminPage, vmCategoriesList>();
+            //CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForCombo, vmCompo_Combo_Categories>();
+
+
+
+
+
+
         }
     }
 }

@@ -9,7 +9,6 @@ namespace PrancaBeauty.Infrastructure.EFCore.Repository.Address
     {
         public AddressRepository(MainContext context) : base(context)
         {
-
         }
     }
 }

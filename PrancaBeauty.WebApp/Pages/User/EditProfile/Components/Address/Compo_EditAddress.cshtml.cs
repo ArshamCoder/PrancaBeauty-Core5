@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Framework.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrancaBeauty.Application.Apps.Address;
 using PrancaBeauty.Application.Contracts.Address;
 using PrancaBeauty.WebApp.Common.ExMethod;
-using PrancaBeauty.WebApp.Common.Utility.MessageBox;
+using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
 using PrancaBeauty.WebApp.Models.ViewInput;
+using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.Address
 {
@@ -45,7 +42,7 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.Address
 
             Input.UserId = User.GetUserDetails().UserId;
             var Result = await _AddressApplication.EditAddressAsync(_Mapper.Map<InpEditAddress>(Input));
-            if (Result.IsSucceeded)
+            if (Result.IsSucceed)
             {
                 return _MsgBox.SuccessMsg(_Localizer[Result.Message], "RefreshGrid('ListAddress');Close();");
             }

@@ -35,6 +35,8 @@ namespace PrancaBeauty.WebApp.Pages.User.EditProfile.Components.Address
             if (!ModelState.IsValid)
                 return _MsgBox.ModelStateMsg(ModelState.GetErrors());
 
+
+
             Input.UserId = User.GetUserDetails().UserId;
             var Result = await _AddressApplication.AddAddressAsync(_Mapper.Map<InpAddAddress>(Input));
             if (Result.IsSucceed)
