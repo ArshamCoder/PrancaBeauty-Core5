@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PrancaBeauty.Application.Apps.Accesslevel;
 using PrancaBeauty.Application.Apps.AccesslevelsRoles;
 using PrancaBeauty.Application.Apps.Address;
+using PrancaBeauty.Application.Apps.Categories;
 using PrancaBeauty.Application.Apps.Cities;
 using PrancaBeauty.Application.Apps.Countries;
 using PrancaBeauty.Application.Apps.File;
@@ -18,6 +19,7 @@ using PrancaBeauty.Application.Apps.Role;
 using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Apps.Template;
 using PrancaBeauty.Application.Apps.Users;
+using PrancaBeauty.Domain.Categories.Contracts;
 using PrancaBeauty.Domain.FileServer.FileAgg.Contracts;
 using PrancaBeauty.Domain.FileServer.ServerAgg.Contracts;
 using PrancaBeauty.Domain.Region.CityAgg.Contracts;
@@ -39,6 +41,7 @@ using PrancaBeauty.Infrastructure.EfCore.Repository.Setting;
 using PrancaBeauty.Infrastructure.EfCore.Repository.Template;
 using PrancaBeauty.Infrastructure.EfCore.Repository.User;
 using PrancaBeauty.Infrastructure.EFCore.Repository.Address;
+using PrancaBeauty.Infrastructure.EFCore.Repository.Categories;
 using PrancaBeauty.Infrastructure.EFCore.Repository.Cities;
 using PrancaBeauty.Infrastructure.EFCore.Repository.Counties;
 using PrancaBeauty.Infrastructure.EFCore.Repository.Province;
@@ -80,6 +83,7 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IProvinceRepository, ProvinceRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
             // Applications
@@ -96,6 +100,7 @@ namespace PrancaBeauty.Infrastructure.Core.Configuration
             services.AddScoped<ICityApplication, CityApplication>();
             services.AddScoped<ICountryApplication, CountryApplication>();
             services.AddScoped<IProvinceApplication, ProvinceApplication>();
+            services.AddScoped<ICategoryApplication, CategoryApplication>();
 
         }
     }

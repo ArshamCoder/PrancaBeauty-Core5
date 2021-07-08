@@ -1,4 +1,5 @@
 ﻿using Framework.Domain;
+using PrancaBeauty.Domain.Categories.Entities;
 using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
 using PrancaBeauty.Domain.Region.CityAgg.Entities;
 using PrancaBeauty.Domain.Region.CountryAgg.Entities;
@@ -43,6 +44,8 @@ namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
         public virtual ICollection<TblProvinces_Translate> tblProvinces_Translate { get; set; }
         public virtual ICollection<TblCities_Translates> tblCities_Translates { get; set; }
         public virtual ICollection<TblUser> tblUsers { get; set; }
+        public virtual ICollection<TblCategory_Translates> tblCategory_Translates { get; set; }
+
         public virtual TblFile TblFile { get; set; }
     }
 }

@@ -1,8 +1,10 @@
-﻿(function ($) {
+(function ($) {
     "use strict";
+
     $(document).ready(function () {
         $('.loading').hide();
     });
+
     new WOW().init();
 
     /*---background image---*/
@@ -90,7 +92,6 @@
             }
         });
     }
-
     function checkClasses() {
         var total = $('.product_dl_column3 .owl-stage .owl-item.active').length;
 
@@ -544,8 +545,7 @@
     /*---countdown activation---*/
 
     $('[data-countdown]').each(function () {
-        var $this = $(this),
-            finalDate = $(this).data('countdown');
+        var $this = $(this), finalDate = $(this).data('countdown');
         $this.countdown(finalDate, function (event) {
             $this.html(event.strftime('<div class="countdown_area"><div class="single_countdown"><div class="countdown_number">%D</div><div class="countdown_title">days</div></div><div class="single_countdown"><div class="countdown_number">%H</div><div class="countdown_title">hours</div></div><div class="single_countdown"><div class="countdown_number">%M</div><div class="countdown_title">mins</div></div><div class="single_countdown"><div class="countdown_number">%S</div><div class="countdown_title">secs</div></div></div>'));
 
@@ -591,7 +591,6 @@
         url: 'http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef'
 
     });
-
     function mailChimpResponse(resp) {
 
         if (resp.result === 'success') {
@@ -614,7 +613,8 @@
                     element.removeClass('open');
                     element.find('li').removeClass('open');
                     element.find('ul').slideUp();
-                } else {
+                }
+                else {
                     element.addClass('open');
                     element.children('ul').slideDown();
                     element.siblings('li').children('ul').slideUp();
@@ -748,10 +748,5 @@
     });
 
     /*---product dl column3 activation---*/
-
-
-
-
-
-
 })(jQuery);
+

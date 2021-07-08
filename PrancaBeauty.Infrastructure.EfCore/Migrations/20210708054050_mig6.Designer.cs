@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20210708054050_mig6")]
+    partial class mig6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,69 +120,6 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("PrancaBeauty.Domain.Categories.Entities.TblCategoris", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ImageId")
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid?>("ParentId")
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("TblCategoris");
-                });
-
-            modelBuilder.Entity("PrancaBeauty.Domain.Categories.Entities.TblCategory_Translates", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("LangId")
-                        .HasMaxLength(150)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("LangId");
-
-                    b.ToTable("TblCategory_Translates");
                 });
 
             modelBuilder.Entity("PrancaBeauty.Domain.FileServer.FileAgg.Entities.TblFile", b =>
@@ -896,42 +835,6 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.Categories.Entities.TblCategoris", b =>
-                {
-                    b.HasOne("PrancaBeauty.Domain.FileServer.FileAgg.Entities.TblFile", "tblFiles")
-                        .WithMany("tblCategoris")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PrancaBeauty.Domain.Categories.Entities.TblCategoris", "tblCategory_Parent")
-                        .WithMany("tblCategory_Childs")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("tblCategory_Parent");
-
-                    b.Navigation("tblFiles");
-                });
-
-            modelBuilder.Entity("PrancaBeauty.Domain.Categories.Entities.TblCategory_Translates", b =>
-                {
-                    b.HasOne("PrancaBeauty.Domain.Categories.Entities.TblCategoris", "tblCategoris")
-                        .WithMany("tblCategory_Translates")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("PrancaBeauty.Domain.Region.LanguageAgg.Entities.TblLanguage", "TblLanguage")
-                        .WithMany("tblCategory_Translates")
-                        .HasForeignKey("LangId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("tblCategoris");
-
-                    b.Navigation("TblLanguage");
-                });
-
             modelBuilder.Entity("PrancaBeauty.Domain.FileServer.FileAgg.Entities.TblFile", b =>
                 {
                     b.HasOne("PrancaBeauty.Domain.FileServer.ServerAgg.Entities.TblFileServer", "TblFileServer")
@@ -1155,17 +1058,8 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
                     b.Navigation("TblLanguage");
                 });
 
-            modelBuilder.Entity("PrancaBeauty.Domain.Categories.Entities.TblCategoris", b =>
-                {
-                    b.Navigation("tblCategory_Childs");
-
-                    b.Navigation("tblCategory_Translates");
-                });
-
             modelBuilder.Entity("PrancaBeauty.Domain.FileServer.FileAgg.Entities.TblFile", b =>
                 {
-                    b.Navigation("tblCategoris");
-
                     b.Navigation("TblCountries");
 
                     b.Navigation("TblLanguages");
@@ -1194,8 +1088,6 @@ namespace PrancaBeauty.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("PrancaBeauty.Domain.Region.LanguageAgg.Entities.TblLanguage", b =>
                 {
-                    b.Navigation("tblCategory_Translates");
-
                     b.Navigation("tblCities_Translates");
 
                     b.Navigation("tblCountries_Translates");

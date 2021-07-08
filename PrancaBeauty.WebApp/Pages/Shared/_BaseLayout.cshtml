@@ -8,7 +8,8 @@
     <meta name="description" content="@ViewData["description"]">
     @if (@ViewData["canonical"] != null)
     {
-<meta name="canonical" content="@ViewData["canonical"]">}
+<meta name="canonical" content="@ViewData["canonical"]">
+}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -42,10 +43,12 @@
 
     @if (ViewData["LangDir"].ToString() == "rtl")
     {<!-- Main Style CSS -->
-                        <link rel="stylesheet" href="~/Main/css/style-rtl.min.css"> }
-                                    else
-                                    { <!-- Main Style CSS -->
-                                                        <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">}
+                        <link rel="stylesheet" href="~/Main/css/style-rtl.min.css">
+ }
+                    else
+                    { <!-- Main Style CSS -->
+                                        <link rel="stylesheet" href="~/Main/css/style-ltr.min.css">
+}
 
 
 
@@ -65,9 +68,8 @@
     <div class="loading">
         <img src="~/Main/img/loading.gif" />
     </div>
-    <script src="~/Main/js/vendor/jquery-3.4.1.min.js"></script>
-    <!-- JS
-            ============================================ -->
+
+
     <!--popper min js-->
     <script src="~/Main/js/popper.js"></script>
     <!--bootstrap min js-->

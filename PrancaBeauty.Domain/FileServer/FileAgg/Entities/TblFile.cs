@@ -1,4 +1,5 @@
 ﻿using Framework.Domain;
+using PrancaBeauty.Domain.Categories.Entities;
 using PrancaBeauty.Domain.FileServer.ServerAgg.Entities;
 using PrancaBeauty.Domain.Region.CountryAgg.Entities;
 using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
@@ -26,6 +27,8 @@ namespace PrancaBeauty.Domain.FileServer.FileAgg.Entities
 
         public virtual ICollection<TblCountries> TblCountries { get; set; }
         public virtual ICollection<TblLanguage> TblLanguages { get; set; }
+
+        public virtual ICollection<TblCategoris> tblCategoris { get; set; }
 
     }
 }

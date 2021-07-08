@@ -1,4 +1,4 @@
-﻿/** 
+/** 
  * Kendo UI v2020.2.513 (http://www.telerik.com/kendo-ui)                                                                                                                                               
  * Copyright 2020 Progress Software Corporation and/or one of its subsidiaries or affiliates. All rights reserved.                                                                                      
  *                                                                                                                                                                                                      
@@ -2942,7 +2942,6 @@ button.k-button-expand, input[type=submit].k-button-expand, input[type=button].k
     text-overflow: ellipsis;
     text-align: left
 }
-
 
 .k-grid-header th.k-header {
     vertical-align: middle;
@@ -19132,6 +19131,6 @@ input.k-textbox {
 }
 /*# sourceMappingURL=kendo.common-bootstrap.min.css.map */
 
-.AAA {
-    display: block;
+.AAA{
+    display:block;
 }
