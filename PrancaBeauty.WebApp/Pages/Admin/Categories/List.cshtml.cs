@@ -1,0 +1,55 @@
+﻿using AutoMapper;
+using Framework.Infrastructure;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PrancaBeauty.Application.Apps.Categories;
+using PrancaBeauty.WebApp.Authentication;
+using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
+using PrancaBeauty.WebApp.Models.ViewInput;
+using PrancaBeauty.WebApp.Models.ViewModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace PrancaBeauty.WebApp.Pages.Admin.Categories
+{
+    [Authorize(Roles = Roles.CanViewListCategories)]
+    public class ListModel : PageModel
+    {
+        private readonly IMsgBox _MsgBox;
+        private readonly ILocalizer _Localizer;
+        private readonly IMapper _Mapper;
+        private readonly ICategoryApplication _CategoryApplication;
+
+        public ListModel(ICategoryApplication CtegoryApplication, IMsgBox msgBox, ILocalizer localizer, IMapper mapper)
+        {
+            _CategoryApplication = CtegoryApplication;
+            _MsgBox = msgBox;
+            _Localizer = localizer;
+            _Mapper = mapper;
+        }
+
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request, string LangId)
+        {
+            var qData = await _CategoryApplication.GetListForAdminPageAsync(LangId, Input.Title, Input.ParentTitle, request.Page, request.PageSize);
+
+            var qListData = _Mapper.Map<List<vmCategoriesList>>(qData.Item2);
+
+            var _DataGrid = qListData.ToDataSourceResult(request);
+            _DataGrid.Total = (int)qData.Item1.CountAllItem;
+            _DataGrid.Data = qListData;
+
+            return new JsonResult(_DataGrid);
+        }
+
+        [BindProperty(SupportsGet = true)]
+        public viListCategories Input { get; set; }
+    }
+}

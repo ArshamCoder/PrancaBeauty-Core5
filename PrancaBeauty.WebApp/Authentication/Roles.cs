@@ -2,6 +2,7 @@
 {
     public static class Roles
     {
+
         public const string AdminPage = "AdminPage";
 
         #region AccessLevels
@@ -12,7 +13,6 @@
         public const string CanRemoveAccessLevel = "CanRemoveAccessLevel";
         #endregion
 
-
         #region Users
         public const string CanManageUsers = "CanManageUsers";
         public const string CanViewListUsers = "CanViewListUsers";
@@ -21,6 +21,14 @@
         public const string CanRemoveUsers = "CanRemoveUsers";
         public const string CanChangeUsersStatus = "CanChangeUsersStatus";
         public const string CanChangeUsersAccessLevel = "CanChangeUsersAccessLevel";
+        #endregion
+
+        #region Categories
+        public const string CanManageCategories = "CanManageCategories";
+        public const string CanViewListCategories = "CanViewListCategories";
+        public const string CanAddCategory = "CanAddCategory";
+        public const string CanEditCategory = "CanEditCategory";
+        public const string CanRemoveCategory = "CanRemoveCategory";
         #endregion
     }
 }

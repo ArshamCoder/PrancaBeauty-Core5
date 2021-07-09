@@ -1,0 +1,74 @@
+﻿using AutoMapper;
+using Framework.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PrancaBeauty.Application.Apps.Categories;
+using PrancaBeauty.Application.Apps.Language;
+using PrancaBeauty.Application.Contracts.Categories;
+using PrancaBeauty.WebApp.Authentication;
+using PrancaBeauty.WebApp.Common.ExMethod;
+using PrancaBeauty.WebApp.Common.Utilities.MessageBox;
+using PrancaBeauty.WebApp.Models.ViewInput;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
+
+namespace PrancaBeauty.WebApp.Pages.Admin.Categories
+{
+    [Authorize(Roles = Roles.CanAddCategory)]
+    public class AddModel : PageModel
+    {
+        private readonly IMsgBox _MsgBox;
+        private readonly IMapper _Mapper;
+        private readonly ILocalizer _Localizer;
+        private readonly ICategoryApplication _CategoryApplication;
+        private readonly ILanguageApplication _LanguageApplication;
+        public AddModel(ICategoryApplication categoryApplication, ILanguageApplication languageApplication, IMsgBox msgBox, IMapper mapper, ILocalizer localizer)
+        {
+            _CategoryApplication = categoryApplication;
+            _LanguageApplication = languageApplication;
+            _MsgBox = msgBox;
+            _Mapper = mapper;
+            _Localizer = localizer;
+        }
+
+        public async Task<IActionResult> OnGetAsync(string ReturnUrl)
+        {
+            ViewData["ReturnUrl"] = ReturnUrl ?? $"/{CultureInfo.CurrentCulture.Parent.Name}/Admin/Category/List";
+
+            var qLang = await _LanguageApplication.GetAllLanguageForSiteLangAsync();
+
+            Input = new viAddCategory() { LstTranslate = new List<viAddCategory_Translate>() };
+
+            foreach (var item in qLang)
+            {
+                Input.LstTranslate.Add(new viAddCategory_Translate()
+                {
+                    LangId = item.Id
+                });
+            }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+                return _MsgBox.ModelStateMsg(ModelState.GetErrors());
+
+            var Result = await _CategoryApplication.AddCategoryAsync(_Mapper.Map<InpAddCategory>(Input));
+            if (Result.IsSucceed)
+            {
+                return _MsgBox.SuccessMsg(_Localizer[Result.Message], "GotoList()");
+            }
+            else
+            {
+                return _MsgBox.FaildMsg(_Localizer[Result.Message]);
+            }
+        }
+
+        [BindProperty]
+        public viAddCategory Input { get; set; }
+    }
+}
