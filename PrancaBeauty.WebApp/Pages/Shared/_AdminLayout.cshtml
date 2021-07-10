@@ -30,7 +30,7 @@
 
     <!-- sweetalert -->
     <link href="~/lib/sweetalert/sweetalert.min.css" rel="stylesheet" />
-
+    @await RenderSectionAsync("styles", false)
     <!-- template rtl version -->
     <link rel="stylesheet" href="/Admin/css/custom-style.css">
 
@@ -212,7 +212,8 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>}
+        </li>
+}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -220,9 +221,11 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>}
+        </li>
+}
                     </ul>
-                </li>}
+                </li>
+}
 
                             @if (User.IsInRole(Roles.CanManageUsers))
                             {
@@ -242,7 +245,8 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewUsers"]</p>
             </a>
-        </li>}
+        </li>
+}
                         @if (User.IsInRole(Roles.CanViewListUsers))
                         {
         <li class="nav-item">
@@ -250,9 +254,11 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListUsers"]</p>
             </a>
-        </li>}
+        </li>
+}
                     </ul>
-                </li>}
+                </li>
+}
 
 
 

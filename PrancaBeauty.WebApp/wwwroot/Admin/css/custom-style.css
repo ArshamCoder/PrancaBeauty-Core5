@@ -280,3 +280,31 @@ a:not([href]) {
         left: calc(50% - 100px);
         top: calc(50vh - 100px);
     }
+
+
+.FotnIconCategory {
+    text-align: center;
+    display: block;
+}
+
+    .FotnIconCategory:before {
+        content: attr(fontIcon);
+    }
+
+.form-control {
+    height: 44px;
+    width: 100% !important;
+}
+
+.k-dropdown-wrap {
+    height: 44px;
+}
+
+    .k-dropdown-wrap .k-input {
+        position: relative;
+        top: 5px !important;
+    }
+
+    .k-dropdown-wrap .k-select .k-icon {
+        top: 5px !important;
+    }
