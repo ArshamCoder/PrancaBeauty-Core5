@@ -72,21 +72,41 @@
     </div>
 </div>
 
+<div class="hide" id="ToolbarPanel">
+    <div class="row">
+        <div class="col-md-2">
+            <input type="text" onchange="Search()" asp-for="Input.Title" id="txtSearchTitle" class="form-control form-control-sm" placeholder="@Localizer["Title"]" />
+        </div>
+
+        <div class="col-md-2">
+            <input type="text" onchange="Search()" asp-for="Input.ParentTitle" id="txtSearchParentTitle" class="form-control form-control-sm" placeholder="@Localizer["ParentTitle"]" />
+        </div>
+    </div>
+</div>
+
 <script id="DropDownCmd">
-    // ReSharper disable once PossiblyUnassignedProperty
     <div class="item-action dropdown">
         <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fa fa-bars fs-16 text-dark"></i></a>
         <div class="dropdown-menu dropdown-menu-left">
-            @if (User.IsInRole(Roles.CanEditCategory))
-            {
-<a href="/@ViewData["Culture"]/Admin/Category/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>}
-            @if (User.IsInRole(Roles.CanRemoveCategory))
-            {
-<a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>}
+        @if (User.IsInRole(Roles.CanEditCategory))
+        {
+            <a href="/@ViewData["Culture"]/Admin/Category/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
+        }
+    @if (User.IsInRole(Roles.CanRemoveCategory))
+    {
+        <a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>
+    }
         </div>
-    </div>
+        </div>
 </script>
 
+@if (User.IsInRole(Roles.CanAddCategory))
+{
+<script>
+        function Add() {
+            location.href = '/@ViewData["Culture"]/Admin/Category/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
+        }
+</script>}
 @if (User.IsInRole(Roles.CanAddCategory))
 {
 <script>
@@ -107,11 +127,9 @@
     function RefreshData() {
         RefreshGrid('ListCategories');
     }
-
     function Search() {
         var _Title = $('#txtSearchTitle').val();
         var _ParentTitle = $('#txtSearchParentTitle').val();
-
         var _Grid = $('#ListCategories').data('kendoGrid');
         _Grid.dataSource.transport.options.read.url = '/@CultureInfo.CurrentCulture.Parent.Name/Admin/Category/List?handler=ReadData&Title=' + _Title + '&ParentTitle=' + _ParentTitle;
         _Grid.dataSource.read();
