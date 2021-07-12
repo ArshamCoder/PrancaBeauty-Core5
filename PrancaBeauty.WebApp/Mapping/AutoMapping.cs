@@ -22,12 +22,12 @@ namespace PrancaBeauty.WebApp.Mapping
             CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForAdminPage, vmCategoriesList>();
             CreateMap<viAddCategory, InpAddCategory>();
             CreateMap<viAddCategory_Translate, InpAddCategory_Translate>();
-
+            CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForCombo, vmCompo_Combo_Categories>();
 
             //CreateMap<viCompo_AccountSettings, InpSaveAccountSettingUserDetails>();
             //CreateMap<OutGetAddressByUserIdForManage, vmCompo_ListAddress>();
 
-            //CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForCombo, vmCompo_Combo_Categories>();
+
 
 
 
