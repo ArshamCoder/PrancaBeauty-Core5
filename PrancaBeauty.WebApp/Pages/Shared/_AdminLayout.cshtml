@@ -36,7 +36,7 @@
 
 
     <!-- jQuery -->
-    <script src="/lib/jquery/jquery.min.js"></script>
+    @*<script src="/lib/jquery/jquery.min.js"></script>*@
 
     <!-- KenoUI Js -->
     <script src="~/lib/KendoUI/js/jszip.min.js"></script>
@@ -194,6 +194,38 @@
                                     </p>
                                 </a>
                             </li>
+                            @if (User.IsInRole(Roles.CanManageCategories))
+                            {
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-shield"></i>
+                        <p>
+                            @Localizer["ManageCategories"]
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if (User.IsInRole(Roles.CanAddCategory))
+                        {
+        <li class="nav-item">
+            <a href="/@CultureInfo.CurrentCulture.Parent.Name/Admin/Category/Add" class="nav-link active">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>@Localizer["AddNewCategory"]</p>
+            </a>
+        </li>
+}
+                        @if (User.IsInRole(Roles.CanViewListCategories))
+                        {
+        <li class="nav-item">
+            <a href="/@CultureInfo.CurrentCulture.Parent.Name/Admin/Category/List" class="nav-link">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>@Localizer["ListCategories"]</p>
+            </a>
+        </li>
+}
+                    </ul>
+                </li>
+}
                             @if (User.IsInRole(Roles.CanManageAccessLevel))
                             {
                 <li class="nav-item has-treeview">
@@ -212,8 +244,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -221,11 +252,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
 
                             @if (User.IsInRole(Roles.CanManageUsers))
                             {
@@ -245,8 +274,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewUsers"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListUsers))
                         {
         <li class="nav-item">
@@ -254,11 +282,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListUsers"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
 
 
 
