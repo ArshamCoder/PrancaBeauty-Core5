@@ -38,6 +38,9 @@
     <!-- jQuery -->
     @*<script src="/lib/jquery/jquery.min.js"></script>*@
 
+    <!--jquery min js-->
+    <script src="~/Main/js/vendor/jquery-3.4.1.min.js"></script>
+
     <!-- KenoUI Js -->
     <script src="~/lib/KendoUI/js/jszip.min.js"></script>
     <script src="~/lib/KendoUI/js/kendo.all.min.js"></script>
@@ -212,8 +215,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewCategory"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListCategories))
                         {
         <li class="nav-item">
@@ -221,11 +223,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListCategories"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
                             @if (User.IsInRole(Roles.CanManageAccessLevel))
                             {
                 <li class="nav-item has-treeview">
@@ -244,7 +244,8 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>}
+        </li>
+}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -252,9 +253,11 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>}
+        </li>
+}
                     </ul>
-                </li>}
+                </li>
+}
 
                             @if (User.IsInRole(Roles.CanManageUsers))
                             {
@@ -274,7 +277,8 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewUsers"]</p>
             </a>
-        </li>}
+        </li>
+}
                         @if (User.IsInRole(Roles.CanViewListUsers))
                         {
         <li class="nav-item">
@@ -282,9 +286,11 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListUsers"]</p>
             </a>
-        </li>}
+        </li>
+}
                     </ul>
-                </li>}
+                </li>
+}
 
 
 
