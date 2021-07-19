@@ -1,5 +1,6 @@
 ﻿using NETCore.Encrypt;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Framework.Common.ExMethod
 {
@@ -39,6 +40,12 @@ namespace Framework.Common.ExMethod
         {
             string md5Hash = EncryptProvider.Md5(text);
             return md5Hash;
+        }
+
+        public static string ReplaceRegex(this string text, string Pattern, string NewText)
+        {
+            string ReplaceTxt = Regex.Replace(text, Pattern, NewText, RegexOptions.Multiline | RegexOptions.Singleline);
+            return ReplaceTxt;
         }
     }
 }
