@@ -50,6 +50,8 @@ namespace Framework.Application.Services.Security.AntiShell
         {
             try
             {
+                // چک کردن پسوند فایل ها به صورت کاملا دقیق
+
                 if (_FormFile is null)
                     throw new ArgumentInvalidException(nameof(_FormFile));
 
@@ -59,6 +61,7 @@ namespace Framework.Application.Services.Security.AntiShell
                 string hex = "";
                 foreach (var item in buffer)
                 {
+                    //تبدیل بایت به هگز دسیمال
                     hex += string.Format("{0:X}", item) + " ";
                 }
 
