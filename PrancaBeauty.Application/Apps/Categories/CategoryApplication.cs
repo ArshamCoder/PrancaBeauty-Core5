@@ -2,6 +2,7 @@
 using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using PrancaBeauty.Application.Common.FtpWapper;
 using PrancaBeauty.Application.Contracts.Categories;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Exceptions;
@@ -17,13 +18,14 @@ namespace PrancaBeauty.Application.Apps.Categories
     public class CategoryApplication : ICategoryApplication
     {
         private readonly ILogger _Logger;
-        //private readonly IFtpWapper _FtpWapper;
+        private readonly IFtpWapper _FtpWapper;
         private readonly ICategoryRepository _CategoryRepository;
 
-        public CategoryApplication(ILogger logger, ICategoryRepository categoryRepository)
+        public CategoryApplication(ILogger logger, ICategoryRepository categoryRepository, IFtpWapper ftpWapper)
         {
             _Logger = logger;
             _CategoryRepository = categoryRepository;
+            _FtpWapper = ftpWapper;
         }
 
         public async Task<(OutPagingData, List<OutGetListForAdminPage>)> GetListForAdminPageAsync(string LangId, string Title, string ParentTitle, int PageNum, int Take)
@@ -125,11 +127,11 @@ namespace PrancaBeauty.Application.Apps.Categories
                     });
                 }
 
-                //var FileUploadResult = await _FtpWapper.UplaodCategoryImgAsync(Input.Image, Input.Name);
-                //if (FileUploadResult == null)
-                //    return new OperationResult().Failed("Error500");
+                var FileUploadResult = await _FtpWapper.UplaodCategoryImgAsync(Input.Image, Input.Name);
+                if (FileUploadResult == null)
+                    return new OperationResult().Failed("Error500");
 
-                // tCategory.ImageId = Guid.Parse(FileUploadResult);
+                tCategory.ImageId = Guid.Parse(FileUploadResult);
                 await _CategoryRepository.AddAsync(tCategory, default, true);
 
                 return new OperationResult().Succeed();
