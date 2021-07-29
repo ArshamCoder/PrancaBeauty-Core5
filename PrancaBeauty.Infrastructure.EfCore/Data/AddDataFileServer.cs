@@ -19,15 +19,16 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
         {
             if (!_repFileServer.Get.Any(a => a.Name == "Public"))
             {
+                // [{FtpHost:'ftp://127.0.0.3',FtpPort:'21',FtpPath:'/',FtpUserName:'Arsham',FtpPassword:'1'}]
                 _repFileServer.AddAsync(new TblFileServer()
                 {
                     Id = new Guid().SequentialGuid(),
                     Name = "Public",
-                    FtpData = "",
+                    FtpData = "UU+c1H9R7gmsOZQZ5IpuIdRoPdIqrUqK03h5SiHc9mk7skgie5bdQlb6hfRj0C6UM16ja7e0voUyovKBl79ht7jhPJHukx3JRZVmpCctL2kNI26YVrnJn8O4esS9o7E5ViGo/MjJVEcieQyIbRXGNQ==",
                     Capacity = 0,
                     Description = "",
                     HttpDomin = "http://127.0.0.111",
-                    HttpPath = "/Main",
+                    HttpPath = "/",
                     IsActive = true,
                 }, default, false).Wait();
             }

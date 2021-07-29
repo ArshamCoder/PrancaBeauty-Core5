@@ -1,6 +1,7 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Application.Consts;
+using Framework.Common.ExMethod;
+using Framework.Infrastructure;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PrancaBeauty.WebApp.Localization;
 
 namespace PrancaBeauty.WebApp.Pages.Home
 {
@@ -18,6 +19,8 @@ namespace PrancaBeauty.WebApp.Pages.Home
         {
             var msg = _localizer["Hello"];
 
+            var txt = "{\"FtpHost\":\"ftp://127.0.0.3\",\"FtpPort\":21,\"FtpPath\":\"/\",\"FtpUserName\":\"Arsham\",\"FtpPassword\":\"1\"}";
+            var res = txt.AesEncrypt(AuthConst.SecretKey);
 
         }
     }
