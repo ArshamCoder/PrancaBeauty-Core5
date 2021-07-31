@@ -37,7 +37,7 @@
                                   .DefaultSettings(Localizer)
                                   .Columns(col=> {
                                       col.Bound(a => a.Id).Hidden().HtmlAttributes(new { @class = "RowId" }).Sortable(false);
-                                      col.Bound(a => a.ImgUrl).Width(60).Title(" ").ClientTemplate("<img src='#=ImgUrl#' />").Sortable(false);
+                                      col.Bound(a => a.ImgUrl).HtmlAttributes(new { style="text-align:center;" }).Width(60).Title(" ").ClientTemplate("<img style='width:26px;' src='#=ImgUrl#' />").Sortable(false);
                                       col.Bound(a => a.Name).Sortable(false);
                                       col.Bound(a => a.Title).Sortable(false);
                                       col.Bound(a => a.ParentTitle).Sortable(false);
@@ -106,14 +106,16 @@
         function Add() {
             location.href = '/@ViewData["Culture"]/Admin/Category/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
         }
-</script>}
+</script>
+}
 @if (User.IsInRole(Roles.CanAddCategory))
 {
 <script>
         function Add() {
             location.href = '/@ViewData["Culture"]/Admin/Category/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
         }
-</script>}
+</script>
+}
 
 @if (User.IsInRole(Roles.CanRemoveCategory))
 {
@@ -121,7 +123,8 @@
         function Remove(_Id) {
             RemoveData('/@ViewData["Culture"]/Admin/Category/List?handler=Remove', {Id:_Id});
         }
-</script>}
+</script>
+}
 
 <script>
     function RefreshData() {

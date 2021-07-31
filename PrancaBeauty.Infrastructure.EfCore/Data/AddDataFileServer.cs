@@ -27,7 +27,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                     FtpData = "UU+c1H9R7gmsOZQZ5IpuIdRoPdIqrUqK03h5SiHc9mk7skgie5bdQlb6hfRj0C6UM16ja7e0voUyovKBl79ht7jhPJHukx3JRZVmpCctL2kNI26YVrnJn8O4esS9o7E5ViGo/MjJVEcieQyIbRXGNQ==",
                     Capacity = 0,
                     Description = "",
-                    HttpDomin = "http://127.0.0.111",
+                    HttpDomin = "http://127.0.0.3",
                     HttpPath = "/",
                     IsActive = true,
                 }, default, false).Wait();

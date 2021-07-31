@@ -40,7 +40,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                         FileName = "IranFlag.png",
                         FileServerId = _FileServer.GetNoTraking.Where(a => a.Name == "Public").Select(a => a.Id).Single(),
                         MimeType = "image/png",
-                        Path = "/flags/",
+                        Path = "/Img/flags/",
                         SizeOnDisk = 0
                     }
                 }, default, true).Wait();
@@ -66,7 +66,7 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                         FileName = "UsFlag.png",
                         FileServerId = _FileServer.GetNoTraking.Where(a => a.Name == "Public").Select(a => a.Id).Single(),
                         MimeType = "image/png",
-                        Path = "/flags/",
+                        Path = "/Img/flags/",
                         SizeOnDisk = 0
                     }
                 }, default, true).Wait();

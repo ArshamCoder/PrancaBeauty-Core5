@@ -40,7 +40,7 @@ namespace PrancaBeauty.Infrastructure.EFCore.Data
                         FileName = "IranCountryFlag.png",
                         FileServerId = _FileServer.GetNoTraking.Where(a => a.Name == "Public").Select(a => a.Id).Single(),
                         MimeType = "image/png",
-                        Path = "/flags/",
+                        Path = "/Img/flags/",
                         SizeOnDisk = 0
                     },
                     tblCountries_Translates = new List<TblCountries_Translates> {

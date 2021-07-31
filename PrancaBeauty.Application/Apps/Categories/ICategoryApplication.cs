@@ -14,5 +14,6 @@ namespace PrancaBeauty.Application.Apps.Categories
         Task<(OutPagingData, List<OutGetListForAdminPage>)> GetListForAdminPageAsync(string LangId, string Title, string ParentTitle, int PageNum, int Take);
         Task<List<OutGetListForCombo>> GetListForComboAsync(string LangId, string ParentId);
         Task<OperationResult> AddCategoryAsync(InpAddCategory Input);
+        Task<OperationResult> RemoveAsync(string Id);
     }
 }
