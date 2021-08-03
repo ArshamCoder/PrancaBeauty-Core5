@@ -122,7 +122,7 @@ namespace PrancaBeauty.Application.Apps.File
 
                 var qData = await _FileRepository.Get
                                                  .Where(a => a.Id == Guid.Parse(FileId))
-                                                 .Where(a => UserId != null ? a.UserId == Guid.Parse(UserId) : true)
+                                                 .Where(a => UserId == null || a.UserId == Guid.Parse(UserId))
                                                  .SingleOrDefaultAsync();
 
                 if (qData == null)
