@@ -20,7 +20,7 @@ namespace PrancaBeauty.Infrastructure.EFCore.Mapping.Category
                    .WithMany(a => a.tblCategory_Translates)
                    .HasPrincipalKey(a => a.Id)
                    .HasForeignKey(a => a.CategoryId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(a => a.TblLanguage)
                    .WithMany(a => a.tblCategory_Translates)

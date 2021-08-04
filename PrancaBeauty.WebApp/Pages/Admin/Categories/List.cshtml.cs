@@ -50,6 +50,22 @@ namespace PrancaBeauty.WebApp.Pages.Admin.Categories
             return new JsonResult(_DataGrid);
         }
 
+        public async Task<IActionResult> OnPostRemoveAsync(string Id)
+        {
+            if (string.IsNullOrWhiteSpace(Id))
+                return _MsgBox.ModelStateMsg("IdCantBeNull", "RefreshData()");
+
+            var _Result = await _CategoryApplication.RemoveAsync(Id);
+            if (_Result.IsSucceed)
+            {
+                return _MsgBox.SuccessMsg(_Localizer[_Result.Message], "RefreshData()");
+            }
+            else
+            {
+                return _MsgBox.FaildMsg(_Localizer[_Result.Message]);
+            }
+        }
+
         [BindProperty(SupportsGet = true)]
         public viListCategories Input { get; set; }
     }

@@ -13,7 +13,7 @@
                     <h1 class="m-0 text-dark">@ViewData["Title"]</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-left">
+                    <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/@CultureInfo.CurrentCulture.Parent.Name/admin/index">@Localizer["Dashborad"]</a></li>
                         <li class="breadcrumb-item active">@ViewData["Title"]</li>
                     </ol>
@@ -72,32 +72,20 @@
     </div>
 </div>
 
-<div class="hide" id="ToolbarPanel">
-    <div class="row">
-        <div class="col-md-2">
-            <input type="text" onchange="Search()" asp-for="Input.Title" id="txtSearchTitle" class="form-control form-control-sm" placeholder="@Localizer["Title"]" />
-        </div>
-
-        <div class="col-md-2">
-            <input type="text" onchange="Search()" asp-for="Input.ParentTitle" id="txtSearchParentTitle" class="form-control form-control-sm" placeholder="@Localizer["ParentTitle"]" />
-        </div>
-    </div>
-</div>
-
 <script id="DropDownCmd">
     <div class="item-action dropdown">
         <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fa fa-bars fs-16 text-dark"></i></a>
         <div class="dropdown-menu dropdown-menu-left">
-        @if (User.IsInRole(Roles.CanEditCategory))
-        {
-            <a href="/@ViewData["Culture"]/Admin/Category/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
-        }
-    @if (User.IsInRole(Roles.CanRemoveCategory))
-    {
-        <a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>
-    }
+            @if (User.IsInRole(Roles.CanEditCategory))
+            {
+                <a href="/@ViewData["Culture"]/Admin/Category/Edit/#:Id#?ReturnUrl=@Request.GetCurrentUrl()" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
+            }
+            @if (User.IsInRole(Roles.CanRemoveCategory))
+            {
+                <a onClick="Remove('#:Id#')" class="dropdown-item"><i class="dropdown-icon fa fa-times"></i>@Localizer["Remove"]</a>
+            }
         </div>
-        </div>
+    </div>
 </script>
 
 @if (User.IsInRole(Roles.CanAddCategory))
@@ -106,16 +94,7 @@
         function Add() {
             location.href = '/@ViewData["Culture"]/Admin/Category/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
         }
-</script>
-}
-@if (User.IsInRole(Roles.CanAddCategory))
-{
-<script>
-        function Add() {
-            location.href = '/@ViewData["Culture"]/Admin/Category/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
-        }
-</script>
-}
+</script>}
 
 @if (User.IsInRole(Roles.CanRemoveCategory))
 {
@@ -123,8 +102,7 @@
         function Remove(_Id) {
             RemoveData('/@ViewData["Culture"]/Admin/Category/List?handler=Remove', {Id:_Id});
         }
-</script>
-}
+</script>}
 
 <script>
     function RefreshData() {
