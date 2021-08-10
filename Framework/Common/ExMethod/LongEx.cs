@@ -1,27 +1,21 @@
-﻿using Framework.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Framework.Common.ExMethods
+﻿namespace Framework.Common.ExMethod
 {
     public static class LongEx
     {
-        public static string GetFileSizeName(this long FileSize)
+        public static string GetFileSizeName(this long fileSize)
         {
-            string[] Names = { "B", "KB", "MB", "GB", "TB", "ExB" };
-            double Number = FileSize;
+
+            string[] names = { "B", "KB", "MB", "GB", "TB", "ExB" };
+            double number = fileSize;
             int index = 0;
 
-            while (Number > 1024)
+            while (number > 1024)
             {
-                Number = Number / 1024;
+                number = number / 1024;
                 index++;
             }
 
-            return Number.ToString("0.#") + " " + Names[index];
+            return number.ToString("0.#") + " " + names[index];
         }
     }
 }
