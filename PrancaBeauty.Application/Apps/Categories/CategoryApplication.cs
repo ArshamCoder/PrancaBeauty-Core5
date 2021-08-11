@@ -20,12 +20,15 @@ namespace PrancaBeauty.Application.Apps.Categories
         private readonly ILogger _Logger;
         private readonly IFtpWapper _FtpWapper;
         private readonly ICategoryRepository _CategoryRepository;
+        private readonly ICategory_TranslateRepository _Category_TranslateRepository;
 
-        public CategoryApplication(ILogger logger, ICategoryRepository categoryRepository, IFtpWapper ftpWapper)
+        public CategoryApplication(ILogger logger, ICategoryRepository categoryRepository,
+            IFtpWapper ftpWapper, ICategory_TranslateRepository categoryTranslateRepository)
         {
             _Logger = logger;
             _CategoryRepository = categoryRepository;
             _FtpWapper = ftpWapper;
+            _Category_TranslateRepository = categoryTranslateRepository;
         }
 
         public async Task<(OutPagingData, List<OutGetListForAdminPage>)> GetListForAdminPageAsync(string LangId, string Title, string ParentTitle, int PageNum, int Take)
@@ -183,6 +186,121 @@ namespace PrancaBeauty.Application.Apps.Categories
                 // حذف فایل
                 if (_Category.ImageId != null)
                     await _FtpWapper.RemoveFileAsync(_Category.ImageId.Value.ToString());
+
+                return new OperationResult().Succeed();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+            }
+        }
+
+        public async Task<OutGetForEdit> GetForEditAsync(string Id)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Id))
+                    throw new ArgumentInvalidException($"'{nameof(Id)}' cannot be null or whitespace.");
+
+                var qData = await _CategoryRepository.Get
+                                                    .Where(a => a.Id == Guid.Parse(Id))
+                                                    .Select(a => new OutGetForEdit
+                                                    {
+                                                        Id = a.Id.ToString(),
+                                                        Name = a.Name,
+                                                        ParentId = a.ParentId.ToString(),
+                                                        Sort = a.Sort,
+                                                        ImgCategoryUrl = a.tblFiles.TblFileServer.HttpDomin
+                                                                            + a.tblFiles.TblFileServer.HttpPath
+                                                                            + a.tblFiles.Path
+                                                                            + a.tblFiles.FileName,
+                                                        LstTranslate = a.tblCategory_Translates.Select(b => new OutGetForEdit_Translate
+                                                        {
+                                                            LangId = b.LangId.ToString(),
+                                                            Title = b.Title,
+                                                            Description = b.Description
+                                                        }).ToList()
+                                                    })
+                                                    .SingleOrDefaultAsync();
+
+                if (qData == null)
+                    return null;
+
+                return qData;
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
+
+        public async Task<OperationResult> SaveEditAsync(InpSaveEdit Input)
+        {
+            try
+            {
+                if (Input is null)
+                    throw new ArgumentInvalidException(nameof(Input));
+
+                var qData = await _CategoryRepository.Get
+                                                     .Where(a => a.Id == Guid.Parse(Input.Id))
+                                                     .SingleOrDefaultAsync();
+
+                if (qData == null)
+                    return new OperationResult().Failed("IdNotFound");
+
+                qData.Name = Input.Name;
+                qData.Sort = Input.Sort;
+
+                if (Input.ParentId != null)
+                    qData.ParentId = Guid.Parse(Input.ParentId);
+                else
+                    qData.ParentId = null;
+
+                #region ویرایش ترجمه
+                {
+                    // حذف کلیه ی ترجمه ها
+                    var qTranslates = await _Category_TranslateRepository.Get.Where(a => a.CategoryId == Guid.Parse(Input.Id)).ToListAsync();
+                    await _Category_TranslateRepository.DeleteRangeAsync(qTranslates, default);
+
+                    // افزودن ترجمه های جدید
+                    await _Category_TranslateRepository.AddRangeAsync(Input.LstTranslate.Select(a => new TblCategory_Translates
+                    {
+                        Id = new Guid().SequentialGuid(),
+                        CategoryId = Guid.Parse(Input.Id),
+                        Description = a.Description,
+                        LangId = Guid.Parse(a.LangId),
+                        Title = a.Title
+                    }).AsEnumerable(), default);
+                }
+                #endregion
+
+                #region ویرایش تصویر
+                if (Input.Image != null)
+                {
+                    if (qData.ImageId != null)
+                    {
+                        // حذف تصویر قبلی
+                        await _FtpWapper.RemoveFileAsync(qData.ImageId.Value.ToString());
+                        qData.tblFiles = null;
+                    }
+
+                    // اپلود تصویر جدید
+                    string _FileId = await _FtpWapper.UplaodCategoryImgAsync(Input.Image, qData.Name);
+                    qData.ImageId = Guid.Parse(_FileId);
+                }
+                #endregion
+
+                await _CategoryRepository.UpdateAsync(qData, default);
 
                 return new OperationResult().Succeed();
             }

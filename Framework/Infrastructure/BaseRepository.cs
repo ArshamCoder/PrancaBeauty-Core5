@@ -27,7 +27,12 @@ namespace Framework.Infrastructure
             if (autoSave)
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
-
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> Entities, CancellationToken cancellationToken, bool AutoSave = true)
+        {
+            await this.DbEntities.AddRangeAsync(Entities, cancellationToken);
+            if (AutoSave == true)
+                await dbContext.SaveChangesAsync(cancellationToken);
+        }
         public virtual async Task AddRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
         {
             await DbEntities.AddRangeAsync(entities, cancellationToken);
@@ -43,7 +48,12 @@ namespace Framework.Infrastructure
             if (autoSave)
                 await dbContext.SaveChangesAsync(cancellationToken);
         }
-
+        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> Entities, CancellationToken cancellationToken, bool AutoSave = true)
+        {
+            DbEntities.RemoveRange(Entities);
+            if (AutoSave == true)
+                await dbContext.SaveChangesAsync(cancellationToken);
+        }
         public virtual async Task DeleteRengeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool autoSave = true)
         {
             DbEntities.RemoveRange(entities);

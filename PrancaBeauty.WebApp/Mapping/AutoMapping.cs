@@ -23,11 +23,11 @@ namespace PrancaBeauty.WebApp.Mapping
             CreateMap<viAddCategory, InpAddCategory>();
             CreateMap<viAddCategory_Translate, InpAddCategory_Translate>();
             CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForCombo, vmCompo_Combo_Categories>();
-
-            //CreateMap<viCompo_AccountSettings, InpSaveAccountSettingUserDetails>();
-            //CreateMap<OutGetAddressByUserIdForManage, vmCompo_ListAddress>();
-
-
+            CreateMap<viEditCategory, InpSaveEdit>();
+            CreateMap<viEditCategory_Translate, InpSaveEdit_Translate>();
+            CreateMap<PrancaBeauty.Application.Contracts.Categories.OutGetListForAdminPage, vmCategoriesList>();
+            CreateMap<OutGetForEdit, viEditCategory>();
+            CreateMap<OutGetForEdit_Translate, viEditCategory_Translate>();
 
 
 

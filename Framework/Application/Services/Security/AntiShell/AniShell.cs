@@ -17,6 +17,8 @@ namespace Framework.Application.Services.Security.AntiShell
         public async Task<bool> ValidationExtentionAsync(IFormFile _FormFile)
         {
             var _FileInfo = await GetRealExtentionAsync(_FormFile);
+            if (_FileInfo.Item1 == null)
+                return false;
 
             if (_FileInfo.Item1 == "png")
             {
@@ -25,7 +27,7 @@ namespace Framework.Application.Services.Security.AntiShell
             }
             else if (_FileInfo.Item1 == "jpg")
             {
-                if (_FormFile.ContentType != _FileInfo.Item2)
+                if (_FormFile.ContentType != _FileInfo.Item2 /*jpg*/ && _FormFile.ContentType != "image/jpeg")
                     return false;
             }
             else if (_FileInfo.Item1 == "gif")
@@ -50,8 +52,6 @@ namespace Framework.Application.Services.Security.AntiShell
         {
             try
             {
-                // چک کردن پسوند فایل ها به صورت کاملا دقیق
-
                 if (_FormFile is null)
                     throw new ArgumentInvalidException(nameof(_FormFile));
 
@@ -61,10 +61,8 @@ namespace Framework.Application.Services.Security.AntiShell
                 string hex = "";
                 foreach (var item in buffer)
                 {
-                    //تبدیل بایت به هگز دسیمال
                     hex += string.Format("{0:X}", item) + " ";
                 }
-
 
                 if (hex.StartsWith("89 50 4E 47 0D 0A 1A 0A"))
                 {

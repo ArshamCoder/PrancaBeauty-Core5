@@ -26,5 +26,7 @@ namespace Framework.Domain
         Task<TEntity> GetById(CancellationToken cancellationToken, params object[] ids);
         Task<int> SaveChangeAsync();
 
+        Task DeleteRangeAsync(IEnumerable<TEntity> Entities, CancellationToken cancellationToken, bool AutoSave = true);
+        Task AddRangeAsync(IEnumerable<TEntity> Entities, CancellationToken cancellationToken, bool AutoSave = true);
     }
 }
