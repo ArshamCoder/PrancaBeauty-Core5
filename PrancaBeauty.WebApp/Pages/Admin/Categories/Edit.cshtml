@@ -2,7 +2,7 @@
 @using PrancaBeauty.WebApp.Models.ViewInput
 @model PrancaBeauty.WebApp.Pages.Admin.Categories.EditModel
 @{ ViewData["Title"] = Localizer["EditCategory"];
-                Layout = "~/pages/shared/_AdminLayout.cshtml"; }
+    Layout = "~/pages/shared/_AdminLayout.cshtml"; }
 
 @inject PrancaBeauty.Application.Apps.Language.ILanguageApplication _LanguageApplication
 
@@ -48,10 +48,10 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label asp-for="Input.Image"></label>@{ if (Model.Input.ImgCategoryUrl != null)
-                                                            {
-                                                <span>
-                                                    (<a onclick="ShowImgInModal('@Model.Input.ImgCategoryUrl')">@Localizer["View"].ToString()</a>)
-                                                </span> }}
+                                                {
+                                    <span>
+                                        (<a onclick="ShowImgInModal('@Model.Input.ImgCategoryUrl')">@Localizer["View"].ToString()</a>)
+                                    </span> }}
                                             <input asp-for="Input.Image" class="form-control" />
                                         </div>
                                         <div class="col-md-1">
@@ -146,6 +146,7 @@
         }
     </script>
 }
+
 
 <div id="ShowImgModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
