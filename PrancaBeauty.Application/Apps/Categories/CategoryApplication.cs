@@ -132,11 +132,15 @@ namespace PrancaBeauty.Application.Apps.Categories
                     });
                 }
 
-                var FileUploadResult = await _FtpWapper.UplaodCategoryImgAsync(Input.Image, Input.Name);
-                if (FileUploadResult == null)
-                    return new OperationResult().Failed("Error500");
+                if (Input.Image != null)
+                {
+                    var FileUploadResult = await _FtpWapper.UplaodCategoryImgAsync(Input.Image, Input.Name);
+                    if (FileUploadResult == null)
+                        return new OperationResult().Failed("Error500");
 
-                tCategory.ImageId = Guid.Parse(FileUploadResult);
+                    tCategory.ImageId = Guid.Parse(FileUploadResult);
+                }
+
                 await _CategoryRepository.AddAsync(tCategory, default, true);
 
                 return new OperationResult().Succeed();
