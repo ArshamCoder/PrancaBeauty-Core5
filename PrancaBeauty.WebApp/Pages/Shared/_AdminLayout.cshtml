@@ -14,32 +14,36 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/Admin/css/adminlte.min.css">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <!-- bootstrap rtl -->
-    <link rel="stylesheet" href="/Admin/css/bootstrap-rtl.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    @*<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">*@
 
     <!-- KendoUI CSS -->
     <link href="~/lib/KendoUI/css/kendo.common-bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/KendoUI/css/kendo.bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/KendoUI/css/kendo.rtl.min.css" rel="stylesheet" />
+
     <link href="~/lib/KendoUI/css/kendo.theme.min.css" rel="stylesheet" />
 
-    <!-- sweetalert -->
-    <link href="~/lib/sweetalert/sweetalert.min.css" rel="stylesheet" />
-    @await RenderSectionAsync("styles", false)
-    <!-- template rtl version -->
-    <link rel="stylesheet" href="/Admin/css/custom-style.css">
+    @if (ViewData["LangDir"].ToString() == "rtl")
+    {<!-- bootstrap rtl -->
+                <link rel="stylesheet" href="/Admin/css/bootstrap-rtl.min.css"> <!-- Theme style -->
+                                                <link rel="stylesheet" href="/Admin/css/adminlte.min.css"> <!-- template rtl version -->
+                                                                                <link rel="stylesheet" href="/Admin/css/custom-style-rtl.css"> <!-- Kendo Rtl -->
+                                                                                                                <link href="~/lib/KendoUI/css/kendo.rtl.min.css" rel="stylesheet" /> }
+                                                                                                                            else
+                                                                                                                            { <!-- bootstrap -->
+                                                                                                                                <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" /> <!-- Theme style -->
+                                                                                                                                                                <link rel="stylesheet" href="/Admin/css/adminlte.min.css"> <!-- template rtl version -->
+                                                                                                                                                                                                <link rel="stylesheet" href="/Admin/css/custom-style-ltr.css"> <!-- Kendo Ltr -->
+                                                                                                                                                                                                                                <link href="~/lib/KendoUI/css/kendo.ltr.min.css" rel="stylesheet" />}
 
+    <!-- SweetAlert -->
+    <link href="~/lib/sweetalert/sweetalert.min.css" rel="stylesheet" />
+
+    @await RenderSectionAsync("Styles", false)
 
     <!-- jQuery -->
-    @*<script src="/lib/jquery/jquery.min.js"></script>*@
-
-    <!--jquery min js-->
-    <script src="~/Main/js/vendor/jquery-3.4.1.min.js"></script>
+    <script src="/lib/jquery/jquery.min.js"></script>
 
     <!-- KenoUI Js -->
     <script src="~/lib/KendoUI/js/jszip.min.js"></script>
@@ -215,7 +219,8 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewCategory"]</p>
             </a>
-        </li>}
+        </li>
+}
                         @if (User.IsInRole(Roles.CanViewListCategories))
                         {
         <li class="nav-item">
@@ -223,9 +228,11 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListCategories"]</p>
             </a>
-        </li>}
+        </li>
+}
                     </ul>
-                </li>}
+                </li>
+}
                             @if (User.IsInRole(Roles.CanManageAccessLevel))
                             {
                 <li class="nav-item has-treeview">
@@ -244,8 +251,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListAccessLevel))
                         {
         <li class="nav-item">
@@ -253,11 +259,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListAccessLevel"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
 
                             @if (User.IsInRole(Roles.CanManageUsers))
                             {
@@ -277,8 +281,7 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["AddNewUsers"]</p>
             </a>
-        </li>
-}
+        </li>}
                         @if (User.IsInRole(Roles.CanViewListUsers))
                         {
         <li class="nav-item">
@@ -286,11 +289,9 @@
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>@Localizer["ListUsers"]</p>
             </a>
-        </li>
-}
+        </li>}
                     </ul>
-                </li>
-}
+                </li>}
 
 
 

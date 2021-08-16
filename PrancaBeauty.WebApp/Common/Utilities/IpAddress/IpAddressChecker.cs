@@ -1420,5 +1420,26 @@ namespace PrancaBeauty.WebApp.Common.Utilities.IpAddress
                 return null;
             }
         }
+        public string GetLangAbbr(string Ip)
+        {
+            AddIranIpList();
+            AddUsIpList();
+
+            // Local => ::1
+            // LoopBack => 127.0.0.1 - 127.255.255.255
+
+            if (IranianIpList.CheckNumber(Ip))
+            {
+                return "fa";
+            }
+            else if (UsIpList.CheckNumber(Ip))
+            {
+                return "en";
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

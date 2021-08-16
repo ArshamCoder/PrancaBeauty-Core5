@@ -10,7 +10,7 @@ using PrancaBeauty.Infrastructure.Core.Configuration;
 using PrancaBeauty.WebApp.Authentication;
 using PrancaBeauty.WebApp.Config;
 using PrancaBeauty.WebApp.Localization.Resource;
-using PrancaBeauty.WebApp.Middlewares;
+using PrancaBeauty.WebApp.Middlewares.PrancaBeauty.WebApp.Middlewares;
 using System.Collections.Generic;
 using System.Globalization;
 using WebMarkupMin.AspNetCore5;

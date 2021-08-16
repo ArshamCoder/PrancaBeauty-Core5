@@ -1,21 +1,11 @@
 ﻿@using System.Globalization
+@{ if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+                {
+                    ViewData["LangDir"] = "rtl";
+                }
+                else
+                {
+                    ViewData["LangDir"] = "ltr";
+                }
 
-@inject PrancaBeauty.WebApp.Common.Utilities.IpAddress.IIpAddressChecker IpAddressChecker
-
-@{ if (!ViewData.Any(a => a.Key == "LangDir"))
-    {
-        string ipAddress = Context.Connection.RemoteIpAddress.ToString();
-        if (IpAddressChecker.CheckIp(ipAddress) == "ir")
-        {
-            ViewData["LangDir"] = "rtl";
-        }
-        else if (IpAddressChecker.CheckIp(ipAddress) == "us")
-        {
-            ViewData["LangDir"] = "ltr";
-        }
-        else
-        {
-            ViewData["LangDir"] = "rtl";
-        }
-    }
-    ViewData["Culture"] = CultureInfo.CurrentCulture.Parent.Name; }
+                ViewData["Culture"] = CultureInfo.CurrentCulture.Parent.Name; }

@@ -1,61 +1,74 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PrancaBeauty.Application.Apps.Language;
 using PrancaBeauty.Application.Apps.Setting;
+using PrancaBeauty.WebApp.Common.Utilities.IpAddress;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PrancaBeauty.WebApp.Middlewares
 {
-    public class RedirectToValidLangMiddleware
+    namespace PrancaBeauty.WebApp.Middlewares
     {
-        private readonly RequestDelegate _Next;
-        public RedirectToValidLangMiddleware(RequestDelegate next)
+        public class RedirectToValidLangMiddleware
         {
-            _Next = next;
-        }
-
-        public async Task InvokeAsync(HttpContext context)
-        {
-            // GET فقط برای حالت 
-            if (context.Request.Method.ToLower() == "get")
+            private readonly RequestDelegate _Next;
+            public RedirectToValidLangMiddleware(RequestDelegate next)
             {
-                string[] paths = context.Request.Path.HasValue ?
-                    context.Request.Path.Value.Trim(new char[] { '/' }).Split("/")
-                    : new string[] { };
-
-                var settingApplication = (ISettingApplication)context.RequestServices.GetService(typeof(ISettingApplication));
-                var languageApplication = (ILanguageApplication)context.RequestServices.GetService(typeof(ILanguageApplication));
-
-                if (paths.Any())
-                {
-                    // زبان انتخاب شده
-                    string langAbbr = paths.First();
-
-                    var isValid = await languageApplication.IsValidAbbrForSiteLangAsync(langAbbr);
-                    if (!isValid)
-                    {
-                        string siteUrl = (await settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
-
-                        // replace
-                        // کردن بخش اول آدرس مرورگر که کاربر فرستاده اینجا
-                        paths[0] = "fa";
-
-                        context.Response.StatusCode = 301;
-                        context.Response.Redirect(siteUrl + "/" + string.Join("/", paths));
-                    }
-                }
-                else
-                {
-                    if (settingApplication != null)
-                    {
-                        string siteUrl = (await settingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
-                        context.Response.Redirect(siteUrl + "/fa");
-                    }
-                }
+                _Next = next;
             }
 
-            await _Next(context);
+            public async Task InvokeAsync(HttpContext context)
+            {
+                // GET فقط برای حالت 
+                if (context.Request.Method.ToLower() == "get")
+                {
+                    string[] Paths = context.Request.Path.HasValue ? context.Request.Path.Value.Trim(new char[] { '/' }).Split("/") : new string[] { };
+
+                    var _SettingApplication = (ISettingApplication)context.RequestServices.GetService(typeof(ISettingApplication));
+                    var _LanguageApplication = (ILanguageApplication)context.RequestServices.GetService(typeof(ILanguageApplication));
+
+
+                    if (Paths.Any())
+                    {
+                        // زبان انتخاب شده
+                        string LangAbbr = Paths.First();
+
+                        var isValid = await _LanguageApplication.IsValidAbbrForSiteLangAsync(LangAbbr);
+                        if (!isValid)
+                        {
+                            string SiteUrl = (await _SettingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
+
+                            Paths[0] = GetLangByIpAddress(context);
+
+                            context.Response.StatusCode = 301;
+                            context.Response.Redirect(SiteUrl + "/" + string.Join("/", Paths));
+                        }
+                    }
+                    else
+                    {
+                        string SiteUrl = (await _SettingApplication.GetSettingAsync(CultureInfo.CurrentCulture.Name)).SiteUrl;
+
+                        string _LangAbbr = GetLangByIpAddress(context);
+
+                        context.Response.Redirect(SiteUrl + $"/{_LangAbbr}");
+                    }
+                }
+
+                await _Next(context);
+            }
+
+            private string GetLangByIpAddress(HttpContext context)
+            {
+                var _IpAddressChecker = (IIpAddressChecker)context.RequestServices.GetService(typeof(IIpAddressChecker));
+
+                var _LangAbbrByIpAddress = _IpAddressChecker.GetLangAbbr(context.Connection.RemoteIpAddress.ToString());
+
+                if (_LangAbbrByIpAddress == null)
+                    return "fa";
+                else
+                    return _LangAbbrByIpAddress;
+            }
         }
     }
 }

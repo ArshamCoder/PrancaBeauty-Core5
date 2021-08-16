@@ -14,7 +14,7 @@
                     <h1 class="m-0 text-dark">@ViewData["Title"]</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-left">
+                    <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/@CultureInfo.CurrentCulture.Parent.Name/admin/index">@Localizer["Dashborad"]</a></li>
                         <li class="breadcrumb-item active">@ViewData["Title"]</li>
                     </ol>
@@ -84,9 +84,7 @@
 </a>}
         @if (User.IsInRole(Roles.CanChangeUsersAccessLevel))
         {
-<a onClick="ChangeAccessLevel('#:Id#','#:AccessLevelId#')" class="dropdown-item"><i class="dropdown-icon fa fa-shield"></i>@Localizer["ChangeAccessLevel"]</a>
-
-}
+<a onClick="ChangeAccessLevel('#:Id#','#:AccessLevelId#')" class="dropdown-item"><i class="dropdown-icon fa fa-shield"></i>@Localizer["ChangeAccessLevel"]</a>}
     </div>
 </div>
 
@@ -128,8 +126,7 @@
     function Add() {
         location.href = '/@ViewData["Culture"]/Admin/Users/Add?ReturnUrl=@(System.Net.WebUtility.UrlEncode(Request.GetCurrentUrl()))';
     }
-</script>
-}
+</script>}
 
 @if (User.IsInRole(Roles.CanRemoveUsers))
 {
@@ -137,15 +134,15 @@
     function Remove(_Id) {
         RemoveData('/@ViewData["Culture"]/Admin/Users/List?handler=Remove', {Id:_Id});
     }
-</script>
-}
+</script>}
 @if (User.IsInRole(Roles.CanChangeUsersStatus))
 {
 <script>
         function ChangeStatus(_Id) {
             RemoveData('/@ViewData["Culture"]/Admin/Users/List?handler=ChanageStatus', {Id:_Id});
         }
-</script>}
+</script>
+}
 
 @if (User.IsInRole(Roles.CanChangeUsersAccessLevel))
 {
@@ -156,7 +153,8 @@
             $('#ChangeAccessLevel').modal({ backdrop: 'static', keyboard: false });
         });
     }
-</script>}
+</script>
+}
 
 <script>
     function RefreshData() {
