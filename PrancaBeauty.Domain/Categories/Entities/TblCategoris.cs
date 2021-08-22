@@ -1,5 +1,6 @@
 ﻿using Framework.Domain;
 using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
+using PrancaBeauty.Domain.Product.ProductAgg.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -17,5 +18,7 @@ namespace PrancaBeauty.Domain.Categories.Entities
         public virtual TblFile tblFiles { get; set; }
         public virtual ICollection<TblCategoris> tblCategory_Childs { get; set; }
         public virtual ICollection<TblCategory_Translates> tblCategory_Translates { get; set; }
+
+        public virtual ICollection<tblProducts> tblProducts { get; set; }
     }
 }
