@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PrancaBeauty.Domain.Categories.Entities;
+using PrancaBeauty.Domain.Category.CategoriyAgg.Entities;
 using PrancaBeauty.Infrastructure.EfCore.Contracts;
 
 namespace PrancaBeauty.Infrastructure.EFCore.Mapping.Category

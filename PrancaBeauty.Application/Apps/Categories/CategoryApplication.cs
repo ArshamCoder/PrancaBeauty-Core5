@@ -6,8 +6,8 @@ using PrancaBeauty.Application.Common.FtpWapper;
 using PrancaBeauty.Application.Contracts.Categories;
 using PrancaBeauty.Application.Contracts.Result;
 using PrancaBeauty.Application.Exceptions;
-using PrancaBeauty.Domain.Categories.Contracts;
-using PrancaBeauty.Domain.Categories.Entities;
+using PrancaBeauty.Domain.Category.CategoriyAgg.Contracts;
+using PrancaBeauty.Domain.Category.CategoriyAgg.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -168,7 +168,7 @@ namespace PrancaBeauty.Application.Apps.Categories
                                                      .Select(a => new
                                                      {
                                                          HasChild = a.tblCategory_Childs.Any(),
-                                                         HasProduct = false
+                                                         HasProduct = a.tblProducts.Any()
                                                      })
                                                      .SingleOrDefaultAsync();
 

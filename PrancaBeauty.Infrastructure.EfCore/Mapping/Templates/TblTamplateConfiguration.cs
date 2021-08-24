@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PrancaBeauty.Domain.TemplateAgg.Entities;
+using PrancaBeauty.Domain.Template.TemplateAgg.Entities;
 using PrancaBeauty.Infrastructure.EfCore.Contracts;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Templates

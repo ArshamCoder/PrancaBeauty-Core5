@@ -2,7 +2,7 @@
 using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
 using System;
 
-namespace PrancaBeauty.Domain.SettingAgg.Entities
+namespace PrancaBeauty.Domain.Setting.SettingAgg.Entities
 {
     public class TblSetting : IEntity
     {

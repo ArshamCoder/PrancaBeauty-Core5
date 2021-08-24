@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Apps.Setting;
 using PrancaBeauty.Application.Contracts.Templates;
-using PrancaBeauty.Domain.TemplateAgg.Contracts;
+using PrancaBeauty.Domain.Template.TemplateAgg.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

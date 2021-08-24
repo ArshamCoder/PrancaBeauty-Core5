@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PrancaBeauty.Domain.SettingAgg.Entities;
+using PrancaBeauty.Domain.Setting.SettingAgg.Entities;
 using PrancaBeauty.Infrastructure.EfCore.Contracts;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Setting

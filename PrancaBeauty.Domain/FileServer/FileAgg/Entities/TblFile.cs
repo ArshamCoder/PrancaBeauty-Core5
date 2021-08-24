@@ -1,5 +1,5 @@
 ﻿using Framework.Domain;
-using PrancaBeauty.Domain.Categories.Entities;
+using PrancaBeauty.Domain.Category.CategoriyAgg.Entities;
 using PrancaBeauty.Domain.FileServer.ServerAgg.Entities;
 using PrancaBeauty.Domain.Product.ProductMediaAgg.Entities;
 using PrancaBeauty.Domain.Product.ProductReviewsMediaAgg.Entities;

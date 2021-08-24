@@ -4,7 +4,7 @@ using PrancaBeauty.Domain.Product.ProductAgg.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace PrancaBeauty.Domain.Categories.Entities
+namespace PrancaBeauty.Domain.Category.CategoriyAgg.Entities
 {
     public class TblCategoris : IEntity
     {

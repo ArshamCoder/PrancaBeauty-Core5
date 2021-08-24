@@ -2,7 +2,7 @@
 using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
 using System;
 
-namespace PrancaBeauty.Domain.TemplateAgg.Entities
+namespace PrancaBeauty.Domain.Template.TemplateAgg.Entities
 {
     public class TblTemplate : IEntity
     {

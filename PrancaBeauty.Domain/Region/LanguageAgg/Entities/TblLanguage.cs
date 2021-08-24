@@ -1,5 +1,5 @@
 ﻿using Framework.Domain;
-using PrancaBeauty.Domain.Categories.Entities;
+using PrancaBeauty.Domain.Category.CategoriyAgg.Entities;
 using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
 using PrancaBeauty.Domain.Product.ProductPropertisAgg.Entities;
 using PrancaBeauty.Domain.Product.ProductReviewsAttributeAgg.Entities;
@@ -8,8 +8,8 @@ using PrancaBeauty.Domain.Product.ProductVariantAgg.Entities;
 using PrancaBeauty.Domain.Region.CityAgg.Entities;
 using PrancaBeauty.Domain.Region.CountryAgg.Entities;
 using PrancaBeauty.Domain.Region.ProvinceAgg.Entities;
-using PrancaBeauty.Domain.SettingAgg.Entities;
-using PrancaBeauty.Domain.TemplateAgg.Entities;
+using PrancaBeauty.Domain.Setting.SettingAgg.Entities;
+using PrancaBeauty.Domain.Template.TemplateAgg.Entities;
 using PrancaBeauty.Domain.User.SellerAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;

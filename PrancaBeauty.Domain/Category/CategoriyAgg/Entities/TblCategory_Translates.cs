@@ -2,7 +2,7 @@
 using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
 using System;
 
-namespace PrancaBeauty.Domain.Categories.Entities
+namespace PrancaBeauty.Domain.Category.CategoriyAgg.Entities
 {
     public class TblCategory_Translates : IEntity
     {
