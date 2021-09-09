@@ -17,6 +17,10 @@ namespace PrancaBeauty.Domain.Product.ProductAgg.Entities
     public class tblProducts : IEntity
     {
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// آی دی کاربری است که برای اولین بار این محصول ایجاد کرده
+        /// </summary>
         public Guid AuthorUserId { get; set; }
         public Guid CategoryId { get; set; }
         public DateTime Date { get; set; }
