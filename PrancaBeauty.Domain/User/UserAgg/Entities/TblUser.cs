@@ -29,6 +29,7 @@ namespace PrancaBeauty.Domain.User.UserAgg.Entities
         public string PasswordPhoneNumber { get; set; }
         public DateTime? LastTrySentSms { get; set; }
         public bool IsActive { get; set; }
+        public bool IsSeller { get; set; }
 
 
 
