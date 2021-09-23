@@ -21,6 +21,7 @@
         public const string CanRemoveUsers = "CanRemoveUsers";
         public const string CanChangeUsersStatus = "CanChangeUsersStatus";
         public const string CanChangeUsersAccessLevel = "CanChangeUsersAccessLevel";
+        public const string CanChangeProfileImage = "CanChangeProfileImage";
         #endregion
 
         #region Categories
@@ -29,6 +30,17 @@
         public const string CanAddCategory = "CanAddCategory";
         public const string CanEditCategory = "CanEditCategory";
         public const string CanRemoveCategory = "CanRemoveCategory";
+        #endregion
+
+        #region Products
+        public const string CanManageProducts = "CanManageProducts";
+        public const string CanViewListProducts = "CanViewListProducts";
+        public const string CanViewListAllAuthorUserProducts = "CanViewListAllAuthorUserProducts";
+        public const string CanViewListAllSellerUserProducts = "CanViewListAllSellerUserProducts";
+        public const string CanAddProduct = "CanAddProduct";
+        public const string CanEditProduct = "CanEditProduct";
+        public const string CanRemoveProduct = "CanRemoveProduct";
+
         #endregion
     }
 }
