@@ -28,6 +28,12 @@ namespace PrancaBeauty.Infrastructure.EFCore.Mapping.Product
                    .HasPrincipalKey(a => a.Id)
                    .HasForeignKey(a => a.CategoryId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(a => a.tblLanguage)
+                .WithMany(a => a.tblProducts)
+                .HasPrincipalKey(a => a.Id)
+                .HasForeignKey(a => a.LangId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -18,11 +18,10 @@ namespace PrancaBeauty.Infrastructure.EfCore.Mapping.Region.Language
             builder.Property(a => a.Abbr).IsRequired().HasMaxLength(50);
 
 
-
-            builder.HasOne(a => a.TblFile)
-                .WithMany(a => a.TblLanguages)
+            builder.HasOne(a => a.tblCountries)
+                .WithMany(a => a.tblLanguages)
                 .HasPrincipalKey(a => a.Id)
-                .HasForeignKey(a => a.FlagImgId)
+                .HasForeignKey(a => a.CountryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

@@ -50,14 +50,12 @@ namespace PrancaBeauty.Application.Apps.Categories
                     ParentId = a.ParentId.ToString(),
                     Name = a.Name,
                     Title = a.tblCategory_Translates.Where(b => b.LangId == Guid.Parse(LangId)).Select(b => b.Title).Single(),
-                    ImgUrl = a.tblFiles.TblFileServer.HttpDomin
-                                + a.tblFiles.TblFileServer.HttpPath
-                                + a.tblFiles.Path
-                                + a.tblFiles.FileName,
+                    ImgUrl = a.tblFiles.tblFilePaths.tblFileServer.HttpDomin
+                             + a.tblFiles.tblFilePaths.tblFileServer.HttpPath
+                             + a.tblFiles.tblFilePaths.Path
+                             + a.tblFiles.FileName,
                     Sort = a.Sort,
-                    ParentTitle = a.tblCategory_Parent.tblCategory_Translates
-                        .Where(b => b.LangId == Guid.Parse(LangId))
-                        .Select(b => b.Title).Single(),
+                    ParentTitle = a.tblCategory_Parent.tblCategory_Translates.Where(b => b.LangId == Guid.Parse(LangId)).Select(b => b.Title).Single(),
                 })
                 .Where(a => Title == null || a.Title.Contains(Title))
                 .Where(a => ParentTitle == null || a.ParentTitle.Contains(ParentTitle))
@@ -83,21 +81,21 @@ namespace PrancaBeauty.Application.Apps.Categories
         public async Task<List<OutGetListForCombo>> GetListForComboAsync(string LangId, string ParentId)
         {
             var qData = await _CategoryRepository.Get
-                                                 .Where(a => ParentId != null ? a.ParentId == Guid.Parse(ParentId) /*&& a.Id != Guid.Parse(ParentId)*/ : a.ParentId == null)
-                                                .Select(a => new OutGetListForCombo
-                                                {
-                                                    Id = a.Id.ToString(),
-                                                    ParentId = a.ParentId.ToString(),
-                                                    Name = a.Name,
-                                                    Title = a.tblCategory_Translates.Where(b => b.LangId == Guid.Parse(LangId)).Select(b => b.Title).Single(),
-                                                    Sort = a.Sort,
-                                                    hasChildren = a.tblCategory_Childs/*.Where(b => b.Id != Guid.Parse(ParentId))*/.Any(),
-                                                    ImgUrl = a.tblFiles.TblFileServer.HttpDomin
-                                                                + a.tblFiles.TblFileServer.HttpPath
-                                                                + a.tblFiles.Path
-                                                                + a.tblFiles.FileName,
-                                                })
-                                                .ToListAsync();
+                .Where(a => ParentId != null ? a.ParentId == Guid.Parse(ParentId) /*&& a.Id != Guid.Parse(ParentId)*/ : a.ParentId == null)
+                .Select(a => new OutGetListForCombo
+                {
+                    Id = a.Id.ToString(),
+                    ParentId = a.ParentId.ToString(),
+                    Name = a.Name,
+                    Title = a.tblCategory_Translates.Where(b => b.LangId == Guid.Parse(LangId)).Select(b => b.Title).Single(),
+                    Sort = a.Sort,
+                    hasChildren = a.tblCategory_Childs/*.Where(b => b.Id != Guid.Parse(ParentId))*/.Any(),
+                    ImgUrl = a.tblFiles.tblFilePaths.tblFileServer.HttpDomin
+                             + a.tblFiles.tblFilePaths.tblFileServer.HttpPath
+                             + a.tblFiles.tblFilePaths.Path
+                             + a.tblFiles.FileName,
+                })
+                .ToListAsync();
 
             return qData;
         }
@@ -212,25 +210,25 @@ namespace PrancaBeauty.Application.Apps.Categories
                     throw new ArgumentInvalidException($"'{nameof(Id)}' cannot be null or whitespace.");
 
                 var qData = await _CategoryRepository.Get
-                                                    .Where(a => a.Id == Guid.Parse(Id))
-                                                    .Select(a => new OutGetForEdit
-                                                    {
-                                                        Id = a.Id.ToString(),
-                                                        Name = a.Name,
-                                                        ParentId = a.ParentId.ToString(),
-                                                        Sort = a.Sort,
-                                                        ImgCategoryUrl = a.tblFiles.TblFileServer.HttpDomin
-                                                                            + a.tblFiles.TblFileServer.HttpPath
-                                                                            + a.tblFiles.Path
-                                                                            + a.tblFiles.FileName,
-                                                        LstTranslate = a.tblCategory_Translates.Select(b => new OutGetForEdit_Translate
-                                                        {
-                                                            LangId = b.LangId.ToString(),
-                                                            Title = b.Title,
-                                                            Description = b.Description
-                                                        }).ToList()
-                                                    })
-                                                    .SingleOrDefaultAsync();
+                    .Where(a => a.Id == Guid.Parse(Id))
+                    .Select(a => new OutGetForEdit
+                    {
+                        Id = a.Id.ToString(),
+                        Name = a.Name,
+                        ParentId = a.ParentId.ToString(),
+                        Sort = a.Sort,
+                        ImgCategoryUrl = a.tblFiles.tblFilePaths.tblFileServer.HttpDomin
+                                         + a.tblFiles.tblFilePaths.tblFileServer.HttpPath
+                                         + a.tblFiles.tblFilePaths.Path
+                                         + a.tblFiles.FileName,
+                        LstTranslate = a.tblCategory_Translates.Select(b => new OutGetForEdit_Translate
+                        {
+                            LangId = b.LangId.ToString(),
+                            Title = b.Title,
+                            Description = b.Description
+                        }).ToList()
+                    })
+                    .SingleOrDefaultAsync();
 
                 if (qData == null)
                     return null;

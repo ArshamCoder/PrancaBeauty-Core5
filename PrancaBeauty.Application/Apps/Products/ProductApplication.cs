@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PrancaBeauty.Application.Exceptions;
 
 namespace PrancaBeauty.Application.Apps.Products
 {
@@ -22,26 +24,33 @@ namespace PrancaBeauty.Application.Apps.Products
             _CategoryApplication = categoryApplication;
         }
 
-        public async Task<(OutPagingData, List<OutGetProductsForManage>)> GetProductsForManageAsync(string LangId, string SellerUserId, string AuthorUserId, string Title, string Name, bool? IsDelete, bool? IsDraft, bool? IsConfirmed, bool? IsSchedule)
+        public async Task<(OutPagingData, List<OutGetProductsForManage>)> GetProductsForManageAsync(int Page, int Take, string LangId, string SellerUserId, string AuthorUserId, string Title, string Name, bool? IsDelete, bool? IsDraft, bool? IsConfirmed, bool? IsSchedule)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(LangId))
+                    throw new ArgumentInvalidException($"'{nameof(LangId)}' cannot be null or whitespace.");
+
                 var qData = _ProductRepository.Get
-                                              .Where(a => SellerUserId != null ? a.tblProductSellers.Where(b => b.SellerUserId == Guid.Parse(SellerUserId)).Any() : true)
-                                              .Where(a => AuthorUserId != null ? a.AuthorUserId == Guid.Parse(AuthorUserId) : true)
+                                              .Where(a => SellerUserId == null || a.tblProductSellers.Any(b => b.SellerUserId == Guid.Parse(SellerUserId)))
+                                              .Where(a => a.LangId == Guid.Parse(LangId))
                                               .Select(a => new OutGetProductsForManage
                                               {
                                                   Id = a.Id.ToString(),
-                                                  ImgUrl = a.tblProductMedia.Where(b => b.tblFiles.MimeType.StartsWith("image"))
-                                                                            .Select(b => b.tblFiles.TblFileServer.HttpDomin
-                                                                                         + b.tblFiles.TblFileServer.HttpPath
-                                                                                         + b.tblFiles.Path
+                                                  ImgUrl = a.tblProductMedia.Where(b => b.tblFiles.tblFileTypes.MimeType.StartsWith("image"))
+                                                                            .Select(b => b.tblFiles.tblFilePaths.tblFileServer.HttpDomin
+                                                                                         + b.tblFiles.tblFilePaths.tblFileServer.HttpPath
+                                                                                         + b.tblFiles.tblFilePaths.Path
                                                                                          + b.tblFiles.FileName).First(),
+                                                  UniqueNumber = a.UniqueNumber,
                                                   Name = a.Name,
                                                   Title = a.Title,
                                                   Date = a.Date,
+                                                  HasUnConfirmedAsk = a.tblProductAsk.Any(b => b.IsConfirm == false),
                                                   CountAsks = a.tblProductAsk.Count(),
+                                                  HasUnConfirmedReviews = a.tblProductReviews.Any(b => b.IsConfirm == false),
                                                   CountReviews = a.tblProductReviews.Count(),
+                                                  HasUnConfirmedSellerRequest = a.tblProductSellers.Any(b => b.IsConfirm == false),
                                                   CountSellers = a.tblProductSellers.Count(),
                                                   CountVisit = 0,
                                                   Status = a.IsDelete ? OutGetProductsForManage_Status.IsDelete : (a.IsDraft ? OutGetProductsForManage_Status.IsDraft : (a.IsConfirmed ? OutGetProductsForManage_Status.IsConfirm : (a.Date > DateTime.Now ? OutGetProductsForManage_Status.IsSchedule : OutGetProductsForManage_Status.UnKnown))),
@@ -59,6 +68,9 @@ namespace PrancaBeauty.Application.Apps.Products
 
                 #region جستوجو
                 {
+                    if (AuthorUserId != null)
+                        qData = qData.Where(a => a.AuthorUserId == AuthorUserId);
+
                     if (Title != null)
                         qData = qData.Where(a => a.Title.Contains(Title));
 
@@ -79,12 +91,28 @@ namespace PrancaBeauty.Application.Apps.Products
                 }
                 #endregion
 
+                #region مرتب سازی
+
+                #endregion
+
+                #region صفحه بندی
+                var _PagingData = PagingData.Calc(await qData.LongCountAsync(), Page, Take);
+                #endregion
+
+                return (_PagingData,
+                                await qData.OrderByDescending(a => a.Date)
+                                           .Skip((int)_PagingData.Skip)
+                                           .Take((int)_PagingData.Take)
+                                           .ToListAsync());
+            }
+            catch (ArgumentInvalidException)
+            {
                 return default;
             }
             catch (Exception ex)
             {
                 _Logger.Error(ex);
-                throw;
+                return default;
             }
         }
     }

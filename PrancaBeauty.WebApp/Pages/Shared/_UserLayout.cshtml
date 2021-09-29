@@ -14,7 +14,8 @@
                         <ul class="nav flex-column dashboard-list">
                             @if (User.IsInRole(Roles.AdminPage))
                             {
-                <li><a href="/@ViewData["Culture"]/Admin/Index" class="nav-link">@Localizer["AdminPanel"]</a></li>}
+                <li><a href="/@ViewData["Culture"]/Admin/Index" class="nav-link">@Localizer["AdminPanel"]</a></li>
+}
 
                             <li><a href="/@ViewData["Culture"]/User/Index" class="nav-link">@Localizer["Dashboard"]</a></li>
 
@@ -22,7 +23,8 @@
                             {
                 @if (User.IsInRole(Roles.CanViewListProducts))
                 {
-<li> <a href="/@ViewData["Culture"]/User/Products/List" class="nav-link">@Localizer["ProductList"]</a></li>}}
+<li> <a href="/@ViewData["Culture"]/User/Products/List" class="nav-link">@Localizer["ProductList"]</a></li>
+}}
                             <li><a href="#downloads" class="nav-link active">Downloads</a></li>
                             <li><a href="#address" class="nav-link">Addresses</a></li>
                             <li><a href="#account-details" class="nav-link">Account details</a></li>
@@ -49,6 +51,7 @@
     <link href="~/lib/KendoUI/css/kendo.bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/KendoUI/css/kendo.rtl.min.css" rel="stylesheet" />
     <link href="~/lib/KendoUI/css/kendo.theme.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("styles", false)
 }
 
 @section scripts{
@@ -58,6 +61,8 @@
 
     <!-- sweetalert -->
     <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+
+    @await RenderSectionAsync("scripts", false)
 }
 
 @section KendoScripts{

@@ -6,17 +6,20 @@ using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
 using PrancaBeauty.Infrastructure.EfCore.Context;
 using System;
 using System.Linq;
+using PrancaBeauty.Domain.Region.CountryAgg.Entities;
 
 namespace PrancaBeauty.Infrastructure.EfCore.Data
 {
     public class AddDataLanguage
     {
-        BaseRepository<TblLanguage> _repLang;
+        readonly BaseRepository<TblLanguage> _repLang;
         readonly BaseRepository<TblFileServer> _FileServer;
+        readonly BaseRepository<TblCountries> _Country;
         public AddDataLanguage()
         {
             _repLang = new BaseRepository<TblLanguage>(new MainContext());
             _FileServer = new BaseRepository<TblFileServer>(new MainContext());
+            _Country = new BaseRepository<TblCountries>(new MainContext());
         }
         public void Run()
         {
@@ -26,23 +29,13 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                 {
                     Id = new Guid().SequentialGuid(),
                     Code = "fa-IR",
-                    UseForSiteLanguage = true,
                     IsActive = true,
                     IsRtl = true,
                     Name = "Persian_IR",
                     NativeName = "فارسی (ایران)",
                     Abbr = "fa",
-                    TblFile = new TblFile()
-                    {
-                        Id = new Guid().SequentialGuid(),
-                        Title = "IranFlag",
-                        Date = DateTime.Now,
-                        FileName = "IranFlag.png",
-                        FileServerId = _FileServer.GetNoTraking.Where(a => a.Name == "Public").Select(a => a.Id).Single(),
-                        MimeType = "image/png",
-                        Path = "/Img/flags/",
-                        SizeOnDisk = 0
-                    }
+                    UseForSiteLanguage = true,
+                    CountryId = _Country.Get.Where(a => a.Name == "Iran").Select(a => a.Id).Single()
                 }, default, true).Wait();
             }
 
@@ -54,21 +47,11 @@ namespace PrancaBeauty.Infrastructure.EfCore.Data
                     Code = "en-US",
                     IsActive = true,
                     IsRtl = false,
-                    UseForSiteLanguage = true,
                     Name = "English_USA",
                     NativeName = "English (USA)",
                     Abbr = "en",
-                    TblFile = new TblFile()
-                    {
-                        Id = new Guid().SequentialGuid(),
-                        Title = "UsFlag",
-                        Date = DateTime.Now,
-                        FileName = "UsFlag.png",
-                        FileServerId = _FileServer.GetNoTraking.Where(a => a.Name == "Public").Select(a => a.Id).Single(),
-                        MimeType = "image/png",
-                        Path = "/Img/flags/",
-                        SizeOnDisk = 0
-                    }
+                    UseForSiteLanguage = true,
+                    CountryId = _Country.Get.Where(a => a.Name == "USA").Select(a => a.Id).Single()
                 }, default, true).Wait();
             }
         }

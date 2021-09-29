@@ -14,6 +14,7 @@ using PrancaBeauty.Domain.User.SellerAgg.Entities;
 using PrancaBeauty.Domain.User.UserAgg.Entities;
 using System;
 using System.Collections.Generic;
+using PrancaBeauty.Domain.Product.ProductAgg.Entities;
 
 namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
 {
@@ -36,6 +37,8 @@ namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
         public bool IsRtl { get; set; }
         public bool IsActive { get; set; }
 
+        public Guid CountryId { get; set; }
+
         /// <summary>
         /// یعنی برای این زبان ریسورس قرار داده شده است یا خیر
         /// </summary>
@@ -50,19 +53,19 @@ namespace PrancaBeauty.Domain.Region.LanguageAgg.Entities
         public virtual ICollection<TblCities_Translates> tblCities_Translates { get; set; }
         public virtual ICollection<TblUser> tblUsers { get; set; }
         public virtual ICollection<TblCategory_Translates> tblCategory_Translates { get; set; }
-
+        public virtual ICollection<tblProducts> tblProducts { get; set; }
 
         public virtual ICollection<tblProductTopic_Translates> tblProductTopic_Translates { get; set; }
         public virtual ICollection<tblProductPropertis_Translates> tblProductPropertis_Translates { get; set; }
         public virtual ICollection<tblProductVariants_Translates> tblProductVariants_Translates { get; set; }
         public virtual ICollection<tblSeller_Translates> tblSeller_Translates { get; set; }
         public virtual ICollection<tblProductReviewsAttribute_Translate> tblProductReviewsAttribute_Translate { get; set; }
+        public virtual TblCountries tblCountries { get; set; }
 
 
 
 
 
 
-        public virtual TblFile TblFile { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
 using System;
 using System.Collections.Generic;
+using PrancaBeauty.Domain.FileServer.FilePathAgg.Entities;
 
 namespace PrancaBeauty.Domain.FileServer.ServerAgg.Entities
 {
@@ -20,6 +21,10 @@ namespace PrancaBeauty.Domain.FileServer.ServerAgg.Entities
         public long Capacity { get; set; } // byte
         public string FtpData { get; set; }
         public bool IsActive { get; set; }
-        public virtual ICollection<TblFile> TblFiles { get; set; }
+
+
+
+        public virtual ICollection<tblFilePaths> tblFilePaths { get; set; }
+
     }
 }

@@ -4,6 +4,7 @@ using PrancaBeauty.Domain.Region.ProvinceAgg.Entities;
 using PrancaBeauty.Domain.User.AddressAgg.Entities;
 using System;
 using System.Collections.Generic;
+using PrancaBeauty.Domain.Region.LanguageAgg.Entities;
 
 namespace PrancaBeauty.Domain.Region.CountryAgg.Entities
 {
@@ -26,5 +27,6 @@ namespace PrancaBeauty.Domain.Region.CountryAgg.Entities
         public virtual ICollection<TblCountries_Translates> tblCountries_Translates { get; set; }
         public virtual ICollection<TblAddress> tblAddress { get; set; }
         public virtual ICollection<TblProvinces> TblProvinces { get; set; }
+        public virtual ICollection<TblLanguage> tblLanguages { get; set; }
     }
 }

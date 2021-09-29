@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using PrancaBeauty.Application.Contracts.Language;
 using PrancaBeauty.Domain.Region.LanguageAgg.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Infrastructure;
 
 namespace PrancaBeauty.Application.Apps.Language
 {
@@ -11,10 +13,12 @@ namespace PrancaBeauty.Application.Apps.Language
     {
         private readonly ILanguageRepository _languageRepository;
         private List<OutSiteLangCache> _siteLangCache;
+        private readonly ILogger _Logger;
 
-        public LanguageApplication(ILanguageRepository languageRepository)
+        public LanguageApplication(ILanguageRepository languageRepository, ILogger logger)
         {
             _languageRepository = languageRepository;
+            _Logger = logger;
         }
 
         public async Task<string> GetCodeByAbbrAsync(string Abbr)
@@ -40,25 +44,33 @@ namespace PrancaBeauty.Application.Apps.Language
 
         private async Task LoadCacheAsync()
         {
-            if (_siteLangCache == null)
+            try
             {
-                _siteLangCache = await _languageRepository.Get
-                    .Where(a => a.IsActive)
-                    .Where(a => a.UseForSiteLanguage)
-                    .Select(a => new OutSiteLangCache
-                    {
-                        Id = a.Id.ToString(),
-                        Abbr = a.Abbr,
-                        Code = a.Code,
-                        IsRtl = a.IsRtl,
-                        Name = a.Name,
-                        NativeName = a.NativeName,
-                        FlagUrl = a.TblFile.TblFileServer.HttpDomin +
-                                  a.TblFile.TblFileServer.HttpPath +
-                                  a.TblFile.Path +
-                                  a.TblFile.FileName
-                    })
-                    .ToListAsync();
+                if (_siteLangCache == null)
+                {
+                    _siteLangCache = await _languageRepository.Get
+                        .Where(a => a.IsActive)
+                        .Where(a => a.UseForSiteLanguage)
+                        .Select(a => new OutSiteLangCache
+                        {
+                            Id = a.Id.ToString(),
+                            CountryId = a.CountryId.ToString(),
+                            Abbr = a.Abbr,
+                            Code = a.Code,
+                            IsRtl = a.IsRtl,
+                            Name = a.Name,
+                            NativeName = a.NativeName,
+                            FlagUrl = a.tblCountries.tblFiles.tblFilePaths.tblFileServer.HttpDomin +
+                                      a.tblCountries.tblFiles.tblFilePaths.tblFileServer.HttpPath +
+                                      a.tblCountries.tblFiles.tblFilePaths.Path +
+                                      a.tblCountries.tblFiles.FileName
+                        })
+                        .ToListAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
             }
 
         }

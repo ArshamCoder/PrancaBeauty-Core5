@@ -8,6 +8,8 @@ using PrancaBeauty.Domain.FileServer.FileAgg.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using PrancaBeauty.Application.Apps.FilePath;
+using PrancaBeauty.Application.Apps.FileTypes;
 
 namespace PrancaBeauty.Application.Apps.File
 {
@@ -15,10 +17,14 @@ namespace PrancaBeauty.Application.Apps.File
     {
         private readonly ILogger _Logger;
         private readonly IFileRepository _FileRepository;
-        public FileApplication(IFileRepository fileRepository, ILogger logger)
+        private readonly IFileTypeApplication _FileTypeApplication;
+        private readonly IFilePathApplication _FilePathApplication;
+        public FileApplication(IFileRepository fileRepository, ILogger logger, IFileTypeApplication fileTypeApplication, IFilePathApplication filePathApplication)
         {
             _FileRepository = fileRepository;
             _Logger = logger;
+            _FileTypeApplication = fileTypeApplication;
+            _FilePathApplication = filePathApplication;
         }
 
         public async Task<OperationResult> AddFileAsync(InpAddFile Input)
@@ -31,16 +37,25 @@ namespace PrancaBeauty.Application.Apps.File
                 if (await CheckExsitAsync(Input.FileServerId, Input.Path, Input.FileName))
                     return new OperationResult().Failed("FileInfoIsDuplicated");
 
+                // اعتبار سنجی نوع فایل
+                string FileTypeId = await _FileTypeApplication.GetIdByMimeTypeAsync(Input.MimeType.ToLower());
+                if (FileTypeId == null)
+                    return new OperationResult().Failed("MimeTypeIsInvalid");
+
+                // اعتبار سنجی پوشه
+                string FilePathId = await _FilePathApplication.GetIdByPathAsync(Input.FileServerId, Input.Path);
+                if (FilePathId == null)
+                    return new OperationResult().Failed("FilePathIsInvalid");
+
                 TblFile tFile = new TblFile()
                 {
                     Id = Guid.Parse(Input.Id),
                     Date = DateTime.Now,
-                    FileServerId = Guid.Parse(Input.FileServerId),
+                    FilePathId = Guid.Parse(FilePathId),
+                    FileTypeId = Guid.Parse(FileTypeId),
                     UserId = Input.UserId != null ? Guid.Parse(Input.UserId) : null,
                     FileName = Input.FileName,
                     IsPrivate = Input.IsPrivate,
-                    MimeType = Input.MimeType,
-                    Path = Input.Path,
                     SizeOnDisk = Input.SizeOnDisk,
                     Title = Input.Title
                 };
@@ -66,10 +81,10 @@ namespace PrancaBeauty.Application.Apps.File
                 throw new ArgumentInvalidException();
 
             return await _FileRepository.Get
-                                        .Where(a => FileServerId == null || a.FileServerId == Guid.Parse(FileServerId))
-                                        .Where(a => Path == null || a.Path == Path)
-                                        .Where(a => FileName == null || a.FileName == FileName)
-                                        .AnyAsync();
+                .Where(a => FileServerId == null || a.tblFilePaths.FileServerId == Guid.Parse(FileServerId))
+                .Where(a => Path == null || a.tblFilePaths.Path == Path)
+                .Where(a => FileName == null || a.FileName == FileName)
+                .AnyAsync();
         }
 
         public async Task<OutGetFileInfo> GetFileInfoAsync(string FileId, string UserId = null)
@@ -80,22 +95,22 @@ namespace PrancaBeauty.Application.Apps.File
                     throw new ArgumentInvalidException($"'{nameof(FileId)}' cannot be null or whitespace.");
 
                 var qData = await _FileRepository.Get
-                                                .Where(a => a.Id == Guid.Parse(FileId))
-                                                .Where(a => UserId == null || a.UserId == Guid.Parse(UserId))
-                                                .Select(a => new OutGetFileInfo
-                                                {
-                                                    Title = a.Title,
-                                                    UserId = a.UserId.ToString(),
-                                                    FileName = a.FileName,
-                                                    FileServerId = a.FileServerId.ToString(),
-                                                    FileServerName = a.TblFileServer.Name,
-                                                    Date = a.Date,
-                                                    IsPrivate = a.IsPrivate,
-                                                    MimeType = a.MimeType,
-                                                    Path = a.Path,
-                                                    SizeOnDisk = a.SizeOnDisk
-                                                })
-                                                .SingleOrDefaultAsync();
+                    .Where(a => a.Id == Guid.Parse(FileId))
+                    .Where(a => UserId == null || a.UserId == Guid.Parse(UserId))
+                    .Select(a => new OutGetFileInfo
+                    {
+                        Title = a.Title,
+                        UserId = a.UserId.ToString(),
+                        FileName = a.FileName,
+                        FileServerId = a.tblFilePaths.FileServerId.ToString(),
+                        FileServerName = a.tblFilePaths.tblFileServer.Name,
+                        Date = a.Date,
+                        IsPrivate = a.IsPrivate,
+                        MimeType = a.tblFileTypes.MimeType,
+                        Path = a.tblFilePaths.Path,
+                        SizeOnDisk = a.SizeOnDisk
+                    })
+                    .SingleOrDefaultAsync();
 
                 if (qData == null)
                     return null;

@@ -26,6 +26,6 @@ namespace PrancaBeauty.WebApp.Pages.Shared.Components.Combo_Language
         }
 
         [BindProperty(SupportsGet = true)]
-        public ViCompo_Combo_Language Input { get; set; }
+        public viCompo_Combo_Language Input { get; set; }
     }
 }

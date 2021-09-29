@@ -13,6 +13,7 @@ namespace PrancaBeauty.Application.Contracts.Products
         public string AuthorUserName { get; set; }
         public string AuthorName { get; set; }
         public string AuthorImageUrl { get; set; }
+        public string UniqueNumber { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
         public string ImgUrl { get; set; }
@@ -24,10 +25,13 @@ namespace PrancaBeauty.Application.Contracts.Products
         public bool IsConfirm { get; set; }
         public bool IsDraft { get; set; }
         public DateTime Date { get; set; }
+        public bool HasUnConfirmedSellerRequest { get; set; }
         public int CountSellers { get; set; }
+        public bool HasUnConfirmedReviews { get; set; }
         public int CountReviews { get; set; }
-        public int CountAsks { get; set; }
+        public bool HasUnConfirmedAsk { get; set; }
         public int CountVisit { get; set; }
+        public int CountAsks { get; set; }
     }
 
     public enum OutGetProductsForManage_Status

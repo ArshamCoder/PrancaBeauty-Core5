@@ -1,0 +1,258 @@
+﻿@page "/{culture}/User/Products/List"
+@using PrancaBeauty.WebApp.Models.ViewModel
+@using PrancaBeauty.WebApp.Models.ViewInput
+@model PrancaBeauty.WebApp.Pages.User.Products.ListModel
+@{ ViewData["Title"] = Localizer["ProductList"];
+                Layout = "~/Pages/Shared/_UserLayout.cshtml"; }
+
+@section breadcrumbs{
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="/@ViewData["Culture"]">@Localizer["Home"]</a></li>
+                            <li><a href="/@ViewData["Culture"]/User/Index">@Localizer["Dashboard"]</a></li>
+                            <li>@Localizer["ProductList"]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="k-lang">
+            @(Html.Kendo()
+                   .Grid<vmProductList>()
+                   .Name("ListProducts")
+                   .DefaultSettings(Localizer)
+                   .Columns(col=> {
+                       col.Bound(a => a.Id).Hidden().HtmlAttributes(new { @class = "RowId" }).Sortable(false);
+                       col.Bound(a => a.ImgUrl).HtmlAttributes(new { style = "text-align:center;" }).ClientTemplate("<img style='width:128px' src='#=ImgUrl#'/>");
+                       col.Bound(a => a.Title).ClientTemplateId("TitleCell");
+                       col.Bound(a => a.AuthorName).ClientTemplateId("AuthorCell");
+                       col.Bound(a => a.Status).ClientTemplateId("StatusCell");
+                       col.Bound(a => a).Width(50).Title(" ")
+                                                  .HtmlAttributes(new { style= "overflow: visible; text-align: center;" })
+                                                  .ClientHeaderTemplate((User.IsInRole(Roles.CanAddProduct)? "<button class='btn btn-success btn-sm' onclick='Add()'><i class='fa fa-plus'></i></button>" : "") + "<button class='btn btn-primary btn-sm ml-1 mr-1' onclick='ShowSearchModal()'><i class='fa fa-search'></i></button>")
+                                                  .ClientTemplateId("DropDownCmd");
+                   })
+                   .DataSource(ds=>ds.Ajax()
+                                     .PageSize(10)
+                                     .Read(read=>read.Url($"/{CultureInfo.CurrentCulture.Parent.Name}/User/Products/List?handler=ReadData").Data("forgeryToken"))))
+        </div>
+    </div>
+</div>
+
+<div id="SearchModal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Localizer["Search"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label asp-for="Input.LangId"></label>
+                            <LoadComponent id="LangSearch"
+                                           url="/@ViewData["culture"]/Shared/Compo/ComboLanguage"
+                                           context="HttpContext"
+                                           data='new viCompo_Combo_Language { FieldName="Input.LangId",LangId=Model.Input.LangId }'></LoadComponent>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Input.Title"></label>
+                            <input type="text" id="txtTitle" class="form-control" placeholder="@Localizer["Title"]" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Input.Name"></label>
+                            <input type="text" id="txtName" class="form-control" placeholder="@Localizer["Name"]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        @if (User.IsInRole(Roles.CanViewListAllAuthorUserProducts))
+                        {
+            <div class="col-md-6">
+                <LoadComponent id="AuthorUserId"
+                               url="/@ViewData["culture"]/Shared/Compo/ComboUsers"
+                               context="HttpContext"
+                               data='new viCompo_Combo_Users{ FieldName="Input.AuthorUserId",UserId=Model.Input.AuthorUserId,LangId=null  }'></LoadComponent>
+            </div>
+                            <div class="col-md-6">
+                                <LoadComponent id="SellerUserId"
+                                               url="/@ViewData["culture"]/Shared/Compo/ComboUsers"
+                                               context="HttpContext"
+                                               data='new viCompo_Combo_Users{ FieldName="Input.SellerUserId",UserId=Model.Input.SellerUserId,LangId=null  }'></LoadComponent>
+                            </div> }
+                                        else
+                                        {
+                                            if (!User.IsInRole(Roles.CanViewListAllSellerUserProducts))
+                                            {
+                            <div class="col-md-12">
+                                <label asp-for="Input.SellerUserId"></label>
+                                <input type="text" id="txtSeller" class="form-control" placeholder="@Localizer["Seller"]" />
+                            </div>}
+                                        }
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label asp-for="Input.IsDelete"></label>
+                            <select id="CmbIsDelete" class="form-control">
+                                <option>@Localizer["All"]</option>
+                                <option value="true">@Localizer["IsDelete"]</option>
+                                <option value="false">@Localizer["IsNotDelete"]</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="Input.IsConfirmed"></label>
+                            <select id="CmbIsConfirmed" class="form-control">
+                                <option>@Localizer["All"]</option>
+                                <option value="true">@Localizer["IsConfirmed"]</option>
+                                <option value="false">@Localizer["IsNotConfirmed"]</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="Input.IsDraft"></label>
+                            <select id="CmbIsDraft" class="form-control">
+                                <option>@Localizer["All"]</option>
+                                <option value="true">@Localizer["IsDraft"]</option>
+                                <option value="false">@Localizer["IsNotDraft"]</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="Input.IsSchedule"></label>
+                            <select id="CmbIsSchedule" class="form-control">
+                                <option>@Localizer["All"]</option>
+                                <option value="true">@Localizer["IsSchedule"]</option>
+                                <option value="false">@Localizer["IsNotSchedule"]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="Search()" type="button" class="btn btn-primary">@Localizer["Filter"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="TitleCell">
+                                     <div class="row">
+                                         <div class="col-md-12">
+                                             <a href="/Product/#=UniqueNumber#/#=Name#">#=Title#</a>
+                                         </div>
+                                     </div>
+                                     <div class="row">
+                                         <div class="col-md-12">
+                                             <a href="/Category/#=CategoryMap#">#=CategoryTitle#</a>
+                                         </div>
+                                     </div>
+                                     <div class="row">
+                                         <div class="col-md-12">
+                                             <span>#=Date#</span>
+                                         </div>
+                                     </div>
+                                     <div class="row">
+                                         <div class="col-md-12">
+                                             <div class="d-inline #:HasUnConfirmedReviews==true?'font-weight-bold':''#"><i class="fa fa-comment mr-1 ml-1"></i><span>#:CountReviews#</span></div>
+                                             <div class="d-inline #:HasUnConfirmedAsk==true?'font-weight-bold':''#"><i class="fa fa-question mr-1 ml-1"></i><span>#:CountAsks#</span></div>
+                                             <div class="d-inline #:HasUnConfirmedSellerRequest==true?'font-weight-bold':''#"><i class="fa fa-users mr-1 ml-1"></i><span>#:CountSellers#</span></div>
+                                             <div class='d-inline'><i class="fa fa-eye mr-1 ml-1"></i><span>#:CountVisit#</span></div>
+                                         </div>
+                                     </div>
+</script>
+
+<script id="AuthorCell">
+                                    <a href="">
+                                        <div class="d-inline"><img class="img-responcive img-circle" src="#=AuthorImageUrl#" /></div>
+                                        <div class="d-inline">#=AuthorName#</div>
+                                    </a>
+</script>
+
+<script id="StatusCell">
+    <span class="badge badge-#:Status==0?'danger':(Status==1?'info':(Status==2?'success':(Status==3?'warning':(Status==4?'dark':'primary'))))#">
+        #:Status==0?'@Localizer["IsDelete"]':(Status==1?'@Localizer["IsDraft"]':(Status==2?'@Localizer["IsConfirm"]':(Status==3?'@Localizer["IsSchedule"]':(Status==4?'@Localizer["UnKnown"]':'@Localizer["UnKnown"]'))))#
+    </span>
+</script>
+
+<script id="DropDownCmd">
+    <div class="item-action dropdown">
+        <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fa fa-bars fs-16 text-dark"></i></a>
+        <div class="dropdown-menu dropdown-menu-left">
+            @if (User.IsInRole(Roles.CanEditProduct))
+            {
+                <a href="/@ViewData["Culture"]/Admin/Users/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
+            }
+
+            @if (User.IsInRole(Roles.CanRemoveProduct))
+            {
+                <a href="/@ViewData["Culture"]/Admin/Users/Edit/#:Id#" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Remove"]</a>
+            }
+        </div>
+    </div>
+</script>
+
+
+@if (User.IsInRole(Roles.CanAddProduct))
+{
+<script>
+        function Add() {
+            location.href = '/@ViewData["culture"]/User/Products/Add?ReturnUrl=@Request.GetCurrentUrlEncoded()';
+        }
+</script>}
+
+<script>
+    function ShowSearchModal() {
+        $('#SearchModal').modal();
+    }
+
+    function Search() {
+        var _LangId = $('#Input_LangId').val();
+        var _Title = $('#txtTitle').val();
+        var _Name = $('#txtName').val();
+        var _IsDelete = $('#CmbIsDelete option:selected').val();
+        var _IsConfirmed = $('#CmbIsConfirmed option:selected').val();
+        var _IsDraft = $('#CmbIsDraft option:selected').val();
+        var _IsSchedule = $('#CmbIsSchedule option:selected').val();
+        var _Author="";
+        var _Seller="";
+        @if (User.IsInRole(Roles.CanViewListAllAuthorUserProducts))
+        {
+            @Html.Raw("_Author = $('#Input_AuthorUserId').val();")
+            @Html.Raw("_Seller = $('#Input_SellerUserId').val();")
+        }
+        else
+        {
+            if (!User.IsInRole(Roles.CanViewListAllSellerUserProducts))
+            {
+                @Html.Raw("_Seller = $('#Input_SellerUserId').val();")
+            }
+        }
+
+        var _Grid = $('#ListProducts').data('kendoGrid');
+        _Grid.dataSource.transport.options.read.url = '/@CultureInfo.CurrentCulture.Parent.Name/User/Products/List?handler=ReadData&Input.LangId=' + _LangId + "&Input.Title=" + _Title + "&Input.Name=" + _Name + "&Input.AuthorUserId=" + _Author + "&Input.SellerUserId=" + _Seller + "&Input.IsDelete=" + _IsDelete + "&Input.IsConfirmed=" + _IsConfirmed + "&Input.IsDraft=" + _IsDraft + "&Input.IsSchedule=" + _IsSchedule;
+        _Grid.dataSource.read();
+        _Grid.refresh();
+
+        ChangeUrl(_Grid.dataSource.transport.options.read.url);
+    }
+
+
+
+    //$(document).ready(function () {
+    //    Search();
+    //});
+</script>

@@ -44,7 +44,7 @@ namespace PrancaBeauty.Domain.User.UserAgg.Entities
         public virtual ICollection<tblProductReviewsLikes> tblProductReviewsLikes { get; set; }
         public virtual ICollection<tblProductAsk> tblProductAsk { get; set; }
         public virtual ICollection<tblProductAskLikes> tblProductAskLikes { get; set; }
-
+        public virtual ICollection<TblFile> tblFiles { get; set; }
 
         public virtual tblSellers tblSellers { get; set; }
         public virtual ICollection<tblProductSellers> tblProductSellers { get; set; }
