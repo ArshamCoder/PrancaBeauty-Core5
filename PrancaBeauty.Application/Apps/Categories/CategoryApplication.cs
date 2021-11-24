@@ -316,5 +316,52 @@ namespace PrancaBeauty.Application.Apps.Categories
                 return new OperationResult().Failed("Error500");
             }
         }
+
+        public async Task<IEnumerable<OutGetParentsByChildId>> GetParentsByChildIdAsync(string LangId, string ChildId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(LangId))
+                    throw new ArgumentInvalidException($"'{nameof(LangId)}' cannot be null or whitespace.");
+
+                if (string.IsNullOrWhiteSpace(ChildId))
+                    throw new ArgumentInvalidException($"'{nameof(ChildId)}' cannot be null or whitespace.");
+
+                Guid? ParentId = Guid.Parse(ChildId);
+                Stack<OutGetParentsByChildId> StkItems = new Stack<OutGetParentsByChildId>();
+
+                while (ParentId != null)
+                {
+                    var qData = await _CategoryRepository.Get
+                        .Where(a => a.Id == ParentId.Value)
+                        .Include(a => a.tblCategory_Parent)
+                        .Include(a => a.tblCategory_Translates)
+                        .SingleOrDefaultAsync();
+                    if (qData == null)
+                        break;
+
+                    StkItems.Push(new OutGetParentsByChildId()
+                    {
+                        Id = qData.Id.ToString(),
+                        Name = qData.Name,
+                        Title = qData.tblCategory_Translates.Where(a => a.LangId == Guid.Parse(LangId)).Select(a => a.Title).Single()
+                    });
+
+                    ParentId = qData.ParentId;
+                }
+
+                return StkItems.ToList();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
+
     }
 }

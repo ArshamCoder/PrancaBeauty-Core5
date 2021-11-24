@@ -17,5 +17,6 @@ namespace PrancaBeauty.Application.Apps.Categories
         Task<OperationResult> RemoveAsync(string Id);
         Task<OutGetForEdit> GetForEditAsync(string Id);
         Task<OperationResult> SaveEditAsync(InpSaveEdit Input);
+        Task<IEnumerable<OutGetParentsByChildId>> GetParentsByChildIdAsync(string LangId, string ChildId);
     }
 }

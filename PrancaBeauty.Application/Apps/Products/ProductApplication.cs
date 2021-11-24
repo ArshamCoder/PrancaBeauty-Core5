@@ -32,7 +32,8 @@ namespace PrancaBeauty.Application.Apps.Products
                     throw new ArgumentInvalidException($"'{nameof(LangId)}' cannot be null or whitespace.");
 
                 var qData = _ProductRepository.Get
-                                              .Where(a => SellerUserId == null || a.tblProductSellers.Any(b => b.SellerUserId == Guid.Parse(SellerUserId)))
+                                              .Where(a => SellerUserId == null ||
+                                                          a.tblProductSellers.Any(b => b.SellerUserId == Guid.Parse(SellerUserId)))
                                               .Where(a => a.LangId == Guid.Parse(LangId))
                                               .Select(a => new OutGetProductsForManage
                                               {
