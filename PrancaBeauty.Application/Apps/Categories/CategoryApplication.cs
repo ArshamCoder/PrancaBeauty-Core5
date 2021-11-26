@@ -344,7 +344,9 @@ namespace PrancaBeauty.Application.Apps.Categories
                     {
                         Id = qData.Id.ToString(),
                         Name = qData.Name,
-                        Title = qData.tblCategory_Translates.Where(a => a.LangId == Guid.Parse(LangId)).Select(a => a.Title).Single()
+                        Title = qData.tblCategory_Translates
+                            .Where(a => a.LangId == Guid.Parse(LangId))
+                            .Select(a => a.Title).Single()
                     });
 
                     ParentId = qData.ParentId;
