@@ -36,7 +36,7 @@ namespace PrancaBeauty.WebApp.Pages.User.Products
             return Page();
         }
 
-        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request,string LangId)
+        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request, string LangId)
         {
             if (!User.IsInRole(Roles.CanViewListAllAuthorUserProducts))
             {
@@ -69,7 +69,7 @@ namespace PrancaBeauty.WebApp.Pages.User.Products
             var Items = _Mapper.Map<List<vmProductList>>(qData.Item2);
 
             // To DataSourceResult
-            var _DataGrid = Items.ToDataSourceResult(request);
+            var _DataGrid = await Items.ToDataSourceResultAsync(request);
 
             // Paging
             _DataGrid.Total = (int)qData.Item1.CountAllItem;

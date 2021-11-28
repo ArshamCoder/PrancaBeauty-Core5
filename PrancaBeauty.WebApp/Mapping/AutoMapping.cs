@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PrancaBeauty.Application.Contracts.Address;
 using PrancaBeauty.Application.Contracts.Categories;
+using PrancaBeauty.Application.Contracts.Products;
 using PrancaBeauty.Application.Contracts.Users;
 using PrancaBeauty.WebApp.Models.ViewInput;
 using PrancaBeauty.WebApp.Models.ViewModel;
@@ -15,6 +16,7 @@ namespace PrancaBeauty.WebApp.Mapping
             CreateMap<ViCompo_AddAddress, InpAddAddress>();
             CreateMap<viCompo_EditAddress, InpEditAddress>();
             CreateMap<OutGetAddressDetails, viCompo_EditAddress>();
+            CreateMap<OutGetProductsForManage, vmProductList>();
             CreateMap<OutGetAddressByUserIdForManage, VmCompo_ListAddress>().ReverseMap();
             CreateMap<PrancaBeauty.Application.Contracts.Countries.OutGetListForCombo, vmCompo_Combo_Countries>();
             CreateMap<PrancaBeauty.Application.Contracts.Province.OutGetListForCombo, vmCompo_Combo_Province>();
